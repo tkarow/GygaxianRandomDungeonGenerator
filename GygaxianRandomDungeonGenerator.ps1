@@ -1,4 +1,4 @@
-﻿function Roll-D2{
+function Roll-D2{
 
     Get-Random -Minimum 1 -Maximum 3
 
@@ -320,7 +320,7 @@ $TableVC = @{
 #Tom note: e.g. $TableVC.(Roll-D20) | ?{($_.'Room Area Lower Limit' -le 580) -and ($_.'Room Area Upper Limit' -ge 580)}
 
 #TABLE V. D.: EXIT LOCATION '(d20)
-#If a passage or door is indicated in a wall where the space immediately beyond the wall has already been mapped, then the exit is either a secret door (1-5) or a one-way door (6-10) or it is in the opposite direction (1 1-20).
+#If a passage or door is indicated in a wall where the space immediately beyond the wall has already been mapped, then the exit is either a secret door (1-5) or a one-way door (6-10) or it is in the opposite direction (11-20).
 $TableVD = @{
 1  = "opposite wall"
 2  = "opposite wall"
