@@ -872,7 +872,7 @@ function Get-TableVIRoll {
 }
 #endregion
 
-#TABLE V. J.: TREASURE IS HIDDEN BYAN (d20)
+#TABLE V. J.: TREASURE IS HIDDEN BY/IN (d20)
 $TableVJ = @{
 1  = "Invisibility"
 2  = "Invisibility"
