@@ -1,3 +1,4 @@
+#region Basic Dice Functions
 function Get-D2Roll{
 
     [pscustomobject]@{
@@ -77,6 +78,8 @@ function Get-D100Roll{
     }
 
 }
+
+#endregion
 
 function Write-Rolls{
     
