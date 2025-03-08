@@ -163,26 +163,45 @@ $TableII = @{
 #Space Beyond Door Is:
 #Check again immediately on TABLE I. unless door is straight ahead; if another door is not indicated, then ignore the result and check again 30' past the door. If a room or chamber is beyond a door, go to TABLE V.
 $TableIIA = @{
-1  = "Parallel passage (extends 30' in both directions.) or 1 0 ' x 10' room if door is straight ahead"
-2  = "Parallel passage (extends 30' in both directions.) or 1 0 ' x 10' room if door is straight ahead"
-3  = "Parallel passage (extends 30' in both directions.) or 1 0 ' x 10' room if door is straight ahead"
-4  = "Parallel passage (extends 30' in both directions.) or 1 0 ' x 10' room if door is straight ahead"
-5  = "Passage straight ahead"
-6  = "Passage straight ahead"
-7  = "Passage straight ahead"
-8  = "Passage straight ahead"
-9  = "Passage 45 degrees ahead/behind (the direction will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"
-10 = "Passage 45 degrees behind/ahead (the direction will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"
-11 = "Room (go to TABLE V.)"
-12 = "Room (go to TABLE V.)"
-13 = "Room (go to TABLE V.)"
-14 = "Room (go to TABLE V.)"
-15 = "Room (go to TABLE V.)"
-16 = "Room (go to TABLE V.)"
-17 = "Room (go to TABLE V.)"
-18 = "Room (go to TABLE V.)"
-19 = "Chamber (go to TABLE V.)"
-20 = "Chamber (go to TABLE V.)"
+1  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
+2  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
+3  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
+4  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
+5  = [pscustomobject]@{Description="Passage straight ahead"}
+6  = [pscustomobject]@{Description="Passage straight ahead"}
+7  = [pscustomobject]@{Description="Passage straight ahead"}
+8  = [pscustomobject]@{Description="Passage straight ahead"}
+9  = [pscustomobject]@{Description="Passage 45 degrees ahead/behind (the direction will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
+10 = [pscustomobject]@{Description="Passage 45 degrees behind/ahead (the direction will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
+11 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+12 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+13 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+14 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+15 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+16 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+17 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+18 = [pscustomobject]@{Description="Room (go to TABLE V.)"}
+19 = [pscustomobject]@{Description="Chamber (go to TABLE V.)"}
+20 = [pscustomobject]@{Description="Chamber (go to TABLE V.)"}
+}
+
+function Get-TableIIARoll {
+
+[alias("Get-SpaceBeyondDoorRoll")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableIIA.($Roll).Description
+   
+   }
+
 }
 
 #TABLE III.: SIDE PASSAGES (d20)
