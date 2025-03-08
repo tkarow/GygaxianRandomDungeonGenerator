@@ -1,48 +1,108 @@
-function Roll-D2{
+function Get-D2Roll{
 
-    Get-Random -Minimum 1 -Maximum 3
-
-}
-
-function Roll-D4{
-
-    Get-Random -Minimum 1 -Maximum 5
+    [pscustomobject]@{
+    Min=1
+    Max=2
+    Result=Get-Random -Minimum 1 -Maximum 3
+    }
 
 }
 
-function Roll-D6{
+function Get-D4Roll{
 
-    Get-Random -Minimum 1 -Maximum 7
-
-}
-
-function Roll-D8{
-
-    Get-Random -Minimum 1 -Maximum 9
+    [pscustomobject]@{
+    Min=1
+    Max=4
+    Result=Get-Random -Minimum 1 -Maximum 5
+    }
 
 }
 
-function Roll-D10{
+function Get-D6Roll{
 
-    Get-Random -Minimum 1 -Maximum 11
-
-}
-
-function Roll-D12{
-
-    Get-Random -Minimum 1 -Maximum 13
+    [pscustomobject]@{
+    Min=1
+    Max=6
+    Result=Get-Random -Minimum 1 -Maximum 7
+    }
 
 }
 
-function Roll-D20{
+function Get-D8Roll{
 
-    Get-Random -Minimum 1 -Maximum 21
+    [pscustomobject]@{
+    Min=1
+    Max=8
+    Result=Get-Random -Minimum 1 -Maximum 9
+    }
 
 }
 
-function Roll-D100{
+function Get-D10Roll{
 
-    Get-Random -Minimum 1 -Maximum 101
+    [pscustomobject]@{
+    Min=1
+    Max=10
+    Result=Get-Random -Minimum 1 -Maximum 11
+    }
+
+}
+
+function Get-D12Roll{
+
+    [pscustomobject]@{
+    Min=1
+    Max=12
+    Result=Get-Random -Minimum 1 -Maximum 13
+    }
+
+}
+
+function Get-D20Roll{
+
+    [pscustomobject]@{
+    Min=1
+    Max=20
+    Result=Get-Random -Minimum 1 -Maximum 21
+    }
+
+}
+
+function Get-D100Roll{
+
+    [pscustomobject]@{
+    Min=1
+    Max=100
+    Result=Get-Random -Minimum 1 -Maximum 101
+    }
+
+}
+
+function Write-Rolls{
+    
+    Param(
+    [parameter(Mandatory=$False)]
+    $DieRolls
+    )
+
+    $Sum = ($DieRolls.Result | Measure-Object -Sum).Sum
+    
+    $UniqueDice = $DieRolls.Max | Sort-Object | Get-Unique
+    
+    $NumberOfUniqueRolls = foreach($UniqueDie in $UniqueDice){
+     
+        [pscustomobject]@{
+            NumberofDice = ($DieRolls | ?{($_.Max -eq $UniqueDie)} | Measure-Object).Count
+            UniqueDie = $UniqueDie
+        }
+     
+     }
+
+     #$SetofUniqueRolls = ($NumberOfUniqueRolls | %{"$($_.numberofdice)d$($_.uniquedie)"}) -join ', '
+     $SetofUniqueRolls = ''
+     $NumberOfUniqueRolls | %{$SetofUniqueRolls = "$($SetofUniqueRolls)$(if((($NumberOfUniqueRolls | Measure-Object).Count -gt 1) -and ($SetofUniqueRolls -ne '')){', '})$(if(($_ -eq $NumberOfUniqueRolls[-1]) -and (($NumberOfUniqueRolls | Measure-Object).Count -gt 1)){'and '})$($_.numberofdice)d$($_.uniquedie)"}
+
+    "You rolled a total of $($Sum) on $($SetofUniqueRolls)"
 
 }
 
