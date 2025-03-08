@@ -480,6 +480,232 @@ $TableVJ = @{
 20 = "In a secret room nearby"
 }
 
+#TABLE VI.: STAIRS (d20)
+$TableJ = @{
+1  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
+2  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
+3  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
+4  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
+5  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
+6  = "Down 2 levels (2 in 20 has a door which closes egress for the day.)"
+7  = "Down 3 levels (3 in 20 has a door which closes egress for the day.)"
+8  = "Up 1 level"
+9  = "Up dead end (1 in 6 chance to chute down 2 levels)"
+10 = "Down dead end (1 in 6 chance to chute down 1 level)"
+11 = "Chimney up 1 level, passage continues, check again in 30'"
+12 = "Chimney up 2 levels, passage continues, check again in 30'"
+13 = "Chimney down 2 levels, passage continues, check again in 30'"
+14 = "Trap door down 1 level, passage continues, check again in 30'"
+15 = "Trap door down 1 level, passage continues, check again in 30'"
+16 = "Trap door down 1 level, passage continues, check again in 30'"
+17 = "Trap door down 2 levels, passage continues, check again in 30'"
+18 = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"
+19 = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"
+20 = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"
+}
+#N.B. Check for such doors only after descending steps if playing solo!
+
+#TABLE VII.: TRICK/TRAP (d20)
+$TableVII = @{
+1  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
+2  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
+3  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
+4  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
+5  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
+6  = "Pit, 10' deep, 3 in 6 to fall in."
+7  = "Pit, 10' deep, 3 in 6 to fall in."
+8  = "Pit, 10' deep with spikes, 3 in 6 to fall in."
+9  = "20' x 20' elevator room (party has entered door directly ahead and is in room), descends 1 level and will not ascend for 30 turns."
+10 = "As 9. above, but room descends 2 levels"
+11 = "As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."
+12 = "Wall 10' behind slides across passage blocking it for from 40-60 turns."
+13 = "Oil (equal to one flask) pours on random person from hole in ceiling, followed by flaming cinder (2-12 h.p. damage unless successful save vs. magic is made, which indicates only 1-3 h.p. damage)."
+14 = "Pit, 10' deep, 3 in 6 to fall in, pit walls move together to crush victim(s) in 2-5 rounds."
+15 = "Arrow trap, 1-3 arrows, 1 in 20 is poisoned."
+16 = "Spear trap, 1-3 spears, 1 in 20 is poisoned"
+17 = "Gas; party has detected it, but must breathe it to continue along corridor, as it covers 60' ahead. Mark map accordingly regardless of turning back or not. (See TABLE VII. A.)"
+18 = "Door falls outward causing 1-10 hit points, or stone falls from ceiling causing 2-20 hit points of damage to each person failing his saving throw versus petrification."
+19 = "Illusionary wall concealing 8. (pit) above (1-6), 20. (chute) below (7-10) or chamber with monster and treasure (11-20) (see TABLE V.)."
+#Above should read "Illusionary wall concealing: 
+#1-6: pit as 8 above
+#7-10: chute as 20 below
+#11-20: chamber with monster and treasure (see TABLE V.)
+20 = "Chute down 1 level (cannot be ascended in any manner)."
+}
+
+#TABLE VII. A.: GAS SUB-TABLE (d20)
+$TableVIIA = @{
+1  = "Only effect is to obscure vision when passing through."
+2  = "Only effect is to obscure vision when passing through."
+3  = "Only effect is to obscure vision when passing through."
+4  = "Only effect is to obscure vision when passing through."
+5  = "Only effect is to obscure vision when passing through."
+6  = "Only effect is to obscure vision when passing through."
+7  = "Only effect is to obscure vision when passing through."
+8  = "Blindsfor 1-6 turns after passing through."
+9  = "Blindsfor 1-6 turns after passing through."
+10 = "Fear: run back 120' feet unless saving throw versus magic is made."
+11 = "Fear: run back 120' feet unless saving throw versus magic is made."
+12 = "Fear: run back 120' feet unless saving throw versus magic is made."
+13 = "Sleep: party sound asleep for 2-12 turns (as sleep spell)."
+14 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
+15 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
+16 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
+17 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
+18 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
+19 = "Sickness: return to surface immediately."
+20 = "Poison: killed unless saving throw versus poison is made."
+}
+
+#CAVES AND CAVERNS FOR LOWEST LEVELS:
+#You may wish to have "roughhewn" and natural tunnels in lower levels, and where rooms and chambers are indicated substitute Caves and Caverns. Exits are as above.
+
+#TABLE VIII.: CAVES AND CAVERNS (d20)
+$TableVIII = @{
+1  = "Cave about 40' x 60'"
+2  = "Cave about 40' x 60'"
+3  = "Cave about 40' x 60'"
+4  = "Cave about 40' x 60'"
+5  = "Cave about 40' x 60'"
+6  = "Cave about 50' x75'"
+7  = "Cave about 50' x75'"
+8  = "Double Cave: 20' x 30', 60' x 60'"
+9  = "Double Cave: 20' x 30', 60' x 60'"
+10 = "Double Cave: 35' x 50', 80' x 90' (Roll to see if pool therein (see TABLE VII1. A.).)"
+11 = "Double Cave: 35' x 50', 80' x 90' (Roll to see if pool therein (see TABLE VII1. A.).)"
+12 = "Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"
+13 = "Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"
+14 = "Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"
+15 = "Cavern about 120' x 150'"
+16 = "Cavern about 120' x 150'"
+17 = "Cavern about 150' X 200' (Roll to see if pool therein (see TABLE VII1. A.).)"
+18 = "Cavern about 150' X 200' (Roll to see if pool therein (see TABLE VII1. A.).)"
+19 = "Mammoth cavern about 250'-300' X 350'-400 (Roll to see if lake therein (see TABLE VIII. B.).)"
+20 = "Mammoth cavern about 250'-300' X 350'-400 (Roll to see if lake therein (see TABLE VIII. B.).)"
+}
+
+#TABLE VIII. A.: POOLS (d20)
+$TableVIIIA = @{
+1  = "No pool"
+2  = "No pool"
+3  = "No pool"
+4  = "No pool"
+5  = "No pool"
+6  = "No pool"
+7  = "No pool"
+8  = "No pool"
+9  = "Pool, no monster"
+10 = "Pool, no monster"
+11 = "Pool, monster"
+12 = "Pool, monster"
+13 = "Pool, monster8 treasure"
+14 = "Pool, monster8 treasure"
+15 = "Pool, monster8 treasure"
+16 = "Pool, monster8 treasure"
+17 = "Pool, monster8 treasure"
+18 = "Pool, monster8 treasure"
+19 = "Magical pool (See TABLE VIII. C.)"
+20 = "Magical pool (See TABLE VIII. C.)"
+}
+
+#TABLE VIII. B.: LAKES (d20)
+$TableVIIIB = @{
+1  = "No lake"
+2  = "No lake"
+3  = "No lake"
+4  = "No lake"
+5  = "No lake"
+6  = "No lake"
+7  = "No lake"
+8  = "No lake"
+9  = "No lake"
+10 = "No lake"
+11 = "Lake, no monsters"
+12 = "Lake, no monsters"
+13 = "Lake, no monsters"
+14 = "Lake, no monsters"
+15 = "Lake, no monsters"
+16 = "Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"
+17 = "Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"
+18 = "Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"
+19 = "Enchanted lake (Enchanted lake leads any who manage to cross it to another dimension, special temple, etc. (if special map is available, otherwise treat as lake with monsters), 90% chance that monster will guard lake.)"
+20 = "Enchanted lake (Enchanted lake leads any who manage to cross it to another dimension, special temple, etc. (if special map is available, otherwise treat as lake with monsters), 90% chance that monster will guard lake.)"
+}
+
+#TABLE VIII. C.: MAGIC POOLS (d20)
+#(In order to find out what they are, characters must enter the magic pools.)
+$TableVIIIC = @{
+1  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+2  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+3  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+4  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+5  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+6  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+7  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+8  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
+9  = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+10 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+11 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+12 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+13 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+14 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+15 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = strength
+2 = intelligence
+3 = wisdom
+4 = dexterity
+5 = constitution
+6 = charisma
+(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
+16 = "Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: lawful good 1-6, lawful evil 7-9, chaotic good 10-12, chaotic evil 13-17, neutral 18-20"
+17 = "Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: lawful good 1-6, lawful evil 7-9, chaotic good 10-12, chaotic evil 13-17, neutral 18-20"
+18 = "Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."
+19 = "Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."
+20 = "Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."
+}
+
 ###################################
 
 <#
