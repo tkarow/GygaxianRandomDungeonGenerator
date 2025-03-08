@@ -113,29 +113,49 @@ function Write-Rolls{
 
 ###################################
 
-#TABLE I.: PERIODIC CHECK (d20)
+#region TABLE I.: PERIODIC CHECK (d20)
 $TableI = @{
-1  = "Continue straight - check again in 60' (this table)"
-2  = "Continue straight - check again in 60' (this table)"
-3  = "Door (see TABLE II.)"
-4  = "Door (see TABLE II.)"
-5  = "Door (see TABLE II.)"
-6  = "Side Passage (see TABLE III.) -check again in 30' (this table)"
-7  = "Side Passage (see TABLE III.) -check again in 30' (this table)"
-8  = "Side Passage (see TABLE III.) -check again in 30' (this table)"
-9  = "Side Passage (see TABLE III.) -check again in 30' (this table)"
-10 = "Side Passage (see TABLE III.) -check again in 30' (this table)"
-11 = "Passage Turns (see TABLE IV., check width on TABLE III.)"
-12 = "Passage Turns (see TABLE IV., check width on TABLE III.)"
-13 = "Passage Turns (see TABLE IV., check width on TABLE III.)"
-14 = "Chamber (see TABLE V.) -check 30' after leaving (this table)"
-15 = "Chamber (see TABLE V.) -check 30' after leaving (this table)"
-16 = "Chamber (see TABLE V.) -check 30' after leaving (this table)"
-17 = "Stairs (see TABLE VI.)"
-18 = "Dead End (walls left, right, and ahead can be checked for Secret Doors, see TABLE V.D., footnote)"
-19 = "Trick/Trap (see TABLE VII.), passage continues- check again in 30' (this table)"
-20 = "Wandering Monster, check again immediately to see what lies ahead so direction of monster's approach can be determined."
+1  = [pscustomobject]@{Description="Continue straight - check again in 60' (this table)"}
+2  = [pscustomobject]@{Description="Continue straight - check again in 60' (this table)"}
+3  = [pscustomobject]@{Description="Door (see TABLE II.)"}
+4  = [pscustomobject]@{Description="Door (see TABLE II.)"}
+5  = [pscustomobject]@{Description="Door (see TABLE II.)"}
+6  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
+7  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
+8  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
+9  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
+10 = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
+11 = [pscustomobject]@{Description="Passage Turns (see TABLE IV., check width on TABLE III.)"}
+12 = [pscustomobject]@{Description="Passage Turns (see TABLE IV., check width on TABLE III.)"}
+13 = [pscustomobject]@{Description="Passage Turns (see TABLE IV., check width on TABLE III.)"}
+14 = [pscustomobject]@{Description="Chamber (see TABLE V.) -check 30' after leaving (this table)"}
+15 = [pscustomobject]@{Description="Chamber (see TABLE V.) -check 30' after leaving (this table)"}
+16 = [pscustomobject]@{Description="Chamber (see TABLE V.) -check 30' after leaving (this table)"}
+17 = [pscustomobject]@{Description="Stairs (see TABLE VI.)"}
+18 = [pscustomobject]@{Description="Dead End (walls left, right, and ahead can be checked for Secret Doors, see TABLE V.D., footnote)"}
+19 = [pscustomobject]@{Description="Trick/Trap (see TABLE VII.), passage continues- check again in 30' (this table)"}
+20 = [pscustomobject]@{Description="Wandering Monster, check again immediately to see what lies ahead so direction of monster's approach can be determined."}
 }
+
+function Get-TableIRoll {
+
+[alias("Get-PeriodicCheckRoll")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableI.($Roll).Description
+   
+   }
+
+}
+#endregion
 
 #region TABLE II.: DOORS (d20)
 #Always check width of passage (TABLE III. A.)
@@ -181,10 +201,9 @@ function Get-TableIIRoll {
    }
 
 }
-
 #endregion
 
-#region TABLE II.: DOORS (d20)
+#region TABLE II. A.: DOORS (d20)
 #Always check width of passage (TABLE III. A.)
 #Space Beyond Door Is:
 #Check again immediately on TABLE I. unless door is straight ahead; if another door is not indicated, then ignore the result and check again 30' past the door. If a room or chamber is beyond a door, go to TABLE V.
@@ -231,126 +250,229 @@ function Get-TableIIARoll {
 }
 #endregion
 
-#TABLE III.: SIDE PASSAGES (d20)
+#region TABLE III.: SIDE PASSAGES (d20)
 $TableIII = @{
-1  = "left 90 degrees"
-2  = "left 90 degrees"
-3  = "right 90 degrees"
-4  = "right 90 degrees"
-5  = "left 45 degrees ahead"
-6  = "right 45 degrees ahead"
-7  = "left 45 degrees behind (left 135 degrees)"
-8  = "right 45 degrees behind (right 135 degrees)"
-9  = "left curve 45 degrees ahead"
-10 = "right curve 45 degrees ahead"
-11 = "passage `"T`"'s"
-12 = "passage `"T`"'s"
-13 = "passage `"T`"'s"
-14 = "passage `"Y`"'s"
-15 = "passage `"Y`"'s"
-16 = "four-way intersection"
-17 = "four-way intersection"
-18 = "four-way intersection"
-19 = "four-way intersection"
-20 = "passage `"X`"s (if present passage is horizontal or vertical it forms a fifth passage into the `"X`")"
+1  = [pscustomobject]@{Description="Left 90 degrees"}
+2  = [pscustomobject]@{Description="Left 90 degrees"}
+3  = [pscustomobject]@{Description="Right 90 degrees"}
+4  = [pscustomobject]@{Description="Right 90 degrees"}
+5  = [pscustomobject]@{Description="Left 45 degrees ahead"}
+6  = [pscustomobject]@{Description="Right 45 degrees ahead"}
+7  = [pscustomobject]@{Description="Left 45 degrees behind (left 135 degrees)"}
+8  = [pscustomobject]@{Description="Right 45 degrees behind (right 135 degrees)"}
+9  = [pscustomobject]@{Description="Left curve 45 degrees ahead"}
+10 = [pscustomobject]@{Description="Right curve 45 degrees ahead"}
+11 = [pscustomobject]@{Description="Passage `"T`"'s"}
+12 = [pscustomobject]@{Description="Passage `"T`"'s"}
+13 = [pscustomobject]@{Description="Passage `"T`"'s"}
+14 = [pscustomobject]@{Description="Passage `"Y`"'s"}
+15 = [pscustomobject]@{Description="Passage `"Y`"'s"}
+16 = [pscustomobject]@{Description="Four-way intersection"}
+17 = [pscustomobject]@{Description="Four-way intersection"}
+18 = [pscustomobject]@{Description="Four-way intersection"}
+19 = [pscustomobject]@{Description="Four-way intersection"}
+20 = [pscustomobject]@{Description="Passage `"X`"s (if present passage is horizontal or vertical it forms a fifth passage into the `"X`")"}
 }
 
-#TABLE III. A.: PASSAGE WIDTH (d20)
+function Get-TableIIIRoll {
+
+[alias("Get-SidePassageRoll")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableIII.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE III. A.: PASSAGE WIDTH (d20)
 $TableIIIA = @{
-1  = "10'"
-2  = "10'"
-3  = "10'"
-4  = "10'"
-5  = "10'"
-6  = "10'"
-7  = "10'"
-8  = "10'"
-9  = "10'"
-10 = "10'"
-11 = "10'"
-12 = "10'"
-13 = "20'"
-14 = "20'"
-15 = "20'"
-16 = "20'"
-17 = "30'"
-18 = "5'"
-19 = "SPECIAL PASSAGE (TABLE III. B. below)"
-20 = "SPECIAL PASSAGE (TABLE III. B. below)"
+1  = [pscustomobject]@{Description="10'"}
+2  = [pscustomobject]@{Description="10'"}
+3  = [pscustomobject]@{Description="10'"}
+4  = [pscustomobject]@{Description="10'"}
+5  = [pscustomobject]@{Description="10'"}
+6  = [pscustomobject]@{Description="10'"}
+7  = [pscustomobject]@{Description="10'"}
+8  = [pscustomobject]@{Description="10'"}
+9  = [pscustomobject]@{Description="10'"}
+10 = [pscustomobject]@{Description="10'"}
+11 = [pscustomobject]@{Description="10'"}
+12 = [pscustomobject]@{Description="10'"}
+13 = [pscustomobject]@{Description="20'"}
+14 = [pscustomobject]@{Description="20'"}
+15 = [pscustomobject]@{Description="20'"}
+16 = [pscustomobject]@{Description="20'"}
+17 = [pscustomobject]@{Description="30'"}
+18 = [pscustomobject]@{Description="5'"}
+19 = [pscustomobject]@{Description="SPECIAL PASSAGE (TABLE III. B. below)"}
+20 = [pscustomobject]@{Description="SPECIAL PASSAGE (TABLE III. B. below)"}
 }
 
-#TABLE III. B.: SPECIAL PASSAGE (d20)
+function Get-TableIIIARoll {
+
+[alias("Get-PassageWidth")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableIIIA.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE III. B.: SPECIAL PASSAGE (d20)
 $TableIIIB = @{
-1  = "40', columns down center"
-2  = "40', columns down center"
-3  = "40', columns down center"
-4  = "40', columns down center"
-5  = "40', double row of columns"
-6  = "40', double row of columns"
-7  = "40', double row of columns"
-8  = "50', double raw of columns"
-9  = "50', double raw of columns"
-10 = "50', double raw of columns"
-11 = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (1 1-20) of the time.)"
-12 = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (1 1-20) of the time.)"
-13 = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"
-14 = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"
-15 = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"
-16 = "20' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"
-17 = "20' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"
-18 = "40' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"
-19 = "60' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"
-20 = "20', chasm (chasms bisect the passage. They are 150' to 200' deep. They will be bridged 50% (1-10) of the time, have a jumping place 5'-10' wide 25% (1 1-15) of the time, and be an obstacle 25% (16-20) of the time.)"
+1  = [pscustomobject]@{Description="40', columns down center"}
+2  = [pscustomobject]@{Description="40', columns down center"}
+3  = [pscustomobject]@{Description="40', columns down center"}
+4  = [pscustomobject]@{Description="40', columns down center"}
+5  = [pscustomobject]@{Description="40', double row of columns"}
+6  = [pscustomobject]@{Description="40', double row of columns"}
+7  = [pscustomobject]@{Description="40', double row of columns"}
+8  = [pscustomobject]@{Description="50', double raw of columns"}
+9  = [pscustomobject]@{Description="50', double raw of columns"}
+10 = [pscustomobject]@{Description="50', double raw of columns"}
+11 = [pscustomobject]@{Description="50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (1 1-20) of the time.)"}
+12 = [pscustomobject]@{Description="50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (1 1-20) of the time.)"}
+13 = [pscustomobject]@{Description="10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
+14 = [pscustomobject]@{Description="10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
+15 = [pscustomobject]@{Description="10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
+16 = [pscustomobject]@{Description="20' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+17 = [pscustomobject]@{Description="20' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+18 = [pscustomobject]@{Description="40' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+19 = [pscustomobject]@{Description="60' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+20 = [pscustomobject]@{Description="20', chasm (chasms bisect the passage. They are 150' to 200' deep. They will be bridged 50% (1-10) of the time, have a jumping place 5'-10' wide 25% (1 1-15) of the time, and be an obstacle 25% (16-20) of the time.)"}
 }
 
-#TABLE IV.: TURNS (d20)
+function Get-TableIIIBRoll {
+
+[alias("Get-PassageWidth")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableIIIB.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE IV.: TURNS (d20)
 $TableIV = @{
-1  = "left 90 degrees"
-2  = "left 90 degrees"
-3  = "left 90 degrees"
-4  = "left 90 degrees"
-5  = "left 90 degrees"
-6  = "left 90 degrees"
-7  = "left 90 degrees"
-8  = "left 90 degrees"
-9  = "left 45 degrees ahead"
-10 = "left 45 degrees behind (left 135 degrees)"
-11 = "right 90 degrees"
-12 = "right 90 degrees"
-13 = "right 90 degrees"
-14 = "right 90 degrees"
-15 = "right 90 degrees"
-16 = "right 90 degrees"
-17 = "right 90 degrees"
-18 = "right 90 degrees"
-19 = "right 45 degrees ahead"
-20 = "right 45 degrees behind (right 135 degrees)"
+1  = [pscustomobject]@{Description="Left 90 degrees"}
+2  = [pscustomobject]@{Description="Left 90 degrees"}
+3  = [pscustomobject]@{Description="Left 90 degrees"}
+4  = [pscustomobject]@{Description="Left 90 degrees"}
+5  = [pscustomobject]@{Description="Left 90 degrees"}
+6  = [pscustomobject]@{Description="Left 90 degrees"}
+7  = [pscustomobject]@{Description="Left 90 degrees"}
+8  = [pscustomobject]@{Description="Left 90 degrees"}
+9  = [pscustomobject]@{Description="Left 45 degrees ahead"}
+10 = [pscustomobject]@{Description="Left 45 degrees behind (left 135 degrees)"}
+11 = [pscustomobject]@{Description="Right 90 degrees"}
+12 = [pscustomobject]@{Description="Right 90 degrees"}
+13 = [pscustomobject]@{Description="Right 90 degrees"}
+14 = [pscustomobject]@{Description="Right 90 degrees"}
+15 = [pscustomobject]@{Description="Right 90 degrees"}
+16 = [pscustomobject]@{Description="Right 90 degrees"}
+17 = [pscustomobject]@{Description="Right 90 degrees"}
+18 = [pscustomobject]@{Description="Right 90 degrees"}
+19 = [pscustomobject]@{Description="Right 45 degrees ahead"}
+20 = [pscustomobject]@{Description="Right 45 degrees behind (right 135 degrees)"}
 }
 
-#TABLE V.: CHAMBERS AND ROOMS SHAPE AND SIZE (d20)
+function Get-TableIVRoll {
+
+[alias("Get-PassageWidth")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableIV.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE V.: CHAMBERS AND ROOMS SHAPE AND SIZE (d20)
 #(Roll for Shape, Size, and Exits: then' Contents, Treasure, and how the latter i s contained, if applicable.)
 $TableV = @{
-1  = "Chamber Shape and Area: Square, 20'x20'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 10'x10'"
-2  = "Chamber Shape and Area: Square, 20'x20'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 10'x10'"
-3  = "Chamber Shape and Area: Square, 20'x20'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 20'x20'"
-4  = "Chamber Shape and Area: Square, 20'x20'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 20'x20'"
-5  = "Chamber Shape and Area: Square, 30'x30'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 30'x30'"
-6  = "Chamber Shape and Area: Square, 30'x30'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 30'x30'"
-7  = "Chamber Shape and Area: Square, 40'x40'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 40'x40'"
-8  = "Chamber Shape and Area: Square, 40'x40'. . . . . . . . . . . . . . . . . . . Room Shape and Area: Square, 40'x40'"
-9  = "Chamber Shape and Area: Rectangular, 20' x 30' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 10' x 20'"
-10 = "Chamber Shape and Area: Rectangular, 20' x 30' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 10' x 20'"
-11 = "Chamber Shape and Area: Rectangular, 20' x 30' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 20' x 30'"
-12 = "Chamber Shape and Area: Rectangular, 20' x 30' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 20' x 30'"
-13 = "Chamber Shape and Area: Rectangular, 20' x 30' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 20' x 30'"
-14 = "Chamber Shape and Area: Rectangular, 30' x 50' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 20' x 40'"
-15 = "Chamber Shape and Area: Rectangular, 30' x 50' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 20' x 40'"
-16 = "Chamber Shape and Area: Rectangular, 40' x 60' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 30' x 40'"
-17 = "Chamber Shape and Area: Rectangular, 40' x 60' . . . . . . . . . . . . . . . Room Shape and Area: Rectangular, 30' x 40'"
-18 = "Unusual shape and size - see sub-tables below"
-19 = "Unusual shape and size - see sub-tables below"
-20 = "Unusual shape and size - see sub-tables below"
+1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10'x10'"}}
+2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10'x10'"}}
+3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20'x20'"}}
+4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20'x20'"}}
+5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30'x30'"}}
+6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30'x30'"}}
+7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40'x40'"}}
+8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40'x40'"}}
+9  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
+10 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
+11 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
+12 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
+13 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
+14 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 30' x 50'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 40'"}}
+15 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 30' x 50'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 40'"}}
+16 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 40' x 60'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 30' x 40'"}}
+17 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Rectangular, 40' x 60'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 30' x 40'"}}
+18 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
+19 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
+20 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
 }
+
+function Get-TableVRoll {
+
+[alias("Get-ChambersAndRoomsShapeAndSize")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [ValidateSet("Chamber","Room")]
+        $Type
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = if($Type -eq "Room"){($TableV.($Roll)).Room}elseif($Type -eq "Chamber"){($TableV.($Roll)).Chamber.Description}else{@(($TableV.($Roll)).Chamber;($TableV.($Roll)).Room.Description)}
+   
+   }
+
+}
+#endregion
 
 #TABLE V. A.: UNUSUAL SHAPE (Roll Separately for Size) (d20)
 $TableVA = @{
