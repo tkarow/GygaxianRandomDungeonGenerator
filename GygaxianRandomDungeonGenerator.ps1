@@ -364,7 +364,7 @@ $TableIIIB = @{
 
 function Get-TableIIIBRoll {
 
-[alias("Get-PassageWidth")]
+[alias("Get-SpecialPassage")]
     param(
         [Parameter(Mandatory=$False)]
         [int]$Roll
@@ -408,7 +408,7 @@ $TableIV = @{
 
 function Get-TableIVRoll {
 
-[alias("Get-PassageWidth")]
+[alias("Get-Turns")]
     param(
         [Parameter(Mandatory=$False)]
         [int]$Roll
@@ -453,7 +453,7 @@ $TableV = @{
 
 function Get-TableVRoll {
 
-[alias("Get-ChambersAndRoomsShapeAndSize")]
+[alias("Get-RoomShapeAndSize","Get-ChamberShapeAndSize")]
     param(
         [Parameter(Mandatory=$False)]
         [int]$Roll,
@@ -474,55 +474,95 @@ function Get-TableVRoll {
 }
 #endregion
 
-#TABLE V. A.: UNUSUAL SHAPE (Roll Separately for Size) (d20)
+#region TABLE V. A.: UNUSUAL SHAPE (Roll Separately for Size) (d20)
 $TableVA = @{
-1  = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"
-2  = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"
-3  = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"
-4  = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"
-5  = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"
-6  = "Triangular"
-7  = "Triangular"
-8  = "Triangular"
-9  = "Trapezoidal"
-10 = "Trapezoidal"
-11 = "Trapezoidal"
-12 = "Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)"
-13 = "Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)"
-14 = "Oval"
-15 = "Oval"
-16 = "Hexagonal"
-17 = "Hexagonal"
-18 = "Octagonal"
-19 = "Octagonal"
-20 = "Cave"
+1  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
+2  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
+3  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
+4  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
+5  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
+6  = [pscustomobject]@{Description="Triangular"}
+7  = [pscustomobject]@{Description="Triangular"}
+8  = [pscustomobject]@{Description="Triangular"}
+9  = [pscustomobject]@{Description="Trapezoidal"}
+10 = [pscustomobject]@{Description="Trapezoidal"}
+11 = [pscustomobject]@{Description="Trapezoidal"}
+12 = [pscustomobject]@{Description="Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)"}
+13 = [pscustomobject]@{Description="Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)"}
+14 = [pscustomobject]@{Description="Oval"}
+15 = [pscustomobject]@{Description="Oval"}
+16 = [pscustomobject]@{Description="Hexagonal"}
+17 = [pscustomobject]@{Description="Hexagonal"}
+18 = [pscustomobject]@{Description="Octagonal"}
+19 = [pscustomobject]@{Description="Octagonal"}
+20 = [pscustomobject]@{Description="Cave"}
 }
 
-#TABLE V. B.: UNUSUAL SIZE (d20)
+function Get-TableVARoll {
+
+[alias("Get-UnusualRoomShape","Get-UnusualChamberShape")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVA.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE V. B.: UNUSUAL SIZE (d20)
 $TableVB = @{
-1  = "about 500 sq. ft."
-2  = "about 500 sq. ft."
-3  = "about 500 sq. ft."
-4  = "about 900 sq. ft."
-5  = "about 900 sq. ft."
-6  = "about 900 sq. ft."
-7  = "about 1,300 sq. ft."
-8  = "about 1,300 sq. ft."
-9  = "about 2,000 sq. ft."
-10 = "about 2,000 sq. ft."
-11 = "about 2,700 sq. ft."
-12 = "about 2,700 sq. ft."
-13 = "about 3,400 sq. ft."
-14 = "about 3,400 sq. ft."
-15 = "roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"
-16 = "roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"
-17 = "roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"
-18 = "roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"
-19 = "roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"
-20 = "roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"
+1  = [pscustomobject]@{Description="About 500 sq. ft."}
+2  = [pscustomobject]@{Description="About 500 sq. ft."}
+3  = [pscustomobject]@{Description="About 500 sq. ft."}
+4  = [pscustomobject]@{Description="About 900 sq. ft."}
+5  = [pscustomobject]@{Description="About 900 sq. ft."}
+6  = [pscustomobject]@{Description="About 900 sq. ft."}
+7  = [pscustomobject]@{Description="About 1,300 sq. ft."}
+8  = [pscustomobject]@{Description="About 1,300 sq. ft."}
+9  = [pscustomobject]@{Description="About 2,000 sq. ft."}
+10 = [pscustomobject]@{Description="About 2,000 sq. ft."}
+11 = [pscustomobject]@{Description="About 2,700 sq. ft."}
+12 = [pscustomobject]@{Description="About 2,700 sq. ft."}
+13 = [pscustomobject]@{Description="About 3,400 sq. ft."}
+14 = [pscustomobject]@{Description="About 3,400 sq. ft."}
+15 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
+16 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
+17 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
+18 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
+19 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
+20 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
 }
 
-#TABLE V. C.: NUMBER OF EXITS (d20)
+function Get-TableVBRoll {
+
+[alias("Get-UnusualRoomSize","Get-UnusualChamberSize")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVB.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE V. C.: NUMBER OF EXITS (d20)
 $TableVC = @{
 1  = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 600;'Number of Exits' = 1},[pscustomobject]@{'Room Area Lower Limit' = 601;'Room Area Upper Limit' = 1000000;'Number of Exits' = 2}
 2  = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 600;'Number of Exits' = 1},[pscustomobject]@{'Room Area Lower Limit' = 601;'Room Area Upper Limit' = 1000000;'Number of Exits' = 2}
@@ -546,6 +586,30 @@ $TableVC = @{
 20 = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 1000000;'Number of Exits' = "1 - door in chamber, passage in room"}
 }
 #Tom note: e.g. $TableVC.(Roll-D20) | ?{($_.'Room Area Lower Limit' -le 580) -and ($_.'Room Area Upper Limit' -ge 580)}
+
+function Get-TableVCRoll {
+
+[alias("Get-NumberOfExits")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        $RoomArea
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+   if(!$RoomArea){$RoomArea = @(500,800,1400,3000)[(Get-Random -Minimum 0 -Maximum 4)];$Unspecified = $True}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   RoomArea = "$($RoomArea)$(if($Unspecified){' (Unspecified)'})";
+   Description = ($TableVC.($Roll) | ?{($_.'Room Area Lower Limit' -le $RoomArea) -and ($_.'Room Area Upper Limit' -ge $RoomArea)}).'Number of Exits'
+   
+   }
+
+}
+#endregion
 
 #TABLE V. D.: EXIT LOCATION '(d20)
 #If a passage or door is indicated in a wall where the space immediately beyond the wall has already been mapped, then the exit is either a secret door (1-5) or a one-way door (6-10) or it is in the opposite direction (11-20).
