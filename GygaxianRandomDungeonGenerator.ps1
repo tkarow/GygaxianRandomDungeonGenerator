@@ -81,6 +81,8 @@ function Get-D100Roll{
 
 #endregion
 
+###################################
+
 function Write-Rolls{
     
     Param(
@@ -135,41 +137,62 @@ $TableI = @{
 20 = "Wandering Monster, check again immediately to see what lies ahead so direction of monster's approach can be determined."
 }
 
-#TABLE II.: DOORS (d20)
+#region TABLE II.: DOORS (d20)
 #Always check width of passage (TABLE III. A.)
 #Location of Door:
 $TableII = @{
-1  = "Left"
-2  = "Left"
-3  = "Left"
-4  = "Left"
-5  = "Left"
-6  = "Left"
-7  = "Right"
-8  = "Right"
-9  = "Right"
-10 = "Right"
-11 = "Right"
-12 = "Right"
-13 = "Ahead"
-14 = "Ahead"
-15 = "Ahead"
-16 = "Ahead"
-17 = "Ahead"
-18 = "Ahead"
-19 = "Ahead"
-20 = "Ahead"
+1  = [pscustomobject]@{Description="Left"}
+2  = [pscustomobject]@{Description="Left"}
+3  = [pscustomobject]@{Description="Left"}
+4  = [pscustomobject]@{Description="Left"}
+5  = [pscustomobject]@{Description="Left"}
+6  = [pscustomobject]@{Description="Left"}
+7  = [pscustomobject]@{Description="Right"}
+8  = [pscustomobject]@{Description="Right"}
+9  = [pscustomobject]@{Description="Right"}
+10 = [pscustomobject]@{Description="Right"}
+11 = [pscustomobject]@{Description="Right"}
+12 = [pscustomobject]@{Description="Right"}
+13 = [pscustomobject]@{Description="Ahead"}
+14 = [pscustomobject]@{Description="Ahead"}
+15 = [pscustomobject]@{Description="Ahead"}
+16 = [pscustomobject]@{Description="Ahead"}
+17 = [pscustomobject]@{Description="Ahead"}
+18 = [pscustomobject]@{Description="Ahead"}
+19 = [pscustomobject]@{Description="Ahead"}
+20 = [pscustomobject]@{Description="Ahead"}
 }
 
-#TABLE II.: DOORS (d20)
+function Get-TableIIRoll {
+
+[alias("Get-LocationOfDoorRoll")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableII.($Roll).Description
+   
+   }
+
+}
+
+#endregion
+
+#region TABLE II.: DOORS (d20)
 #Always check width of passage (TABLE III. A.)
 #Space Beyond Door Is:
 #Check again immediately on TABLE I. unless door is straight ahead; if another door is not indicated, then ignore the result and check again 30' past the door. If a room or chamber is beyond a door, go to TABLE V.
 $TableIIA = @{
-1  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
-2  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
-3  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
-4  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10 ' x 10' room if door is straight ahead"}
+1  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
+2  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
+3  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
+4  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
 5  = [pscustomobject]@{Description="Passage straight ahead"}
 6  = [pscustomobject]@{Description="Passage straight ahead"}
 7  = [pscustomobject]@{Description="Passage straight ahead"}
@@ -206,6 +229,7 @@ function Get-TableIIARoll {
    }
 
 }
+#endregion
 
 #TABLE III.: SIDE PASSAGES (d20)
 $TableIII = @{
