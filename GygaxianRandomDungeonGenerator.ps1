@@ -611,80 +611,140 @@ function Get-TableVCRoll {
 }
 #endregion
 
-#TABLE V. D.: EXIT LOCATION '(d20)
+#region TABLE V. D.: EXIT LOCATION '(d20)
 #If a passage or door is indicated in a wall where the space immediately beyond the wall has already been mapped, then the exit is either a secret door (1-5) or a one-way door (6-10) or it is in the opposite direction (11-20).
 $TableVD = @{
-1  = "opposite wall"
-2  = "opposite wall"
-3  = "opposite wall"
-4  = "opposite wall"
-5  = "opposite wall"
-6  = "opposite wall"
-7  = "opposite wall"
-8  = "left wall"
-9  = "left wall"
-10 = "left wall"
-11 = "left wall"
-12 = "left wall"
-13 = "right wall"
-14 = "right wall"
-15 = "right wall"
-16 = "right wall"
-17 = "right wall"
-18 = "same wall"
-19 = "same wall"
-20 = "same wall"
+1  = [pscustomobject]@{Description="Opposite wall"}
+2  = [pscustomobject]@{Description="Opposite wall"}
+3  = [pscustomobject]@{Description="Opposite wall"}
+4  = [pscustomobject]@{Description="Opposite wall"}
+5  = [pscustomobject]@{Description="Opposite wall"}
+6  = [pscustomobject]@{Description="Opposite wall"}
+7  = [pscustomobject]@{Description="Opposite wall"}
+8  = [pscustomobject]@{Description="Left wall"}
+9  = [pscustomobject]@{Description="Left wall"}
+10 = [pscustomobject]@{Description="Left wall"}
+11 = [pscustomobject]@{Description="Left wall"}
+12 = [pscustomobject]@{Description="Left wall"}
+13 = [pscustomobject]@{Description="Right wall"}
+14 = [pscustomobject]@{Description="Right wall"}
+15 = [pscustomobject]@{Description="Right wall"}
+16 = [pscustomobject]@{Description="Right wall"}
+17 = [pscustomobject]@{Description="Right wall"}
+18 = [pscustomobject]@{Description="Same wall"}
+19 = [pscustomobject]@{Description="Same wall"}
+20 = [pscustomobject]@{Description="Same wall"}
 }
+
+function Get-TableVDRoll {
+
+[alias("Get-ExitLocation")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVD.($Roll).Description
+   
+   }
+
+}
+#endregion
 
 #TABLE V. E.: EXIT DIRECTION (d20)
 $TableVE = @{
-1  = "straight ahead"
-2  = "straight ahead"
-3  = "straight ahead"
-4  = "straight ahead"
-5  = "straight ahead"
-6  = "straight ahead"
-7  = "straight ahead"
-8  = "straight ahead"
-9  = "straight ahead"
-10 = "straight ahead"
-11 = "straight ahead"
-12 = "straight ahead"
-13 = "straight ahead"
-14 = "straight ahead"
-15 = "straight ahead"
-16 = "straight ahead"
-17 = "45 degrees left/right (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"
-18 = "45 degrees left/right (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"
-19 = "45 degrees right/left (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"
-20 = "45 degrees right/left (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"
+1  = [pscustomobject]@{Description="Straight ahead"}
+2  = [pscustomobject]@{Description="Straight ahead"}
+3  = [pscustomobject]@{Description="Straight ahead"}
+4  = [pscustomobject]@{Description="Straight ahead"}
+5  = [pscustomobject]@{Description="Straight ahead"}
+6  = [pscustomobject]@{Description="Straight ahead"}
+7  = [pscustomobject]@{Description="Straight ahead"}
+8  = [pscustomobject]@{Description="Straight ahead"}
+9  = [pscustomobject]@{Description="Straight ahead"}
+10 = [pscustomobject]@{Description="Straight ahead"}
+11 = [pscustomobject]@{Description="Straight ahead"}
+12 = [pscustomobject]@{Description="Straight ahead"}
+13 = [pscustomobject]@{Description="Straight ahead"}
+14 = [pscustomobject]@{Description="Straight ahead"}
+15 = [pscustomobject]@{Description="Straight ahead"}
+16 = [pscustomobject]@{Description="Straight ahead"}
+17 = [pscustomobject]@{Description="45 degrees left/right (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
+18 = [pscustomobject]@{Description="45 degrees left/right (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
+19 = [pscustomobject]@{Description="45 degrees right/left (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
+20 = [pscustomobject]@{Description="45 degrees right/left (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
 }
 
-#TABLE V. F.: CHAMBER OR ROOM CONTENTS (d20)
+function Get-TableVERoll {
+
+[alias("Get-ExitDirection")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVE.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE V. F.: CHAMBER OR ROOM CONTENTS (d20)
 $TableVF = @{
-1  = "Empty"
-2  = "Empty"
-3  = "Empty"
-4  = "Empty"
-5  = "Empty"
-6  = "Empty"
-7  = "Empty"
-8  = "Empty"
-9  = "Empty"
-10 = "Empty"
-11 = "Empty"
-12 = "Empty"
-13 = "Monster only (determine on appropriate table from APPENDIX C RANDOM MONSTER ENCOUNTERS, Dungeon Encounter Matrix)."
-14 = "Monster only (determine on appropriate table from APPENDIX C RANDOM MONSTER ENCOUNTERS, Dungeon Encounter Matrix)."
-15 = "Monster and treasure (see TABLE V.G. below)"
-16 = "Monster and treasure (see TABLE V.G. below)"
-17 = "Monster and treasure (see TABLE V.G. below)"
-18 = "Special (Determine by balance of level or put in what you desire; otherwise put in stairs as indicated), or contains stairway up 1 level (1-5), up 2 levels (7-E), down 1 level (9-14), down 2 levels (15-19), or down 3 levels- 2 flights of stairs and a slanting passageway (20)."
-19 = "Trick/Trap (see TABLE VII.)"
-20 = "Treasure (see TABLE V.G.)"
+1  = [pscustomobject]@{Description="Empty"}
+2  = [pscustomobject]@{Description="Empty"}
+3  = [pscustomobject]@{Description="Empty"}
+4  = [pscustomobject]@{Description="Empty"}
+5  = [pscustomobject]@{Description="Empty"}
+6  = [pscustomobject]@{Description="Empty"}
+7  = [pscustomobject]@{Description="Empty"}
+8  = [pscustomobject]@{Description="Empty"}
+9  = [pscustomobject]@{Description="Empty"}
+10 = [pscustomobject]@{Description="Empty"}
+11 = [pscustomobject]@{Description="Empty"}
+12 = [pscustomobject]@{Description="Empty"}
+13 = [pscustomobject]@{Description="Monster only (determine on appropriate table from APPENDIX C RANDOM MONSTER ENCOUNTERS, Dungeon Encounter Matrix)."}
+14 = [pscustomobject]@{Description="Monster only (determine on appropriate table from APPENDIX C RANDOM MONSTER ENCOUNTERS, Dungeon Encounter Matrix)."}
+15 = [pscustomobject]@{Description="Monster and treasure (see TABLE V.G. below)"}
+16 = [pscustomobject]@{Description="Monster and treasure (see TABLE V.G. below)"}
+17 = [pscustomobject]@{Description="Monster and treasure (see TABLE V.G. below)"}
+18 = [pscustomobject]@{Description="Special (Determine by balance of level or put in what you desire; otherwise put in stairs as indicated), or contains stairway up 1 level (1-5), up 2 levels (7-E), down 1 level (9-14), down 2 levels (15-19), or down 3 levels- 2 flights of stairs and a slanting passageway (20)."}
+19 = [pscustomobject]@{Description="Trick/Trap (see TABLE VII.)"}
+20 = [pscustomobject]@{Description="Treasure (see TABLE V.G.)"}
 }
 
-#TABLE V. G.: TREASURE* (d%)
+function Get-TableVFRoll {
+
+[alias("Get-RoomContents","Get-ChamberContents")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVF.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE V. G.: TREASURE* (d%)
 #*See also TABLES V. H. and I. or J.
 $TableVG = @(
 [pscustomobject]@{Min=1;Max=25;NoMonster='1,000 copper pieces/level';WMonster='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
@@ -699,54 +759,118 @@ $TableVG = @(
 #Tom note: ($TableVG | ?{$_.min -le 89} | ?{$_.max -ge 89}).nomonster
 #Tom note: ($TableVG | ?{($_.min -le 89) -and ($_.max -ge 89)}).nomonster
 
-#TABLE V. H.: TREASURE IS CONTAINED IN* (d20)
+function Get-TableVGRoll {
+
+[alias("Get-Treasure")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [bool]$Monster
+    )
+
+   if(!$Roll){$Roll = (Get-D100Roll).Result}
+   if(!$Monster){@($True,$False)[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Monster = $("$Monster$(if($Unspecified){' (Unspecified)'})");
+   Description = "$(if($Monster -eq $False){($TableVG | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).NoMonster}else{($TableVG | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).WMonster})"
+   
+   }
+
+}
+#endregion
+
+#region TABLE V. H.: TREASURE IS CONTAINED IN* (d20)
 #*Go to TABLE V. I. on a roll of 1-8, TABLE V. J. on a 9-20 to determine protection if desired.
 $TableVH = @{
-1  = "Bags"
-2  = "Bags"
-3  = "Sacks"
-4  = "Sacks"
-5  = "Small Coffers"
-6  = "Small Coffers"
-7  = "Chests"
-8  = "Chests"
-9  = "Huge Chests"
-10 = "Huge Chests"
-11 = "Pottery Jars"
-12 = "Pottery Jars"
-13 = "Metal Urns"
-14 = "Metal Urns"
-15 = "Stone Containers"
-16 = "Stone Containers"
-17 = "Iron Trunks"
-18 = "Iron Trunks"
-19 = "Loose"
-20 = "Loose"
+1  = [pscustomobject]@{Description="Bags"}
+2  = [pscustomobject]@{Description="Bags"}
+3  = [pscustomobject]@{Description="Sacks"}
+4  = [pscustomobject]@{Description="Sacks"}
+5  = [pscustomobject]@{Description="Small Coffers"}
+6  = [pscustomobject]@{Description="Small Coffers"}
+7  = [pscustomobject]@{Description="Chests"}
+8  = [pscustomobject]@{Description="Chests"}
+9  = [pscustomobject]@{Description="Huge Chests"}
+10 = [pscustomobject]@{Description="Huge Chests"}
+11 = [pscustomobject]@{Description="Pottery Jars"}
+12 = [pscustomobject]@{Description="Pottery Jars"}
+13 = [pscustomobject]@{Description="Metal Urns"}
+14 = [pscustomobject]@{Description="Metal Urns"}
+15 = [pscustomobject]@{Description="Stone Containers"}
+16 = [pscustomobject]@{Description="Stone Containers"}
+17 = [pscustomobject]@{Description="Iron Trunks"}
+18 = [pscustomobject]@{Description="Iron Trunks"}
+19 = [pscustomobject]@{Description="Loose"}
+20 = [pscustomobject]@{Description="Loose"}
 }
 
-#TABLE V. I.: TREASURE IS GUARDED BY (d20)
-$TableVI = @{
-1  = "Contact poison on container"
-2  = "Contact poison on container"
-3  = "Contact poison on treasure"
-4  = "Contact poison on treasure"
-5  = "Poisoned needles in lock"
-6  = "Poisoned needles in lock"
-7  = "Poisoned needles in handles"
-8  = "Spring darts firing from front of container"
-9  = "Spring darts firing up from top of container"
-10 = "Spring darts firing up from inside bottom of container"
-11 = "Blade scything across inside"
-12 = "Blade scything across inside"
-13 = "Poisonous insects or reptiles living inside container"
-14 = "Gas released by opening container"
-15 = "Trapdoor opening in front of container"
-16 = "Trapdoor opening 6' in front of container"
-17 = "Stone block dropping in front of the container"
-18 = "Spears released from walls when container opened"
-19 = "Explosive runes"
-20 = "Symbol"
+function Get-TableVHRoll {
+
+[alias("Get-TreasureContainer")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVH.($Roll).Description
+   
+   }
+
 }
+#endregion
+
+#region TABLE V. I.: TREASURE IS GUARDED BY (d20)
+$TableVI = @{
+1  = [pscustomobject]@{Description="Contact poison on container"}
+2  = [pscustomobject]@{Description="Contact poison on container"}
+3  = [pscustomobject]@{Description="Contact poison on treasure"}
+4  = [pscustomobject]@{Description="Contact poison on treasure"}
+5  = [pscustomobject]@{Description="Poisoned needles in lock"}
+6  = [pscustomobject]@{Description="Poisoned needles in lock"}
+7  = [pscustomobject]@{Description="Poisoned needles in handles"}
+8  = [pscustomobject]@{Description="Spring darts firing from front of container"}
+9  = [pscustomobject]@{Description="Spring darts firing up from top of container"}
+10 = [pscustomobject]@{Description="Spring darts firing up from inside bottom of container"}
+11 = [pscustomobject]@{Description="Blade scything across inside"}
+12 = [pscustomobject]@{Description="Blade scything across inside"}
+13 = [pscustomobject]@{Description="Poisonous insects or reptiles living inside container"}
+14 = [pscustomobject]@{Description="Gas released by opening container"}
+15 = [pscustomobject]@{Description="Trapdoor opening in front of container"}
+16 = [pscustomobject]@{Description="Trapdoor opening 6' in front of container"}
+17 = [pscustomobject]@{Description="Stone block dropping in front of the container"}
+18 = [pscustomobject]@{Description="Spears released from walls when container opened"}
+19 = [pscustomobject]@{Description="Explosive runes"}
+20 = [pscustomobject]@{Description="Symbol"}
+}
+
+function Get-TableVIRoll {
+
+[alias("Get-TreasureGuard")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $TableVI.($Roll).Description
+   
+   }
+
+}
+#endregion
 
 #TABLE V. J.: TREASURE IS HIDDEN BYAN (d20)
 $TableVJ = @{
