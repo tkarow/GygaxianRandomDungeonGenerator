@@ -112,6 +112,7 @@ function Write-Rolls{
 }
 
 ###################################
+#The following is my adaptation of Advanced Dungeons and Dragons' Dungeon Master's Guide' Appendix A (pg. 169 - 172) into PowerShell tables and functions
 
 #region TABLE I.: PERIODIC CHECK (d20)
 $Table1 = @{
