@@ -114,30 +114,30 @@ function Write-Rolls{
 ###################################
 
 #region TABLE I.: PERIODIC CHECK (d20)
-$TableI = @{
+$Table1 = @{
 1  = [pscustomobject]@{Description="Continue straight - check again in 60' (this table)"}
 2  = [pscustomobject]@{Description="Continue straight - check again in 60' (this table)"}
 3  = [pscustomobject]@{Description="Door (see TABLE II.)"}
 4  = [pscustomobject]@{Description="Door (see TABLE II.)"}
 5  = [pscustomobject]@{Description="Door (see TABLE II.)"}
-6  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
-7  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
-8  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
-9  = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
-10 = [pscustomobject]@{Description="Side Passage (see TABLE III.) -check again in 30' (this table)"}
+6  = [pscustomobject]@{Description="Side Passage (see TABLE III.) - check again in 30' (this table)"}
+7  = [pscustomobject]@{Description="Side Passage (see TABLE III.) - check again in 30' (this table)"}
+8  = [pscustomobject]@{Description="Side Passage (see TABLE III.) - check again in 30' (this table)"}
+9  = [pscustomobject]@{Description="Side Passage (see TABLE III.) - check again in 30' (this table)"}
+10 = [pscustomobject]@{Description="Side Passage (see TABLE III.) - check again in 30' (this table)"}
 11 = [pscustomobject]@{Description="Passage Turns (see TABLE IV., check width on TABLE III.)"}
 12 = [pscustomobject]@{Description="Passage Turns (see TABLE IV., check width on TABLE III.)"}
 13 = [pscustomobject]@{Description="Passage Turns (see TABLE IV., check width on TABLE III.)"}
-14 = [pscustomobject]@{Description="Chamber (see TABLE V.) -check 30' after leaving (this table)"}
-15 = [pscustomobject]@{Description="Chamber (see TABLE V.) -check 30' after leaving (this table)"}
-16 = [pscustomobject]@{Description="Chamber (see TABLE V.) -check 30' after leaving (this table)"}
+14 = [pscustomobject]@{Description="Chamber (see TABLE V.) - check 30' after leaving (this table)"}
+15 = [pscustomobject]@{Description="Chamber (see TABLE V.) - check 30' after leaving (this table)"}
+16 = [pscustomobject]@{Description="Chamber (see TABLE V.) - check 30' after leaving (this table)"}
 17 = [pscustomobject]@{Description="Stairs (see TABLE VI.)"}
 18 = [pscustomobject]@{Description="Dead End (walls left, right, and ahead can be checked for Secret Doors, see TABLE V.D., footnote)"}
 19 = [pscustomobject]@{Description="Trick/Trap (see TABLE VII.), passage continues- check again in 30' (this table)"}
 20 = [pscustomobject]@{Description="Wandering Monster, check again immediately to see what lies ahead so direction of monster's approach can be determined."}
 }
 
-function Get-TableIRoll {
+function Get-Table1Roll {
 
 [alias("Get-PeriodicCheckRoll")]
     param(
@@ -150,7 +150,7 @@ function Get-TableIRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableI.($Roll).Description
+   Description = $Table1.($Roll).Description
    
    }
 
@@ -160,7 +160,7 @@ function Get-TableIRoll {
 #region TABLE II.: DOORS (d20)
 #Always check width of passage (TABLE III. A.)
 #Location of Door:
-$TableII = @{
+$Table2 = @{
 1  = [pscustomobject]@{Description="Left"}
 2  = [pscustomobject]@{Description="Left"}
 3  = [pscustomobject]@{Description="Left"}
@@ -183,7 +183,7 @@ $TableII = @{
 20 = [pscustomobject]@{Description="Ahead"}
 }
 
-function Get-TableIIRoll {
+function Get-Table2Roll {
 
 [alias("Get-LocationOfDoorRoll")]
     param(
@@ -196,7 +196,7 @@ function Get-TableIIRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableII.($Roll).Description
+   Description = $Table2.($Roll).Description
    
    }
 
@@ -207,7 +207,7 @@ function Get-TableIIRoll {
 #Always check width of passage (TABLE III. A.)
 #Space Beyond Door Is:
 #Check again immediately on TABLE I. unless door is straight ahead; if another door is not indicated, then ignore the result and check again 30' past the door. If a room or chamber is beyond a door, go to TABLE V.
-$TableIIA = @{
+$Table2A = @{
 1  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
 2  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
 3  = [pscustomobject]@{Description="Parallel passage (extends 30' in both directions.) or 10' x 10' room if door is straight ahead"}
@@ -230,7 +230,7 @@ $TableIIA = @{
 20 = [pscustomobject]@{Description="Chamber (go to TABLE V.)"}
 }
 
-function Get-TableIIARoll {
+function Get-Table2ARoll {
 
 [alias("Get-SpaceBeyondDoorRoll")]
     param(
@@ -243,7 +243,7 @@ function Get-TableIIARoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableIIA.($Roll).Description
+   Description = $Table2A.($Roll).Description
    
    }
 
@@ -251,7 +251,7 @@ function Get-TableIIARoll {
 #endregion
 
 #region TABLE III.: SIDE PASSAGES (d20)
-$TableIII = @{
+$Table3 = @{
 1  = [pscustomobject]@{Description="Left 90 degrees"}
 2  = [pscustomobject]@{Description="Left 90 degrees"}
 3  = [pscustomobject]@{Description="Right 90 degrees"}
@@ -274,7 +274,7 @@ $TableIII = @{
 20 = [pscustomobject]@{Description="Passage `"X`"s (if present passage is horizontal or vertical it forms a fifth passage into the `"X`")"}
 }
 
-function Get-TableIIIRoll {
+function Get-Table3Roll {
 
 [alias("Get-SidePassageRoll")]
     param(
@@ -287,7 +287,7 @@ function Get-TableIIIRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableIII.($Roll).Description
+   Description = $Table3.($Roll).Description
    
    }
 
@@ -295,7 +295,7 @@ function Get-TableIIIRoll {
 #endregion
 
 #region TABLE III. A.: PASSAGE WIDTH (d20)
-$TableIIIA = @{
+$Table3A = @{
 1  = [pscustomobject]@{Description="10'"}
 2  = [pscustomobject]@{Description="10'"}
 3  = [pscustomobject]@{Description="10'"}
@@ -318,7 +318,7 @@ $TableIIIA = @{
 20 = [pscustomobject]@{Description="SPECIAL PASSAGE (TABLE III. B. below)"}
 }
 
-function Get-TableIIIARoll {
+function Get-Table3ARoll {
 
 [alias("Get-PassageWidth")]
     param(
@@ -331,7 +331,7 @@ function Get-TableIIIARoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableIIIA.($Roll).Description
+   Description = $Table3A.($Roll).Description
    
    }
 
@@ -339,7 +339,7 @@ function Get-TableIIIARoll {
 #endregion
 
 #region TABLE III. B.: SPECIAL PASSAGE (d20)
-$TableIIIB = @{
+$Table3B = @{
 1  = [pscustomobject]@{Description="40', columns down center"}
 2  = [pscustomobject]@{Description="40', columns down center"}
 3  = [pscustomobject]@{Description="40', columns down center"}
@@ -362,7 +362,7 @@ $TableIIIB = @{
 20 = [pscustomobject]@{Description="20', chasm (chasms bisect the passage. They are 150' to 200' deep. They will be bridged 50% (1-10) of the time, have a jumping place 5'-10' wide 25% (1 1-15) of the time, and be an obstacle 25% (16-20) of the time.)"}
 }
 
-function Get-TableIIIBRoll {
+function Get-Table3BRoll {
 
 [alias("Get-SpecialPassage")]
     param(
@@ -375,7 +375,7 @@ function Get-TableIIIBRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableIIIB.($Roll).Description
+   Description = $Table3B.($Roll).Description
    
    }
 
@@ -383,7 +383,7 @@ function Get-TableIIIBRoll {
 #endregion
 
 #region TABLE IV.: TURNS (d20)
-$TableIV = @{
+$Table4 = @{
 1  = [pscustomobject]@{Description="Left 90 degrees"}
 2  = [pscustomobject]@{Description="Left 90 degrees"}
 3  = [pscustomobject]@{Description="Left 90 degrees"}
@@ -406,7 +406,7 @@ $TableIV = @{
 20 = [pscustomobject]@{Description="Right 45 degrees behind (right 135 degrees)"}
 }
 
-function Get-TableIVRoll {
+function Get-Table4Roll {
 
 [alias("Get-Turns")]
     param(
@@ -419,7 +419,7 @@ function Get-TableIVRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableIV.($Roll).Description
+   Description = $Table4.($Roll).Description
    
    }
 
@@ -428,7 +428,7 @@ function Get-TableIVRoll {
 
 #region TABLE V.: CHAMBERS AND ROOMS SHAPE AND SIZE (d20)
 #(Roll for Shape, Size, and Exits: then' Contents, Treasure, and how the latter i s contained, if applicable.)
-$TableV = @{
+$Table5 = @{
 1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10'x10'"}}
 2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10'x10'"}}
 3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20'x20'"}}
@@ -451,7 +451,7 @@ $TableV = @{
 20 = [pscustomobject]@{Chamber=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
 }
 
-function Get-TableVRoll {
+function Get-Table5Roll {
 
 [alias("Get-RoomShapeAndSize","Get-ChamberShapeAndSize")]
     param(
@@ -467,15 +467,17 @@ function Get-TableVRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = if($Type -eq "Room"){($TableV.($Roll)).Room}elseif($Type -eq "Chamber"){($TableV.($Roll)).Chamber.Description}else{@(($TableV.($Roll)).Chamber;($TableV.($Roll)).Room.Description)}
+   Description = if($Type -eq "Room"){($Table5.($Roll)).Room}elseif($Type -eq "Chamber"){($Table5.($Roll)).Chamber.Description}else{@(($Table5.($Roll)).Chamber;($Table5.($Roll)).Room.Description)}
    
    }
 
 }
+#If unspecified, information for both a room and chamber is returned
+#Get-Table5Roll -Type Room
 #endregion
 
 #region TABLE V. A.: UNUSUAL SHAPE (Roll Separately for Size) (d20)
-$TableVA = @{
+$Table5A = @{
 1  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
 2  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
 3  = [pscustomobject]@{Description="Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
@@ -498,7 +500,7 @@ $TableVA = @{
 20 = [pscustomobject]@{Description="Cave"}
 }
 
-function Get-TableVARoll {
+function Get-Table5ARoll {
 
 [alias("Get-UnusualRoomShape","Get-UnusualChamberShape")]
     param(
@@ -511,7 +513,7 @@ function Get-TableVARoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVA.($Roll).Description
+   Description = $Table5A.($Roll).Description
    
    }
 
@@ -519,7 +521,7 @@ function Get-TableVARoll {
 #endregion
 
 #region TABLE V. B.: UNUSUAL SIZE (d20)
-$TableVB = @{
+$Table5B = @{
 1  = [pscustomobject]@{Description="About 500 sq. ft."}
 2  = [pscustomobject]@{Description="About 500 sq. ft."}
 3  = [pscustomobject]@{Description="About 500 sq. ft."}
@@ -542,7 +544,7 @@ $TableVB = @{
 20 = [pscustomobject]@{Description="Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
 }
 
-function Get-TableVBRoll {
+function Get-Table5BRoll {
 
 [alias("Get-UnusualRoomSize","Get-UnusualChamberSize")]
     param(
@@ -555,7 +557,7 @@ function Get-TableVBRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVB.($Roll).Description
+   Description = $Table5B.($Roll).Description
    
    }
 
@@ -563,7 +565,7 @@ function Get-TableVBRoll {
 #endregion
 
 #region TABLE V. C.: NUMBER OF EXITS (d20)
-$TableVC = @{
+$Table5C = @{
 1  = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 600;'Number of Exits' = 1},[pscustomobject]@{'Room Area Lower Limit' = 601;'Room Area Upper Limit' = 1000000;'Number of Exits' = 2}
 2  = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 600;'Number of Exits' = 1},[pscustomobject]@{'Room Area Lower Limit' = 601;'Room Area Upper Limit' = 1000000;'Number of Exits' = 2}
 3  = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 600;'Number of Exits' = 1},[pscustomobject]@{'Room Area Lower Limit' = 601;'Room Area Upper Limit' = 1000000;'Number of Exits' = 2}
@@ -585,9 +587,8 @@ $TableVC = @{
 19 = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 1000000;'Number of Exits' = "1 - door in chamber, passage in room"}
 20 = [pscustomobject]@{'Room Area Lower Limit' = 1;'Room Area Upper Limit' = 1000000;'Number of Exits' = "1 - door in chamber, passage in room"}
 }
-#Tom note: e.g. $TableVC.(Roll-D20) | ?{($_.'Room Area Lower Limit' -le 580) -and ($_.'Room Area Upper Limit' -ge 580)}
 
-function Get-TableVCRoll {
+function Get-Table5CRoll {
 
 [alias("Get-NumberOfExits")]
     param(
@@ -604,16 +605,17 @@ function Get-TableVCRoll {
    
    Roll = $Roll;
    RoomArea = "$($RoomArea)$(if($Unspecified){' (Unspecified)'})";
-   Description = ($TableVC.($Roll) | ?{($_.'Room Area Lower Limit' -le $RoomArea) -and ($_.'Room Area Upper Limit' -ge $RoomArea)}).'Number of Exits'
+   Description = ($Table5C.($Roll) | ?{($_.'Room Area Lower Limit' -le $RoomArea) -and ($_.'Room Area Upper Limit' -ge $RoomArea)}).'Number of Exits'
    
    }
 
 }
+#If unspecified, a room or chamber is randomly selected, noted in parentheses, and its data is returned
 #endregion
 
 #region TABLE V. D.: EXIT LOCATION '(d20)
 #If a passage or door is indicated in a wall where the space immediately beyond the wall has already been mapped, then the exit is either a secret door (1-5) or a one-way door (6-10) or it is in the opposite direction (11-20).
-$TableVD = @{
+$Table5D = @{
 1  = [pscustomobject]@{Description="Opposite wall"}
 2  = [pscustomobject]@{Description="Opposite wall"}
 3  = [pscustomobject]@{Description="Opposite wall"}
@@ -636,7 +638,7 @@ $TableVD = @{
 20 = [pscustomobject]@{Description="Same wall"}
 }
 
-function Get-TableVDRoll {
+function Get-Table5DRoll {
 
 [alias("Get-ExitLocation")]
     param(
@@ -649,15 +651,15 @@ function Get-TableVDRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVD.($Roll).Description
+   Description = $Table5D.($Roll).Description
    
    }
 
 }
 #endregion
 
-#TABLE V. E.: EXIT DIRECTION (d20)
-$TableVE = @{
+#region TABLE V. E.: EXIT DIRECTION (d20)
+$Table5E = @{
 1  = [pscustomobject]@{Description="Straight ahead"}
 2  = [pscustomobject]@{Description="Straight ahead"}
 3  = [pscustomobject]@{Description="Straight ahead"}
@@ -680,7 +682,7 @@ $TableVE = @{
 20 = [pscustomobject]@{Description="45 degrees right/left (The exit will be appropriate to existing circumstances, but use the direction before the slash in preference to the other.)"}
 }
 
-function Get-TableVERoll {
+function Get-Table5ERoll {
 
 [alias("Get-ExitDirection")]
     param(
@@ -693,7 +695,7 @@ function Get-TableVERoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVE.($Roll).Description
+   Description = $Table5E.($Roll).Description
    
    }
 
@@ -701,7 +703,7 @@ function Get-TableVERoll {
 #endregion
 
 #region TABLE V. F.: CHAMBER OR ROOM CONTENTS (d20)
-$TableVF = @{
+$Table5F = @{
 1  = [pscustomobject]@{Description="Empty"}
 2  = [pscustomobject]@{Description="Empty"}
 3  = [pscustomobject]@{Description="Empty"}
@@ -724,7 +726,7 @@ $TableVF = @{
 20 = [pscustomobject]@{Description="Treasure (see TABLE V.G.)"}
 }
 
-function Get-TableVFRoll {
+function Get-Table5FRoll {
 
 [alias("Get-RoomContents","Get-ChamberContents")]
     param(
@@ -737,7 +739,7 @@ function Get-TableVFRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVF.($Roll).Description
+   Description = $Table5F.($Roll).Description
    
    }
 
@@ -746,7 +748,7 @@ function Get-TableVFRoll {
 
 #region TABLE V. G.: TREASURE* (d%)
 #*See also TABLES V. H. and I. or J.
-$TableVG = @(
+$Table5G = @(
 [pscustomobject]@{Min=1;Max=25;NoMonster='1,000 copper pieces/level';WMonster='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
 [pscustomobject]@{Min=26;Max=50;NoMonster='1,000 silver pieces/level';WMonster='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
 [pscustomobject]@{Min=51;Max=65;NoMonster='750 electrum pieces/level';WMonster='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
@@ -756,10 +758,8 @@ $TableVG = @(
 [pscustomobject]@{Min=95;Max=97;NoMonster='1 piece jewelry/level';WMonster='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
 [pscustomobject]@{Min=98;Max=100;NoMonster='Magic (roll once on Magic Items Table)';WMonster='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
 )
-#Tom note: ($TableVG | ?{$_.min -le 89} | ?{$_.max -ge 89}).nomonster
-#Tom note: ($TableVG | ?{($_.min -le 89) -and ($_.max -ge 89)}).nomonster
 
-function Get-TableVGRoll {
+function Get-Table5GRoll {
 
 [alias("Get-Treasure")]
     param(
@@ -776,16 +776,17 @@ function Get-TableVGRoll {
    
    Roll = $Roll;
    Monster = $("$Monster$(if($Unspecified){' (Unspecified)'})");
-   Description = "$(if($Monster -eq $False){($TableVG | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).NoMonster}else{($TableVG | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).WMonster})"
+   Description = "$(if($Monster -eq $False){($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).NoMonster}else{($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).WMonster})"
    
    }
 
 }
+#If unspecified, monster presence is randomly selected, noted in parentheses, and its data is returned
 #endregion
 
 #region TABLE V. H.: TREASURE IS CONTAINED IN* (d20)
 #*Go to TABLE V. I. on a roll of 1-8, TABLE V. J. on a 9-20 to determine protection if desired.
-$TableVH = @{
+$Table5H = @{
 1  = [pscustomobject]@{Description="Bags"}
 2  = [pscustomobject]@{Description="Bags"}
 3  = [pscustomobject]@{Description="Sacks"}
@@ -808,7 +809,7 @@ $TableVH = @{
 20 = [pscustomobject]@{Description="Loose"}
 }
 
-function Get-TableVHRoll {
+function Get-Table5HRoll {
 
 [alias("Get-TreasureContainer")]
     param(
@@ -821,7 +822,7 @@ function Get-TableVHRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVH.($Roll).Description
+   Description = $Table5H.($Roll).Description
    
    }
 
@@ -829,7 +830,7 @@ function Get-TableVHRoll {
 #endregion
 
 #region TABLE V. I.: TREASURE IS GUARDED BY (d20)
-$TableVI = @{
+$Table5I = @{
 1  = [pscustomobject]@{Description="Contact poison on container"}
 2  = [pscustomobject]@{Description="Contact poison on container"}
 3  = [pscustomobject]@{Description="Contact poison on treasure"}
@@ -852,7 +853,7 @@ $TableVI = @{
 20 = [pscustomobject]@{Description="Symbol"}
 }
 
-function Get-TableVIRoll {
+function Get-Table5IRoll {
 
 [alias("Get-TreasureGuard")]
     param(
@@ -865,262 +866,421 @@ function Get-TableVIRoll {
    [pscustomobject]@{
    
    Roll = $Roll;
-   Description = $TableVI.($Roll).Description
+   Description = $Table5I.($Roll).Description
    
    }
 
 }
 #endregion
 
-#TABLE V. J.: TREASURE IS HIDDEN BY/IN (d20)
-$TableVJ = @{
-1  = "Invisibility"
-2  = "Invisibility"
-3  = "Invisibility"
-4  = "Illusion (to change or hide appearance)"
-5  = "Illusion (to change or hide appearance)"
-6  = "Secret space under container"
-7  = "Secret compartment in container"
-8  = "Secret compartment in container"
-9  = "Inside ordinary item in plain view"
-10 = "Disguised to appear as something else"
-11 = "Under a heap of trash/dung"
-12 = "Under a loose stone in the floor"
-13 = "Under a loose stone in the floor"
-14 = "Behind a loose stone in the wall"
-15 = "Behind a loose stone in the wall"
-16 = "In a secret room nearby"
-17 = "In a secret room nearby"
-18 = "In a secret room nearby"
-19 = "In a secret room nearby"
-20 = "In a secret room nearby"
+#region TABLE V. J.: TREASURE IS HIDDEN BY/IN (d20)
+$Table5J = @{
+1  = [pscustomobject]@{Description="Invisibility"}
+2  = [pscustomobject]@{Description="Invisibility"}
+3  = [pscustomobject]@{Description="Invisibility"}
+4  = [pscustomobject]@{Description="Illusion (to change or hide appearance)"}
+5  = [pscustomobject]@{Description="Illusion (to change or hide appearance)"}
+6  = [pscustomobject]@{Description="Secret space under container"}
+7  = [pscustomobject]@{Description="Secret compartment in container"}
+8  = [pscustomobject]@{Description="Secret compartment in container"}
+9  = [pscustomobject]@{Description="Inside ordinary item in plain view"}
+10 = [pscustomobject]@{Description="Disguised to appear as something else"}
+11 = [pscustomobject]@{Description="Under a heap of trash/dung"}
+12 = [pscustomobject]@{Description="Under a loose stone in the floor"}
+13 = [pscustomobject]@{Description="Under a loose stone in the floor"}
+14 = [pscustomobject]@{Description="Behind a loose stone in the wall"}
+15 = [pscustomobject]@{Description="Behind a loose stone in the wall"}
+16 = [pscustomobject]@{Description="In a secret room nearby"}
+17 = [pscustomobject]@{Description="In a secret room nearby"}
+18 = [pscustomobject]@{Description="In a secret room nearby"}
+19 = [pscustomobject]@{Description="In a secret room nearby"}
+20 = [pscustomobject]@{Description="In a secret room nearby"}
 }
 
-#TABLE VI.: STAIRS (d20)
-$TableJ = @{
-1  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
-2  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
-3  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
-4  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
-5  = "Down 1 level (1 in 20 has a door which closes egress for the day.)"
-6  = "Down 2 levels (2 in 20 has a door which closes egress for the day.)"
-7  = "Down 3 levels (3 in 20 has a door which closes egress for the day.)"
-8  = "Up 1 level"
-9  = "Up dead end (1 in 6 chance to chute down 2 levels)"
-10 = "Down dead end (1 in 6 chance to chute down 1 level)"
-11 = "Chimney up 1 level, passage continues, check again in 30'"
-12 = "Chimney up 2 levels, passage continues, check again in 30'"
-13 = "Chimney down 2 levels, passage continues, check again in 30'"
-14 = "Trap door down 1 level, passage continues, check again in 30'"
-15 = "Trap door down 1 level, passage continues, check again in 30'"
-16 = "Trap door down 1 level, passage continues, check again in 30'"
-17 = "Trap door down 2 levels, passage continues, check again in 30'"
-18 = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"
-19 = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"
-20 = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"
+function Get-Table5JRoll {
+
+[alias("Get-HiddenTreasure")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table5J.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VI.: STAIRS (d20)
+$Table6 = @{
+1  = [pscustomobject]@{Description="Down 1 level (1 in 20 has a door which closes egress for the day.)"}
+2  = [pscustomobject]@{Description="Down 1 level (1 in 20 has a door which closes egress for the day.)"}
+3  = [pscustomobject]@{Description="Down 1 level (1 in 20 has a door which closes egress for the day.)"}
+4  = [pscustomobject]@{Description="Down 1 level (1 in 20 has a door which closes egress for the day.)"}
+5  = [pscustomobject]@{Description="Down 1 level (1 in 20 has a door which closes egress for the day.)"}
+6  = [pscustomobject]@{Description="Down 2 levels (2 in 20 has a door which closes egress for the day.)"}
+7  = [pscustomobject]@{Description="Down 3 levels (3 in 20 has a door which closes egress for the day.)"}
+8  = [pscustomobject]@{Description="Up 1 level"}
+9  = [pscustomobject]@{Description="Up dead end (1 in 6 chance to chute down 2 levels)"}
+10 = [pscustomobject]@{Description="Down dead end (1 in 6 chance to chute down 1 level)"}
+11 = [pscustomobject]@{Description="Chimney up 1 level, passage continues, check again in 30'"}
+12 = [pscustomobject]@{Description="Chimney up 2 levels, passage continues, check again in 30'"}
+13 = [pscustomobject]@{Description="Chimney down 2 levels, passage continues, check again in 30'"}
+14 = [pscustomobject]@{Description="Trap door down 1 level, passage continues, check again in 30'"}
+15 = [pscustomobject]@{Description="Trap door down 1 level, passage continues, check again in 30'"}
+16 = [pscustomobject]@{Description="Trap door down 1 level, passage continues, check again in 30'"}
+17 = [pscustomobject]@{Description="Trap door down 2 levels, passage continues, check again in 30'"}
+18 = [pscustomobject]@{Description="Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"}
+19 = [pscustomobject]@{Description="Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"}
+20 = [pscustomobject]@{Description="Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"}
 }
 #N.B. Check for such doors only after descending steps if playing solo!
 
-#TABLE VII.: TRICK/TRAP (d20)
-$TableVII = @{
-1  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
-2  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
-3  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
-4  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
-5  = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
-6  = "Pit, 10' deep, 3 in 6 to fall in."
-7  = "Pit, 10' deep, 3 in 6 to fall in."
-8  = "Pit, 10' deep with spikes, 3 in 6 to fall in."
-9  = "20' x 20' elevator room (party has entered door directly ahead and is in room), descends 1 level and will not ascend for 30 turns."
-10 = "As 9. above, but room descends 2 levels"
-11 = "As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."
-12 = "Wall 10' behind slides across passage blocking it for from 40-60 turns."
-13 = "Oil (equal to one flask) pours on random person from hole in ceiling, followed by flaming cinder (2-12 h.p. damage unless successful save vs. magic is made, which indicates only 1-3 h.p. damage)."
-14 = "Pit, 10' deep, 3 in 6 to fall in, pit walls move together to crush victim(s) in 2-5 rounds."
-15 = "Arrow trap, 1-3 arrows, 1 in 20 is poisoned."
-16 = "Spear trap, 1-3 spears, 1 in 20 is poisoned"
-17 = "Gas; party has detected it, but must breathe it to continue along corridor, as it covers 60' ahead. Mark map accordingly regardless of turning back or not. (See TABLE VII. A.)"
-18 = "Door falls outward causing 1-10 hit points, or stone falls from ceiling causing 2-20 hit points of damage to each person failing his saving throw versus petrification."
-19 = "Illusionary wall concealing 8. (pit) above (1-6), 20. (chute) below (7-10) or chamber with monster and treasure (11-20) (see TABLE V.)."
+function Get-Table6Roll {
+
+[alias("Get-HiddenTreasure")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table6.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VII.: TRICK/TRAP (d20)
+$Table7 = @{
+1  = [pscustomobject]@{Description="Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
+2  = [pscustomobject]@{Description="Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
+3  = [pscustomobject]@{Description="Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
+4  = [pscustomobject]@{Description="Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
+5  = [pscustomobject]@{Description="Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
+6  = [pscustomobject]@{Description="Pit, 10' deep, 3 in 6 to fall in."}
+7  = [pscustomobject]@{Description="Pit, 10' deep, 3 in 6 to fall in."}
+8  = [pscustomobject]@{Description="Pit, 10' deep with spikes, 3 in 6 to fall in."}
+9  = [pscustomobject]@{Description="20' x 20' elevator room (party has entered door directly ahead and is in room), descends 1 level and will not ascend for 30 turns."}
+10 = [pscustomobject]@{Description="As 9. above, but room descends 2 levels"}
+11 = [pscustomobject]@{Description="As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."}
+12 = [pscustomobject]@{Description="Wall 10' behind slides across passage blocking it for from 40-60 turns."}
+13 = [pscustomobject]@{Description="Oil (equal to one flask) pours on random person from hole in ceiling, followed by flaming cinder (2-12 h.p. damage unless successful save vs. magic is made, which indicates only 1-3 h.p. damage)."}
+14 = [pscustomobject]@{Description="Pit, 10' deep, 3 in 6 to fall in, pit walls move together to crush victim(s) in 2-5 rounds."}
+15 = [pscustomobject]@{Description="Arrow trap, 1-3 arrows, 1 in 20 is poisoned."}
+16 = [pscustomobject]@{Description="Spear trap, 1-3 spears, 1 in 20 is poisoned"}
+17 = [pscustomobject]@{Description="Gas; party has detected it, but must breathe it to continue along corridor, as it covers 60' ahead. Mark map accordingly regardless of turning back or not. (See TABLE VII. A.)"}
+18 = [pscustomobject]@{Description="Door falls outward causing 1-10 hit points, or stone falls from ceiling causing 2-20 hit points of damage to each person failing his saving throw versus petrification."}
+19 = [pscustomobject]@{Description="Illusionary wall concealing 8. (pit) above (1-6), 20. (chute) below (7-10) or chamber with monster and treasure (11-20) (see TABLE V.)."}
 #Above should read "Illusionary wall concealing: 
 #1-6: pit as 8 above
 #7-10: chute as 20 below
 #11-20: chamber with monster and treasure (see TABLE V.)
-20 = "Chute down 1 level (cannot be ascended in any manner)."
+20 = [pscustomobject]@{Description="Chute down 1 level (cannot be ascended in any manner)."}
 }
 
-#TABLE VII. A.: GAS SUB-TABLE (d20)
-$TableVIIA = @{
-1  = "Only effect is to obscure vision when passing through."
-2  = "Only effect is to obscure vision when passing through."
-3  = "Only effect is to obscure vision when passing through."
-4  = "Only effect is to obscure vision when passing through."
-5  = "Only effect is to obscure vision when passing through."
-6  = "Only effect is to obscure vision when passing through."
-7  = "Only effect is to obscure vision when passing through."
-8  = "Blindsfor 1-6 turns after passing through."
-9  = "Blindsfor 1-6 turns after passing through."
-10 = "Fear: run back 120' feet unless saving throw versus magic is made."
-11 = "Fear: run back 120' feet unless saving throw versus magic is made."
-12 = "Fear: run back 120' feet unless saving throw versus magic is made."
-13 = "Sleep: party sound asleep for 2-12 turns (as sleep spell)."
-14 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
-15 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
-16 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
-17 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
-18 = "Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."
-19 = "Sickness: return to surface immediately."
-20 = "Poison: killed unless saving throw versus poison is made."
-}
+function Get-Table7Roll {
 
+[alias("Get-Trick","Get-Track","Get-TrickOrTrack")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table7.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VII. A.: GAS SUB-TABLE (d20)
+$Table7A = @{
+1  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+2  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+3  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+4  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+5  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+6  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+7  = [pscustomobject]@{Description="Only effect is to obscure vision when passing through."}
+8  = [pscustomobject]@{Description="Blindsfor 1-6 turns after passing through."}
+9  = [pscustomobject]@{Description="Blindsfor 1-6 turns after passing through."}
+10 = [pscustomobject]@{Description="Fear: run back 120' feet unless saving throw versus magic is made."}
+11 = [pscustomobject]@{Description="Fear: run back 120' feet unless saving throw versus magic is made."}
+12 = [pscustomobject]@{Description="Fear: run back 120' feet unless saving throw versus magic is made."}
+13 = [pscustomobject]@{Description="Sleep: party sound asleep for 2-12 turns (as sleep spell)."}
+14 = [pscustomobject]@{Description="Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."}
+15 = [pscustomobject]@{Description="Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."}
+16 = [pscustomobject]@{Description="Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."}
+17 = [pscustomobject]@{Description="Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."}
+18 = [pscustomobject]@{Description="Strength: adds 1-6 points of strength (as strength spell) to all fighters in party for 1 to 10 hours."}
+19 = [pscustomobject]@{Description="Sickness: return to surface immediately."}
+20 = [pscustomobject]@{Description="Poison: killed unless saving throw versus poison is made."}
+}
 #CAVES AND CAVERNS FOR LOWEST LEVELS:
 #You may wish to have "roughhewn" and natural tunnels in lower levels, and where rooms and chambers are indicated substitute Caves and Caverns. Exits are as above.
 
-#TABLE VIII.: CAVES AND CAVERNS (d20)
-$TableVIII = @{
-1  = "Cave about 40' x 60'"
-2  = "Cave about 40' x 60'"
-3  = "Cave about 40' x 60'"
-4  = "Cave about 40' x 60'"
-5  = "Cave about 40' x 60'"
-6  = "Cave about 50' x75'"
-7  = "Cave about 50' x75'"
-8  = "Double Cave: 20' x 30', 60' x 60'"
-9  = "Double Cave: 20' x 30', 60' x 60'"
-10 = "Double Cave: 35' x 50', 80' x 90' (Roll to see if pool therein (see TABLE VII1. A.).)"
-11 = "Double Cave: 35' x 50', 80' x 90' (Roll to see if pool therein (see TABLE VII1. A.).)"
-12 = "Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"
-13 = "Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"
-14 = "Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"
-15 = "Cavern about 120' x 150'"
-16 = "Cavern about 120' x 150'"
-17 = "Cavern about 150' X 200' (Roll to see if pool therein (see TABLE VII1. A.).)"
-18 = "Cavern about 150' X 200' (Roll to see if pool therein (see TABLE VII1. A.).)"
-19 = "Mammoth cavern about 250'-300' X 350'-400 (Roll to see if lake therein (see TABLE VIII. B.).)"
-20 = "Mammoth cavern about 250'-300' X 350'-400 (Roll to see if lake therein (see TABLE VIII. B.).)"
+function Get-Table7ARoll {
+
+[alias("Get-Gas")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table7A.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VIII.: CAVES AND CAVERNS (d20)
+$Table8 = @{
+1  = [pscustomobject]@{Description="Cave about 40' x 60'"}
+2  = [pscustomobject]@{Description="Cave about 40' x 60'"}
+3  = [pscustomobject]@{Description="Cave about 40' x 60'"}
+4  = [pscustomobject]@{Description="Cave about 40' x 60'"}
+5  = [pscustomobject]@{Description="Cave about 40' x 60'"}
+6  = [pscustomobject]@{Description="Cave about 50' x75'"}
+7  = [pscustomobject]@{Description="Cave about 50' x75'"}
+8  = [pscustomobject]@{Description="Double Cave: 20' x 30', 60' x 60'"}
+9  = [pscustomobject]@{Description="Double Cave: 20' x 30', 60' x 60'"}
+10 = [pscustomobject]@{Description="Double Cave: 35' x 50', 80' x 90' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+11 = [pscustomobject]@{Description="Double Cave: 35' x 50', 80' x 90' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+12 = [pscustomobject]@{Description="Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+13 = [pscustomobject]@{Description="Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+14 = [pscustomobject]@{Description="Cavern about 95' x 125' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+15 = [pscustomobject]@{Description="Cavern about 120' x 150'"}
+16 = [pscustomobject]@{Description="Cavern about 120' x 150'"}
+17 = [pscustomobject]@{Description="Cavern about 150' X 200' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+18 = [pscustomobject]@{Description="Cavern about 150' X 200' (Roll to see if pool therein (see TABLE VII1. A.).)"}
+19 = [pscustomobject]@{Description="Mammoth cavern about 250'-300' X 350'-400 (Roll to see if lake therein (see TABLE VIII. B.).)"}
+20 = [pscustomobject]@{Description="Mammoth cavern about 250'-300' X 350'-400 (Roll to see if lake therein (see TABLE VIII. B.).)"}
 }
 
-#TABLE VIII. A.: POOLS (d20)
-$TableVIIIA = @{
-1  = "No pool"
-2  = "No pool"
-3  = "No pool"
-4  = "No pool"
-5  = "No pool"
-6  = "No pool"
-7  = "No pool"
-8  = "No pool"
-9  = "Pool, no monster"
-10 = "Pool, no monster"
-11 = "Pool, monster"
-12 = "Pool, monster"
-13 = "Pool, monster8 treasure"
-14 = "Pool, monster8 treasure"
-15 = "Pool, monster8 treasure"
-16 = "Pool, monster8 treasure"
-17 = "Pool, monster8 treasure"
-18 = "Pool, monster8 treasure"
-19 = "Magical pool (See TABLE VIII. C.)"
-20 = "Magical pool (See TABLE VIII. C.)"
+function Get-Table8Roll {
+
+[alias("Get-Cave","Get-Cavern","Get-CaveOrCavern")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table8.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VIII. A.: POOLS (d20)
+$Table8A = @{
+1  = [pscustomobject]@{Description="No pool"}
+2  = [pscustomobject]@{Description="No pool"}
+3  = [pscustomobject]@{Description="No pool"}
+4  = [pscustomobject]@{Description="No pool"}
+5  = [pscustomobject]@{Description="No pool"}
+6  = [pscustomobject]@{Description="No pool"}
+7  = [pscustomobject]@{Description="No pool"}
+8  = [pscustomobject]@{Description="No pool"}
+9  = [pscustomobject]@{Description="Pool, no monster"}
+10 = [pscustomobject]@{Description="Pool, no monster"}
+11 = [pscustomobject]@{Description="Pool, monster"}
+12 = [pscustomobject]@{Description="Pool, monster"}
+13 = [pscustomobject]@{Description="Pool, monster8 treasure"}
+14 = [pscustomobject]@{Description="Pool, monster8 treasure"}
+15 = [pscustomobject]@{Description="Pool, monster8 treasure"}
+16 = [pscustomobject]@{Description="Pool, monster8 treasure"}
+17 = [pscustomobject]@{Description="Pool, monster8 treasure"}
+18 = [pscustomobject]@{Description="Pool, monster8 treasure"}
+19 = [pscustomobject]@{Description="Magical pool (See TABLE VIII. C.)"}
+20 = [pscustomobject]@{Description="Magical pool (See TABLE VIII. C.)"}
 }
 
-#TABLE VIII. B.: LAKES (d20)
-$TableVIIIB = @{
-1  = "No lake"
-2  = "No lake"
-3  = "No lake"
-4  = "No lake"
-5  = "No lake"
-6  = "No lake"
-7  = "No lake"
-8  = "No lake"
-9  = "No lake"
-10 = "No lake"
-11 = "Lake, no monsters"
-12 = "Lake, no monsters"
-13 = "Lake, no monsters"
-14 = "Lake, no monsters"
-15 = "Lake, no monsters"
-16 = "Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"
-17 = "Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"
-18 = "Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"
-19 = "Enchanted lake (Enchanted lake leads any who manage to cross it to another dimension, special temple, etc. (if special map is available, otherwise treat as lake with monsters), 90% chance that monster will guard lake.)"
-20 = "Enchanted lake (Enchanted lake leads any who manage to cross it to another dimension, special temple, etc. (if special map is available, otherwise treat as lake with monsters), 90% chance that monster will guard lake.)"
+function Get-Table8ARoll {
+
+[alias("Get-Pool")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table8A.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VIII. B.: LAKES (d20)
+$Table8B = @{
+1  = [pscustomobject]@{Description="No lake"}
+2  = [pscustomobject]@{Description="No lake"}
+3  = [pscustomobject]@{Description="No lake"}
+4  = [pscustomobject]@{Description="No lake"}
+5  = [pscustomobject]@{Description="No lake"}
+6  = [pscustomobject]@{Description="No lake"}
+7  = [pscustomobject]@{Description="No lake"}
+8  = [pscustomobject]@{Description="No lake"}
+9  = [pscustomobject]@{Description="No lake"}
+10 = [pscustomobject]@{Description="No lake"}
+11 = [pscustomobject]@{Description="Lake, no monsters"}
+12 = [pscustomobject]@{Description="Lake, no monsters"}
+13 = [pscustomobject]@{Description="Lake, no monsters"}
+14 = [pscustomobject]@{Description="Lake, no monsters"}
+15 = [pscustomobject]@{Description="Lake, no monsters"}
+16 = [pscustomobject]@{Description="Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"}
+17 = [pscustomobject]@{Description="Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"}
+18 = [pscustomobject]@{Description="Lake, monsters (Determine monster and treasure from appropriate encounter matrix.)"}
+19 = [pscustomobject]@{Description="Enchanted lake (Enchanted lake leads any who manage to cross it to another dimension, special temple, etc. (if special map is available, otherwise treat as lake with monsters), 90% chance that monster will guard lake.)"}
+20 = [pscustomobject]@{Description="Enchanted lake (Enchanted lake leads any who manage to cross it to another dimension, special temple, etc. (if special map is available, otherwise treat as lake with monsters), 90% chance that monster will guard lake.)"}
 }
 
-#TABLE VIII. C.: MAGIC POOLS (d20)
+function Get-Table8BRoll {
+
+[alias("Get-Lake")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table8B.($Roll).Description
+   
+   }
+
+}
+#endregion
+
+#region TABLE VIII. C.: MAGIC POOLS (d20)
 #(In order to find out what they are, characters must enter the magic pools.)
-$TableVIIIC = @{
-1  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-2  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-3  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-4  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-5  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-6  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-7  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-8  = "Turns gold to platinum (1-11) or lead (12-20), one time only."
-9  = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-10 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-11 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-12 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-13 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-14 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-15 = "Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
-1 = strength
-2 = intelligence
-3 = wisdom
-4 = dexterity
-5 = constitution
-6 = charisma
-(add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."
-16 = "Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: lawful good 1-6, lawful evil 7-9, chaotic good 10-12, chaotic evil 13-17, neutral 18-20"
-17 = "Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: lawful good 1-6, lawful evil 7-9, chaotic good 10-12, chaotic evil 13-17, neutral 18-20"
-18 = "Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."
-19 = "Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."
-20 = "Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."
+$Table8C = @{
+1  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+2  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+3  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+4  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+5  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+6  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+7  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+8  = [pscustomobject]@{Description="Turns gold to platinum (1-11) or lead (12-20), one time only."}
+9  = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+10 = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+11 = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+12 = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+13 = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+14 = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+15 = [pscustomobject]@{Description="Will, on a one-time only basis, add (1-3) or subtract (4-6) from one characteristic of all who stand within it:
+1 = Strength
+2 = Intelligence
+3 = Wisdom
+4 = Dexterity
+5 = Constitution
+6 = Charisma
+(Add or subtract from 1-3 points, checking for each character as to addition or subtraction, characteristic, and amount)."}
+16 = [pscustomobject]@{Description="Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: lawful good 1-6, lawful evil 7-9, chaotic good 10-12, chaotic evil 13-17, neutral 18-20"}
+17 = [pscustomobject]@{Description="Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: lawful good 1-6, lawful evil 7-9, chaotic good 10-12, chaotic evil 13-17, neutral 18-20"}
+18 = [pscustomobject]@{Description="Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."}
+19 = [pscustomobject]@{Description="Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."}
+20 = [pscustomobject]@{Description="Transporter pool: 1-7,back to surface; 8-12,elsewhere on level; 13-16, 1 level down; 17-20, 100 miles away for outdoor adventure."}
 }
+
+function Get-Table8CRoll {
+
+[alias("Get-MagicPool")]
+    param(
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+    )
+
+   if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+   [pscustomobject]@{
+   
+   Roll = $Roll;
+   Description = $Table8C.($Roll).Description
+   
+   }
+
+}
+#endregion
 
 ###################################
 
