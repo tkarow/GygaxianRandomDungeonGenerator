@@ -1284,6 +1284,16 @@ function Get-Table8CRoll {
 
 ###################################
 
+#To do:
+
+#Standardize English- capitalization, parenthetical grammar, spacing, etc.
+#Standardize PowerShell syntax- spacing, line breaks, capitalization, etc.
+#Add a new element for each table roll that will make sub-rolls for a result when appropriate
+#Add a new element for each table roll taht will roll all remaining components of a dungeon "module" (e.g. Roll a room's shape, size, contents, number of exits, location of exits, etc.)
+#Add a visual representation of the room/chamber/corridor/etc.
+
+###################################
+
 <#
 @{
 1  = ""
