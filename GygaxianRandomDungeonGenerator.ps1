@@ -475,7 +475,7 @@ function Get-Table4Roll {
 #endregion
 
 #region TABLE V.: CHAMBERS AND ROOMS SHAPE AND SIZE (d20)
-#(Roll for Shape, Size, and Exits: then' Contents, Treasure, and how the latter i s contained, if applicable.)
+#(Roll for Shape, Size, and Exits; then Contents, Treasure, and how the latter i s contained, if applicable.)
 $Table5 = @{
 
 1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
@@ -516,8 +516,13 @@ function Get-Table5Roll {
     )
 
     $Unusual = $False
+
+    if(($MyInvocation.InvocationName -eq "Get-RoomShapeAndSize") -and ($Type -eq $Null)){$Type = "Room"}
+    if(($MyInvocation.InvocationName -eq "Get-ChamberShapeAndSize") -and ($Type -eq $Null)){$Type = "Chamber"}
+
     if(!$Roll){$Roll = (Get-D20Roll).Result}
     if(!$Type){$Type = @("Chamber","Room")[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+    
     if($Roll -ge 18){$Unusual = $True}
     if($Unusual){$5A = (Get-Table5ARoll).Description;$5B = (Get-Table5BRoll).Description}
 
@@ -540,6 +545,8 @@ function Get-Table5Roll {
             if(!$Unusual){
 
                 [pscustomobject]@{
+
+                    Type = $Type
             
                     Shape = "$(($Table5.($Roll)).Room.Description.split(',')[0].split(':')[1].trim())"
                 
@@ -550,6 +557,8 @@ function Get-Table5Roll {
             }else{
             
                 [pscustomobject]@{
+
+                    Type = "Unusual"
             
                     Shape = if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}
 
@@ -565,6 +574,8 @@ function Get-Table5Roll {
         
                 [pscustomobject]@{
 
+                    Type = $Type
+
                     Shape = "$(($Table5.($Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"
 
                     Size = "$(($Table5.($Roll)).Chamber.Description.split(',')[1].trim())"
@@ -574,6 +585,8 @@ function Get-Table5Roll {
             }else{
             
                 [pscustomobject]@{
+
+                    Type = "Unusual"
             
                     Shape = if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}
 
