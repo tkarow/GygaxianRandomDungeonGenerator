@@ -123,7 +123,6 @@ function Write-Rolls{
      
     }
 
-    #$SetofUniqueRolls = ($NumberOfUniqueRolls | %{"$($_.numberofdice)d$($_.uniquedie)"}) -join ', '
     $SetofUniqueRolls = ''
     $NumberOfUniqueRolls | %{$SetofUniqueRolls = "$($SetofUniqueRolls)$(if((($NumberOfUniqueRolls | Measure-Object).Count -gt 1) -and ($SetofUniqueRolls -ne '')){', '})$(if(($_ -eq $NumberOfUniqueRolls[-1]) -and (($NumberOfUniqueRolls | Measure-Object).Count -gt 1)){'and '})$($_.numberofdice)d$($_.uniquedie)"}
 
@@ -479,14 +478,14 @@ function Get-Table4Roll {
 #(Roll for Shape, Size, and Exits: then' Contents, Treasure, and how the latter i s contained, if applicable.)
 $Table5 = @{
 
-1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10'x10'"}}
-2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10'x10'"}}
-3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20'x20'"}}
-4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20'x20'"}}
-5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30'x30'"}}
-6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30'x30'"}}
-7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40'x40'"}}
-8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40'x40'"}}
+1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
+2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
+3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
+4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
+5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
+6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
+7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
+8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
 9  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
 10 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
 11 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
@@ -516,17 +515,80 @@ function Get-Table5Roll {
     
     )
 
+    $Unusual = $False
     if(!$Roll){$Roll = (Get-D20Roll).Result}
+    if(!$Type){$Type = @("Chamber","Room")[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+    if($Roll -ge 18){$Unusual = $True}
+    if($Unusual){$5A = (Get-Table5ARoll).Description;$5B = (Get-Table5BRoll).Description}
 
     [pscustomobject]@{
    
-        Roll = $Roll;
-        Description = if($Type -eq "Room"){($Table5.($Roll)).Room}elseif($Type -eq "Chamber"){($Table5.($Roll)).Chamber.Description}else{@(($Table5.($Roll)).Chamber;($Table5.($Roll)).Room.Description)}
+        Roll = $Roll
+
+        Description = if($Type -eq "Room"){
+
+            "$(($Table5.($Roll)).Room.Description)$(if($Unspecified){' (Unspecified)'})"
+        
+        }else{
+        
+            "$($Table5.($Roll).Chamber.Description)$(if($Unspecified){' (Unspecified)'})"
+            
+        }
+
+        Details = if($Type -eq "Room"){
+
+            if(!$Unusual){
+
+                [pscustomobject]@{
+            
+                    Shape = "$(($Table5.($Roll)).Room.Description.split(',')[0].split(':')[1].trim())"
+                
+                    Size = "$(($Table5.($Roll)).Room.Description.split(',')[1].trim())"
+
+                }
+
+            }else{
+            
+                [pscustomobject]@{
+            
+                    Shape = if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}
+
+                    Size = $5B
+
+                }
+
+            }
+
+        }else{
+
+            if(!$Unusual){
+        
+                [pscustomobject]@{
+
+                    Shape = "$(($Table5.($Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"
+
+                    Size = "$(($Table5.($Roll)).Chamber.Description.split(',')[1].trim())"
+
+                }
+
+            }else{
+            
+                [pscustomobject]@{
+            
+                    Shape = if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}
+
+                    Size = $5B
+
+                }
+
+            }
+
+        }
    
     }
 
 }
-#If unspecified, information for both a room and chamber is returned
+#If unspecified, a room or chamber is randomly selected, noted in parentheses, and its data is returned
 #Get-Table5Roll -Type Room
 #endregion
 
