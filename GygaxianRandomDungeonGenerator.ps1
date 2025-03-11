@@ -1516,6 +1516,51 @@ function Get-5BSpecialArea {
 
 }
 
+function Get-SpecificNumberOfExits {
+
+     param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        $Type,
+        [Parameter(Mandatory=$False)]
+        [int]$Width,
+        [Parameter(Mandatory=$False)]
+        [int]$Length
+
+    )
+
+    $Passage = $False
+    $SecretDoors = 0
+    if(!$Roll){$5CRoll = Get-NumberOfExits}else{$5CRoll = Get-NumberOfExits -Roll $Roll}
+
+    if($5CRoll.Roll -le 15){$DoorsNumber = $5CRoll.Description}
+    if(($5CRoll.Roll -eq 16) -or ($5CRoll.Roll -eq 17) -or ($5CRoll.Roll -eq 18)){$DoorsNumber = (Get-D4Roll).Result}
+    if($5CRoll.Description -like "0*"){$DoorsNumber = 0;1..((($Width * 2) + ($Length * 2)) / 10) | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}}
+    if(($5CRoll.Roll -eq 19) -or ($5CRoll.Roll -eq 20)){
+    
+        if($Type -eq "Chamber"){$DoorsNumber = 1}
+        if($Type -eq "Room"){$Passage = $True}
+
+    }
+
+    if($Type -eq "Unusual"){
+    
+        $DoorsNumber = "?"
+        $SecretDoors = "?"
+
+    }
+
+    [pscustomobject]@{
+    
+        Doors = $DoorsNumber
+        SecretDoors = $SecretDoors
+        Passage = $Passage
+
+    }
+
+}
 
 function Get-Room {
 
@@ -1543,6 +1588,7 @@ function Get-Room {
     if(!$Type){$Type = @("Chamber","Room")[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
 
     if(!$Table5Roll){$Table5Roll = (Get-D20Roll).Result}
+    if(!$Table5CRoll){$Table5CRoll = (Get-D20Roll).Result}
     
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
@@ -1601,6 +1647,8 @@ function Get-Room {
 
     }
 
+    if(!$Unusual){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type}
+
     [pscustomobject]@{
             
         Type = $Type
@@ -1610,7 +1658,7 @@ function Get-Room {
         Shape = if($Unusual){$5A}else{$NewTable5.($Table5Roll)."$($Type)".Shape}
         Exits = [pscustomobject]@{
 
-            Number = if($Table5CRoll){(Get-Table5CRoll -Roll $Table5CRoll -RoomArea $Area).Description}else{(Get-Table5CRoll -RoomArea $Area).Description}
+            Number = $SpecificNumberOfExits
 
             Locations = ''
 
