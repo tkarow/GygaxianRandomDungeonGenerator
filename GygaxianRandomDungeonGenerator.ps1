@@ -1583,9 +1583,8 @@ function Get-Room {
 
     $Unusual = $False
 
-    if(($MyInvocation.InvocationName -eq "Get-Room") -and ($Type -eq $Null)){$Type = "Room"}
-    if(($MyInvocation.InvocationName -eq "Get-Chamber") -and ($Type -eq $Null)){$Type = "Chamber"}
-    if(!$Type){$Type = @("Chamber","Room")[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+    if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
+    if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
 
     if(!$Table5Roll){$Table5Roll = (Get-D20Roll).Result}
     if(!$Table5CRoll){$Table5CRoll = (Get-D20Roll).Result}
@@ -1621,7 +1620,7 @@ function Get-Room {
     
         $Area = if($Table5BRoll -le 14){
         
-            $NewTable5B.($Table5BRoll).Area
+            $5B
             
         }else{
         
