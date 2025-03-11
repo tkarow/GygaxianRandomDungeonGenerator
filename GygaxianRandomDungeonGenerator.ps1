@@ -539,64 +539,6 @@ function Get-Table5Roll {
             "$($Table5.($Roll).Chamber.Description)$(if($Unspecified){' (Unspecified)'})"
             
         }
-
-        Details = if($Type -eq "Room"){
-
-            if(!$Unusual){
-
-                [pscustomobject]@{
-
-                    Type = $Type
-            
-                    Shape = "$(($Table5.($Roll)).Room.Description.split(',')[0].split(':')[1].trim())"
-                
-                    Size = "$(($Table5.($Roll)).Room.Description.split(',')[1].trim())"
-
-                }
-
-            }else{
-            
-                [pscustomobject]@{
-
-                    Type = "Unusual"
-            
-                    Shape = if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}
-
-                    Size = $5B
-
-                }
-
-            }
-
-        }else{
-
-            if(!$Unusual){
-        
-                [pscustomobject]@{
-
-                    Type = $Type
-
-                    Shape = "$(($Table5.($Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"
-
-                    Size = "$(($Table5.($Roll)).Chamber.Description.split(',')[1].trim())"
-
-                }
-
-            }else{
-            
-                [pscustomobject]@{
-
-                    Type = "Unusual"
-            
-                    Shape = if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}
-
-                    Size = $5B
-
-                }
-
-            }
-
-        }
    
     }
 
@@ -670,12 +612,12 @@ $Table5B = @{
 12 = [pscustomobject]@{Description = "About 2,700 sq. ft."}
 13 = [pscustomobject]@{Description = "About 3,400 sq. ft."}
 14 = [pscustomobject]@{Description = "About 3,400 sq. ft."}
-15 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
-16 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
-17 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
-18 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
-19 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
-20 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-l0above, and so on)"}
+15 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
+16 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
+17 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
+18 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
+19 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
+20 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
 
 }
 
@@ -1478,6 +1420,95 @@ function Get-Table8CRoll {
 
 }
 #endregion
+
+###################################
+#The following are tools that I have created designed to more quickly flesh out a random dungeon based on the above
+
+function Get-Room {
+
+    [alias("Get-Chamber")]
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5Roll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5ARoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5BRoll,
+    
+        [Parameter(Mandatory=$False)]
+        [ValidateSet("Chamber","Room")]
+        $Type
+    
+    )
+
+    $Unusual = $False
+
+    if(($MyInvocation.InvocationName -eq "Get-Room") -and ($Type -eq $Null)){$Type = "Room"}
+    if(($MyInvocation.InvocationName -eq "Get-Chamber") -and ($Type -eq $Null)){$Type = "Chamber"}
+    if(!$Type){$Type = @("Chamber","Room")[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+
+    if(!$Table5Roll){$Table5Roll = (Get-D20Roll).Result}
+    
+    if($Table5Roll -ge 18){$Unusual = $True}
+    if($Unusual){
+        
+        if($Table5ARoll){$5A = $Table5ARoll.$Table5ARoll}else{$5A = (Get-Table5ARoll).Description}
+        if($Table5BRoll){$5B = $Table5BRoll.$Table5BRoll}else{$5B = (Get-Table5BRoll).Description}
+    
+    }
+
+    if($Type -eq "Room"){
+
+        [pscustomobject]@{
+            
+            Type = if($Unusual){"Unusual"}else{$Type}
+
+            Dimensions = if($Unusual){"Unusual"}else{
+            
+                [pscustomobject]@{
+
+                    Length = "$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())".split("`'")[0]
+                    Width = "$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())".split("`'")[1].split(" ")[-1].Replace("'","")
+
+                }
+
+            }
+            
+            Shape = if($Unusual){if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[0].split(':')[1].trim())"}
+                
+            Size = if($Unusual){$5B}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())"}
+
+        }
+
+    }else{
+        
+        [pscustomobject]@{
+
+            Dimensions = if($Unusual){"Unusual"}else{
+            
+                [pscustomobject]@{
+
+                    Length = "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())".split("`'")[0]
+                    Width = "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())".split("`'")[1].split(" ")[-1].Replace("'","")
+
+                }
+
+            }
+    
+            Type = $Type
+
+            Shape = if($Unusual){if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}}else{ "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"}
+
+            Size = if($Unusual){$5B}else{"$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())"}
+
+        }
+
+    }
+   
+}
 
 ###################################
 
