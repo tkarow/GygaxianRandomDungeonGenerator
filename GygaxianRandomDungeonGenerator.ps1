@@ -478,14 +478,14 @@ function Get-Table4Roll {
 #(Roll for Shape, Size, and Exits; then Contents, Treasure, and how the latter i s contained, if applicable.)
 $Table5 = @{
 
-1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
-2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
-3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
-4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
-5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
-6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
-7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
-8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
+1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
+2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
+3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
+4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
+5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
+6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
+7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x 40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
+8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x 40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
 9  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
 10 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
 11 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
@@ -1463,7 +1463,27 @@ function Get-Room {
     
     }
 
-    if($Table5CRoll){$5C = $Table5C.($Table5CRoll)}else{$5C = (Get-Table5CRoll).Description}
+    if(($Type -eq "Room") -and (!$Unusual)){
+
+        $Length = [int]("$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())".split("`'")[0])
+        $Width = [int]("$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())".split("`'")[1].split(" ")[-1].Replace("'",''))
+        $Area = $Length * $Width
+    
+    }
+
+    if(($Type -eq "Chamber") -and (!$Unusual)){
+
+        $Length = [int]("$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())".split("`'")[0])
+        $Width = [int]("$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())".split("`'")[1].split(" ")[-1].Replace("'",''))
+        $Area = $Length * $Width
+    
+    }
+
+    if($Unusual){
+    
+        $Area = if($Table5BRoll -le 14){"$($Table5B.$Table5BRoll)".Split(' ')[1].Replace(',','').trim()}else{'TO DO!'}
+    
+    }
 
     if($Type -eq "Room"){
 
@@ -1475,8 +1495,9 @@ function Get-Room {
             
                 [pscustomobject]@{
 
-                    Length = "$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())".split("`'")[0]
-                    Width = "$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())".split("`'")[1].split(" ")[-1].Replace("'","")
+                    Length = $Length
+                    Width = $Width
+                    Area = $Area
 
                 }
 
@@ -1485,6 +1506,14 @@ function Get-Room {
             Shape = if($Unusual){if($5A.Description -like "* *"){"$($5A.Description.split(' ')[0])"}else{$5A}}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[0].split(':')[1].trim())"}
                 
             Size = if($Unusual){$5B}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())"}
+
+            Exits = [pscustomobject]@{
+
+                Number = if($Table5CRoll){(Get-Table5CRoll -Roll $Table5CRoll -RoomArea $Area).Description}else{(Get-Table5CRoll -RoomArea $Area).Description}
+
+                Locations = ''
+
+            }
 
         }
 
@@ -1498,6 +1527,7 @@ function Get-Room {
 
                     Length = "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())".split("`'")[0]
                     Width = "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())".split("`'")[1].split(" ")[-1].Replace("'","")
+                    Area = $Area
 
                 }
 
@@ -1505,9 +1535,17 @@ function Get-Room {
     
             Type = $Type
 
-            Shape = if($Unusual){if($5A.Description -like "* *"){"$($5A.Description.split(' ')[0])"}else{$5A}}else{ "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"}
+            Shape = if($Unusual){if($5A.Description -like "* *"){"$($5A.Description.split(' ')[0])"}else{$5A}}else{"$(($Table5.($Table5Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"}
 
             Size = if($Unusual){$5B}else{"$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())"}
+
+            Exits = [pscustomobject]@{
+
+                Number = if($Table5CRoll){(Get-Table5CRoll -Roll $Table5CRoll -RoomArea $Area).Description}else{(Get-Table5CRoll -RoomArea $Area).Description}
+
+                Locations = ''
+
+            }
 
         }
 
