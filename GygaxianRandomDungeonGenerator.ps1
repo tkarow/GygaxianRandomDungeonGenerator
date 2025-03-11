@@ -1437,6 +1437,9 @@ function Get-Room {
 
         [Parameter(Mandatory=$False)]
         [int]$Table5BRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5CRoll,
     
         [Parameter(Mandatory=$False)]
         [ValidateSet("Chamber","Room")]
@@ -1455,10 +1458,12 @@ function Get-Room {
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
         
-        if($Table5ARoll){$5A = $Table5ARoll.$Table5ARoll}else{$5A = (Get-Table5ARoll).Description}
-        if($Table5BRoll){$5B = $Table5BRoll.$Table5BRoll}else{$5B = (Get-Table5BRoll).Description}
+        if($Table5ARoll){$5A = $Table5A.($Table5ARoll)}else{$5A = (Get-Table5ARoll).Description}
+        if($Table5BRoll){$5B = $Table5B.($Table5BRoll)}else{$5B = (Get-Table5BRoll).Description}
     
     }
+
+    if($Table5CRoll){$5C = $Table5C.($Table5CRoll)}else{$5C = (Get-Table5CRoll).Description}
 
     if($Type -eq "Room"){
 
@@ -1477,7 +1482,7 @@ function Get-Room {
 
             }
             
-            Shape = if($Unusual){if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[0].split(':')[1].trim())"}
+            Shape = if($Unusual){if($5A.Description -like "* *"){"$($5A.Description.split(' ')[0])"}else{$5A}}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[0].split(':')[1].trim())"}
                 
             Size = if($Unusual){$5B}else{"$(($Table5.($Table5Roll)).Room.Description.split(',')[1].trim())"}
 
@@ -1500,7 +1505,7 @@ function Get-Room {
     
             Type = $Type
 
-            Shape = if($Unusual){if($5A -like "* *"){"$($5A.split(' ')[0])"}else{$5A}}else{ "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"}
+            Shape = if($Unusual){if($5A.Description -like "* *"){"$($5A.Description.split(' ')[0])"}else{$5A}}else{ "$(($Table5.($Table5Roll)).Chamber.Description.split(',')[0].split(':')[1].trim())"}
 
             Size = if($Unusual){$5B}else{"$(($Table5.($Table5Roll)).Chamber.Description.split(',')[1].trim())"}
 
