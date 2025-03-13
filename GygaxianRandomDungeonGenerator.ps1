@@ -2,11 +2,11 @@
 function Get-D2Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 2
     Result = Get-Random -Minimum 1 -Maximum 3
-    
+   
     }
 
 }
@@ -14,11 +14,11 @@ function Get-D2Roll{
 function Get-D4Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 4
     Result = Get-Random -Minimum 1 -Maximum 5
-    
+   
     }
 
 }
@@ -26,11 +26,11 @@ function Get-D4Roll{
 function Get-D6Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 6
     Result = Get-Random -Minimum 1 -Maximum 7
-    
+   
     }
 
 }
@@ -38,11 +38,11 @@ function Get-D6Roll{
 function Get-D8Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 8
     Result = Get-Random -Minimum 1 -Maximum 9
-    
+   
     }
 
 }
@@ -50,11 +50,11 @@ function Get-D8Roll{
 function Get-D10Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 10
     Result = Get-Random -Minimum 1 -Maximum 11
-    
+   
     }
 
 }
@@ -66,7 +66,7 @@ function Get-D12Roll{
     Min = 1
     Max = 12
     Result = Get-Random -Minimum 1 -Maximum 13
-    
+   
     }
 
 }
@@ -74,11 +74,11 @@ function Get-D12Roll{
 function Get-D20Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 20
     Result = Get-Random -Minimum 1 -Maximum 21
-    
+   
     }
 
 }
@@ -86,11 +86,11 @@ function Get-D20Roll{
 function Get-D100Roll{
 
     [pscustomobject]@{
-    
+   
     Min = 1
     Max = 100
     Result = Get-Random -Minimum 1 -Maximum 101
-    
+   
     }
 
 }
@@ -100,25 +100,25 @@ function Get-D100Roll{
 ###################################
 
 function Write-Rolls{
-    
+   
     Param(
-    
+   
     [parameter(Mandatory=$False)]
     $DieRolls
-    
+   
     )
 
     $Sum = ($DieRolls.Result | Measure-Object -Sum).Sum
-    
+   
     $UniqueDice = $DieRolls.Max | Sort-Object | Get-Unique
-    
+   
     $NumberOfUniqueRolls = foreach($UniqueDie in $UniqueDice){
      
         [pscustomobject]@{
-    
+   
             NumberofDice = ($DieRolls | ?{($_.Max -eq $UniqueDie)} | Measure-Object).Count
             UniqueDie = $UniqueDie
-    
+   
         }
      
     }
@@ -264,10 +264,10 @@ function Get-Table2ARoll {
 
     [alias("Get-SpaceBeyondDoorRoll")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -315,7 +315,7 @@ function Get-Table3Roll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -363,7 +363,7 @@ function Get-Table3ARoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -411,7 +411,7 @@ function Get-Table3BRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -459,7 +459,7 @@ function Get-Table4Roll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -478,26 +478,26 @@ function Get-Table4Roll {
 #(Roll for Shape, Size, and Exits; then Contents, Treasure, and how the latter i s contained, if applicable.)
 $Table5 = @{
 
-1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
-2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'"}}
-3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
-4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'"}}
-5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
-6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'"}}
-7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x 40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
-8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x 40'"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'"}}
-9  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
-10 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'"}}
-11 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
-12 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
-13 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'"}}
-14 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 30' x 50'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 40'"}}
-15 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 30' x 50'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 40'"}}
-16 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 40' x 60'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 30' x 40'"}}
-17 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 40' x 60'"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 30' x 40'"}}
-18 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
-19 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
-20 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Unusual shape and size - see sub-tables below"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below"}}
+1  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'";Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'";Width = 10;Length = 10;Shape="Square"}}
+2  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'";Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 10' x 10'";Width = 10;Length = 10;Shape="Square"}}
+3  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'";Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'";Width = 20;Length = 20;Shape="Square"}}
+4  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 20'x 20'";Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 20' x 20'";Width = 20;Length = 20;Shape="Square"}}
+5  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x 30'";Width = 30;Length = 30;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'";Width = 30;Length = 30;Shape="Square"}}
+6  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 30'x 30'";Width = 30;Length = 30;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 30' x 30'";Width = 30;Length = 30;Shape="Square"}}
+7  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x 40'";Width = 40;Length = 40;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'";Width = 40;Length = 40;Shape="Square"}}
+8  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Square, 40'x 40'";Width = 40;Length = 40;Shape="Square"};Room=[pscustomobject]@{Description="Room Shape and Area: Square, 40' x 40'";Width = 40;Length = 40;Shape="Square"}}
+9  = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'";Width = 10;Length = 20;Shape="Rectangular"}}
+10 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 10' x 20'";Width = 10;Length = 20;Shape="Rectangular"}}
+11 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"}}
+12 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"}}
+13 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 30'";Width = 20;Length = 30;Shape="Rectangular"}}
+14 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 30' x 50'";Width = 30;Length = 50;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 40'";Width = 20;Length = 40;Shape="Rectangular"}}
+15 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 30' x 50'";Width = 30;Length = 50;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 20' x 40'";Width = 20;Length = 40;Shape="Rectangular"}}
+16 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 40' x 60'";Width = 40;Length = 60;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 30' x 40'";Width = 30;Length = 40;Shape="Rectangular"}}
+17 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Chamber Shape and Area: Rectangular, 40' x 60'";Width = 40;Length = 60;Shape="Rectangular"};Room=[pscustomobject]@{Description="Room Shape and Area: Rectangular, 30' x 40'";Width = 30;Length = 40;Shape="Rectangular"}}
+18 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Unusual shape and size - see sub-tables below";Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below";Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"}}
+19 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Unusual shape and size - see sub-tables below";Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below";Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"}}
+20 = [pscustomobject]@{Chamber=[pscustomobject]@{Description = "Unusual shape and size - see sub-tables below";Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"};Room=[pscustomobject]@{Description="Unusual shape and size - see sub-tables below";Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"}}
 
 }
 
@@ -508,11 +508,11 @@ function Get-Table5Roll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll,
-    
+   
         [Parameter(Mandatory=$False)]
         [ValidateSet("Chamber","Room")]
         $Type
-    
+   
     )
 
     $Unusual = $False
@@ -522,7 +522,7 @@ function Get-Table5Roll {
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
     if(!$Type){$Type = @("Chamber","Room")[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
-    
+   
     if($Roll -ge 18){$Unusual = $True}
     if($Unusual){$5A = (Get-Table5ARoll).Description;$5B = (Get-Table5BRoll).Description}
 
@@ -533,11 +533,11 @@ function Get-Table5Roll {
         Description = if($Type -eq "Room"){
 
             "$(($Table5.($Roll)).Room.Description)$(if($Unspecified){' (Unspecified)'})"
-        
+       
         }else{
-        
+       
             "$($Table5.($Roll).Chamber.Description)$(if($Unspecified){' (Unspecified)'})"
-            
+           
         }
    
     }
@@ -550,26 +550,26 @@ function Get-Table5Roll {
 #region TABLE V. A.: UNUSUAL SHAPE (Roll Separately for Size) (d20)
 $Table5A = @{
 
-1  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
-2  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
-3  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
-4  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
-5  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)"}
-6  = [pscustomobject]@{Description = "Triangular"}
-7  = [pscustomobject]@{Description = "Triangular"}
-8  = [pscustomobject]@{Description = "Triangular"}
-9  = [pscustomobject]@{Description = "Trapezoidal"}
-10 = [pscustomobject]@{Description = "Trapezoidal"}
-11 = [pscustomobject]@{Description = "Trapezoidal"}
-12 = [pscustomobject]@{Description = "Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)"}
-13 = [pscustomobject]@{Description = "Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)"}
-14 = [pscustomobject]@{Description = "Oval"}
-15 = [pscustomobject]@{Description = "Oval"}
-16 = [pscustomobject]@{Description = "Hexagonal"}
-17 = [pscustomobject]@{Description = "Hexagonal"}
-18 = [pscustomobject]@{Description = "Octagonal"}
-19 = [pscustomobject]@{Description = "Octagonal"}
-20 = [pscustomobject]@{Description = "Cave"}
+1  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)";Shape = "Circular"}
+2  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)";Shape = "Circular"}
+3  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)";Shape = "Circular"}
+4  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)";Shape = "Circular"}
+5  = [pscustomobject]@{Description = "Circular (1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.)";Shape = "Circular"}
+6  = [pscustomobject]@{Description = "Triangular";Shape = "Triangular"}
+7  = [pscustomobject]@{Description = "Triangular";Shape = "Triangular"}
+8  = [pscustomobject]@{Description = "Triangular";Shape = "Triangular"}
+9  = [pscustomobject]@{Description = "Trapezoidal";Shape = "Trapezoidal"}
+10 = [pscustomobject]@{Description = "Trapezoidal";Shape = "Trapezoidal"}
+11 = [pscustomobject]@{Description = "Trapezoidal";Shape = "Trapezoidal"}
+12 = [pscustomobject]@{Description = "Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)";Shape = "Odd-shaped"}
+13 = [pscustomobject]@{Description = "Odd-shaped (Draw what shape you desire or what will fit the map - it is a special shape if desired)";Shape = "Odd-shaped"}
+14 = [pscustomobject]@{Description = "Oval";Shape = "Oval"}
+15 = [pscustomobject]@{Description = "Oval";Shape = "Oval"}
+16 = [pscustomobject]@{Description = "Hexagonal";Shape = "Hexagonal"}
+17 = [pscustomobject]@{Description = "Hexagonal";Shape = "Hexagonal"}
+18 = [pscustomobject]@{Description = "Octagonal";Shape = "Octagonal"}
+19 = [pscustomobject]@{Description = "Octagonal";Shape = "Octagonal"}
+20 = [pscustomobject]@{Description = "Cave";Shape = "Cave"}
 
 }
 
@@ -580,7 +580,7 @@ function Get-Table5ARoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -598,26 +598,26 @@ function Get-Table5ARoll {
 #region TABLE V. B.: UNUSUAL SIZE (d20)
 $Table5B = @{
 
-1  = [pscustomobject]@{Description = "About 500 sq. ft."}
-2  = [pscustomobject]@{Description = "About 500 sq. ft."}
-3  = [pscustomobject]@{Description = "About 500 sq. ft."}
-4  = [pscustomobject]@{Description = "About 900 sq. ft."}
-5  = [pscustomobject]@{Description = "About 900 sq. ft."}
-6  = [pscustomobject]@{Description = "About 900 sq. ft."}
-7  = [pscustomobject]@{Description = "About 1,300 sq. ft."}
-8  = [pscustomobject]@{Description = "About 1,300 sq. ft."}
-9  = [pscustomobject]@{Description = "About 2,000 sq. ft."}
-10 = [pscustomobject]@{Description = "About 2,000 sq. ft."}
-11 = [pscustomobject]@{Description = "About 2,700 sq. ft."}
-12 = [pscustomobject]@{Description = "About 2,700 sq. ft."}
-13 = [pscustomobject]@{Description = "About 3,400 sq. ft."}
-14 = [pscustomobject]@{Description = "About 3,400 sq. ft."}
-15 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
-16 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
-17 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
-18 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
-19 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
-20 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)"}
+1  = [pscustomobject]@{Description = "About 500 sq. ft.";Area = 500}
+2  = [pscustomobject]@{Description = "About 500 sq. ft.";Area = 500}
+3  = [pscustomobject]@{Description = "About 500 sq. ft.";Area = 500}
+4  = [pscustomobject]@{Description = "About 900 sq. ft.";Area = 900}
+5  = [pscustomobject]@{Description = "About 900 sq. ft.";Area = 900}
+6  = [pscustomobject]@{Description = "About 900 sq. ft.";Area = 900}
+7  = [pscustomobject]@{Description = "About 1,300 sq. ft.";Area = 1300}
+8  = [pscustomobject]@{Description = "About 1,300 sq. ft.";Area = 1300}
+9  = [pscustomobject]@{Description = "About 2,000 sq. ft.";Area = 2000}
+10 = [pscustomobject]@{Description = "About 2,000 sq. ft.";Area = 2000}
+11 = [pscustomobject]@{Description = "About 2,700 sq. ft.";Area = 2700}
+12 = [pscustomobject]@{Description = "About 2,700 sq. ft.";Area = 2700}
+13 = [pscustomobject]@{Description = "About 3,400 sq. ft.";Area = 3400}
+14 = [pscustomobject]@{Description = "About 3,400 sq. ft.";Area = 3400}
+15 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)";Area = "Special"}
+16 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)";Area = "Special"}
+17 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)";Area = "Special"}
+18 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)";Area = "Special"}
+19 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)";Area = "Special"}
+20 = [pscustomobject]@{Description = "Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)";Area = "Special"}
 
 }
 
@@ -628,7 +628,7 @@ function Get-Table5BRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -678,7 +678,7 @@ function Get-Table5CRoll {
         [int]$Roll,
         [Parameter(Mandatory=$False)]
         $RoomArea
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -730,7 +730,7 @@ function Get-Table5DRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -778,7 +778,7 @@ function Get-Table5ERoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -823,10 +823,10 @@ function Get-Table5FRoll {
 
     [alias("Get-RoomContents","Get-ChamberContents")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -845,14 +845,14 @@ function Get-Table5FRoll {
 #*See also TABLES V. H. and I. or J.
 $Table5G = @(
 
-[pscustomobject]@{Min = 1;Max = 25;NoMonster = '1,000 copper pieces/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 26;Max = 50;NoMonster = '1,000 silver pieces/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 51;Max = 65;NoMonster = '750 electrum pieces/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 66;Max = 80;NoMonster = '250 gold pieces/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 81;Max = 90;NoMonster = '100 platinum pieces/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 91;Max = 94;NoMonster = '1-4 gems/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 95;Max = 97;NoMonster = '1 piece jewelry/level';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
-[pscustomobject]@{Min = 98;Max = 100;NoMonster = 'Magic (roll once on Magic Items Table)';WMonster = 'Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}
+[pscustomobject]@{Min = 1;Max = 25;NoMonster = [pscustomobject]@{Description='1,000 copper pieces/level';Currency=[pscustomobject]@{Amount=1000;Type='Copper pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 26;Max = 50;NoMonster = [pscustomobject]@{Description='1,000 silver pieces/level';Currency=[pscustomobject]@{Amount=1000;Type='Silver pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 51;Max = 65;NoMonster = [pscustomobject]@{Description='750 electrum pieces/level';Currency=[pscustomobject]@{Amount=750;Type='Electrum pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 66;Max = 80;NoMonster = [pscustomobject]@{Description='250 gold pieces/level';Currency=[pscustomobject]@{Amount=250;Type='Gold pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 81;Max = 90;NoMonster = [pscustomobject]@{Description='100 platinum pieces/level';Currency=[pscustomobject]@{Amount=100;Type='Platinum pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 91;Max = 94;NoMonster = [pscustomobject]@{Description='1-4 gems/level';Currency=[pscustomobject]@{Amount=$Null;Type=$Null}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 95;Max = 97;NoMonster = [pscustomobject]@{Description='1 piece jewelry/level';Currency=[pscustomobject]@{Amount=$Null;Type=$Null}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 98;Max = 100;NoMonster = [pscustomobject]@{Description='Magic (roll once on Magic Items Table)';Currency=[pscustomobject]@{Amount=$Null;Type=$Null}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
 
 )
 
@@ -864,18 +864,30 @@ function Get-Table5GRoll {
         [Parameter(Mandatory=$False)]
         [int]$Roll,
         [Parameter(Mandatory=$False)]
-        [bool]$Monster
-    
+        [bool]$Monster,
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+   
     )
 
+    if((!$Level) -or ($Level -eq $Null)){$Level = 1}
+    if($Roll -gt 100){$Roll = 100}
     if(!$Roll){$Roll = (Get-D100Roll).Result}
-    if(!$Monster){@($True,$False)[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+    if($Monster -eq $Null){@($True,$False)[(Get-Random -Minimum 0 -Maximum 2)];$Unspecified = $True}
+
+    $Loot = if($Monster -eq $False){($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).NoMonster.Currency}
 
     [pscustomobject]@{
    
         Roll = $Roll;
         Monster = $("$Monster$(if($Unspecified){' (Unspecified)'})");
-        Description = "$(if($Monster -eq $False){($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).NoMonster}else{($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).WMonster})"
+        Description = "$(if($Monster -eq $False){($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).NoMonster.Description}else{($Table5G | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).WMonster.Description})"
+        Loot = [pscustomobject]@{
+
+            Amount = $Loot.Amount * $Level
+            Type = $Loot.Type
+
+        }
    
     }
 
@@ -917,7 +929,7 @@ function Get-Table5HRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
    if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -965,7 +977,7 @@ function Get-Table5IRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1013,7 +1025,7 @@ function Get-Table5JRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
    if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1099,7 +1111,7 @@ $Table7 = @{
 17 = [pscustomobject]@{Description = "Gas; party has detected it, but must breathe it to continue along corridor, as it covers 60' ahead. Mark map accordingly regardless of turning back or not. (See TABLE VII. A.)"}
 18 = [pscustomobject]@{Description = "Door falls outward causing 1-10 hit points, or stone falls from ceiling causing 2-20 hit points of damage to each person failing his saving throw versus petrification."}
 19 = [pscustomobject]@{Description = "Illusionary wall concealing 8. (pit) above (1-6), 20. (chute) below (7-10) or chamber with monster and treasure (11-20) (see TABLE V.)."}
-#Above should read "Illusionary wall concealing: 
+#Above should read "Illusionary wall concealing:
 #1-6: pit as 8 above
 #7-10: chute as 20 below
 #11-20: chamber with monster and treasure (see TABLE V.)
@@ -1111,10 +1123,10 @@ function Get-Table7Roll {
 
     [alias("Get-Trick","Get-Track","Get-TrickOrTrack")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1161,10 +1173,10 @@ function Get-Table7ARoll {
 
     [alias("Get-Gas")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1209,10 +1221,10 @@ function Get-Table8Roll {
 
     [alias("Get-Cave","Get-Cavern","Get-CaveOrCavern")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1257,10 +1269,10 @@ function Get-Table8ARoll {
 
     [alias("Get-Pool")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1308,7 +1320,7 @@ function Get-Table8BRoll {
 
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1403,10 +1415,10 @@ function Get-Table8CRoll {
 
     [alias("Get-MagicPool")]
     param(
-    
+   
         [Parameter(Mandatory=$False)]
         [int]$Roll
-    
+   
     )
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
@@ -1423,83 +1435,6 @@ function Get-Table8CRoll {
 
 ###################################
 #The following are tools that I have created designed to more quickly flesh out a random dungeon based on the above
-
-$NewTable5 = @{
-
-1  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Width = 10;Length = 10;Shape="Square"}}
-2  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Width = 10;Length = 10;Shape="Square"}}
-3  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Width = 20;Length = 20;Shape="Square"}}
-4  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 20;Shape="Square"};Room=[pscustomobject]@{Width = 20;Length = 20;Shape="Square"}}
-5  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 30;Length = 30;Shape="Square"};Room=[pscustomobject]@{Width = 30;Length = 30;Shape="Square"}}
-6  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 30;Length = 30;Shape="Square"};Room=[pscustomobject]@{Width = 30;Length = 30;Shape="Square"}}
-7  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 40;Length = 40;Shape="Square"};Room=[pscustomobject]@{Width = 40;Length = 40;Shape="Square"}}
-8  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 40;Length = 40;Shape="Square"};Room=[pscustomobject]@{Width = 40;Length = 40;Shape="Square"}}
-9  = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Width = 10;Length = 20;Shape="Rectangular"}}
-10 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Width = 10;Length = 20;Shape="Rectangular"}}
-11 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"}}
-12 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"}}
-13 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"};Room=[pscustomobject]@{Width = 20;Length = 30;Shape="Rectangular"}}
-14 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 30;Length = 50;Shape="Rectangular"};Room=[pscustomobject]@{Width = 20;Length = 40;Shape="Rectangular"}}
-15 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 30;Length = 50;Shape="Rectangular"};Room=[pscustomobject]@{Width = 20;Length = 40;Shape="Rectangular"}}
-16 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 40;Length = 60;Shape="Rectangular"};Room=[pscustomobject]@{Width = 30;Length = 40;Shape="Rectangular"}}
-17 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = 40;Length = 60;Shape="Rectangular"};Room=[pscustomobject]@{Width = 30;Length = 40;Shape="Rectangular"}}
-18 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"};Room=[pscustomobject]@{Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"}}
-19 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"};Room=[pscustomobject]@{Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"}}
-20 = [pscustomobject]@{Chamber=[pscustomobject]@{Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"};Room=[pscustomobject]@{Width = "Unusual";Length = "Unusual";Area = "Unusual";Shape="Unusual"}}
-
-}
-
-$NewTable5A = @{
-
-1  = [pscustomobject]@{Description = "Circular"}
-2  = [pscustomobject]@{Description = "Circular"}
-3  = [pscustomobject]@{Description = "Circular"}
-4  = [pscustomobject]@{Description = "Circular"}
-5  = [pscustomobject]@{Description = "Circular"}
-6  = [pscustomobject]@{Description = "Triangular"}
-7  = [pscustomobject]@{Description = "Triangular"}
-8  = [pscustomobject]@{Description = "Triangular"}
-9  = [pscustomobject]@{Description = "Trapezoidal"}
-10 = [pscustomobject]@{Description = "Trapezoidal"}
-11 = [pscustomobject]@{Description = "Trapezoidal"}
-12 = [pscustomobject]@{Description = "Odd-shaped"}
-13 = [pscustomobject]@{Description = "Odd-shaped"}
-14 = [pscustomobject]@{Description = "Oval"}
-15 = [pscustomobject]@{Description = "Oval"}
-16 = [pscustomobject]@{Description = "Hexagonal"}
-17 = [pscustomobject]@{Description = "Hexagonal"}
-18 = [pscustomobject]@{Description = "Octagonal"}
-19 = [pscustomobject]@{Description = "Octagonal"}
-20 = [pscustomobject]@{Description = "Cave"}
-
-}
-#if Circular, 1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.
-
-$NewTable5B = @{
-
-1  = [pscustomobject]@{Area = 500}
-2  = [pscustomobject]@{Area = 500}
-3  = [pscustomobject]@{Area = 500}
-4  = [pscustomobject]@{Area = 900}
-5  = [pscustomobject]@{Area = 900}
-6  = [pscustomobject]@{Area = 900}
-7  = [pscustomobject]@{Area = 1300}
-8  = [pscustomobject]@{Area = 1300}
-9  = [pscustomobject]@{Area = 2000}
-10 = [pscustomobject]@{Area = 2000}
-11 = [pscustomobject]@{Area = 2700}
-12 = [pscustomobject]@{Area = 2700}
-13 = [pscustomobject]@{Area = 3400}
-14 = [pscustomobject]@{Area = 3400}
-15 = [pscustomobject]@{Area = "Special"}
-16 = [pscustomobject]@{Area = "Special"}
-17 = [pscustomobject]@{Area = "Special"}
-18 = [pscustomobject]@{Area = "Special"}
-19 = [pscustomobject]@{Area = "Special"}
-20 = [pscustomobject]@{Area = "Special"}
-
-}
-#Roll again and add result to 9-10 above (if another 15-20 repeat the process, doubling 9-10 above, and so on)
 
 function Get-5BSpecialArea {
 
@@ -1539,24 +1474,67 @@ function Get-SpecificNumberOfExits {
     if(($5CRoll.Roll -eq 16) -or ($5CRoll.Roll -eq 17) -or ($5CRoll.Roll -eq 18)){$DoorsNumber = (Get-D4Roll).Result}
     if($5CRoll.Description -like "0*"){$DoorsNumber = 0;1..((($Width * 2) + ($Length * 2)) / 10) | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}}
     if(($5CRoll.Roll -eq 19) -or ($5CRoll.Roll -eq 20)){
-    
+   
         if($Type -eq "Chamber"){$DoorsNumber = 1}
-        if($Type -eq "Room"){$Passage = $True}
+        if($Type -eq "Room"){$DoorsNumber = 0;$Passage = $True}
 
     }
 
     if($Type -eq "Unusual"){
-    
+   
         $DoorsNumber = "?"
         $SecretDoors = "?"
 
     }
 
     [pscustomobject]@{
-    
+   
         Doors = $DoorsNumber
         SecretDoors = $SecretDoors
         Passage = $Passage
+
+    }
+
+}
+
+function Get-Monster {
+
+}
+
+function Get-Treasure {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5GRoll,
+        [Parameter(Mandatory=$True)]
+        [bool]$Monster,
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+
+    )
+
+    if((!$Level) -or ($Level -eq $Null)){$Level = 1}
+
+    if(!$Table5GRoll){$Table5GRoll = (Get-D20Roll).Result}
+
+    if($Monster){$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $True}else{$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $False -Level $Level}
+
+    $Loot = @()
+
+    if($Treasure.Roll -le 90){
+    
+        $Loot += $Treasure.Loot
+
+    }elseif(($Treasure.Roll -ge 91) -and ($Treasure.Roll -le 94)){
+    
+        $Loot += [pscustomobject]@{
+
+            Amount = (Get-D4Roll).Result * $Level
+            Type = "Gems"
+            #To do: Get-Gem-DMG pg. 25 
+
+        }
 
     }
 
@@ -1578,7 +1556,7 @@ function Get-Room {
 
         [Parameter(Mandatory=$False)]
         [int]$Table5CRoll
-    
+   
     )
 
     $Unusual = $False
@@ -1588,80 +1566,112 @@ function Get-Room {
 
     if(!$Table5Roll){$Table5Roll = (Get-D20Roll).Result}
     if(!$Table5CRoll){$Table5CRoll = (Get-D20Roll).Result}
-    
+   
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
-        
+       
         if(!$Table5ARoll){$Table5ARoll = (Get-D20Roll).Result}
         if(!$Table5BRoll){$Table5BRoll = (Get-D20Roll).Result}
 
-        $5A = $NewTable5A.($Table5ARoll).Description
-        $5B = $NewTable5B.($Table5BRoll).Area
-    
+        $5A = $Table5A.($Table5ARoll).Shape
+        #TO DO: If Circular, 1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.
+        $5B = $Table5B.($Table5BRoll).Area
+   
     }
 
     if(($Type -eq "Room") -and (!$Unusual)){
 
-        $Length = $NewTable5.($Table5Roll).Room.Length
-        $Width = $NewTable5.($Table5Roll).Room.Width
+        $Length = $Table5.($Table5Roll).Room.Length
+        $Width = $Table5.($Table5Roll).Room.Width
         $Area = $Length * $Width
-    
+   
     }
 
     if(($Type -eq "Chamber") -and (!$Unusual)){
 
-        $Length = $NewTable5.($Table5Roll).Chamber.Length
-        $Width = $NewTable5.($Table5Roll).Chamber.Width
+        $Length = $Table5.($Table5Roll).Chamber.Length
+        $Width = $Table5.($Table5Roll).Chamber.Width
         $Area = $Length * $Width
-    
+   
     }
 
     if($Unusual){
-    
+   
         $Area = if($Table5BRoll -le 14){
-        
+       
             $5B
-            
+           
         }else{
-        
+       
             $i = 1
 
             $UnusualRoll = ''
             $UnusualRoll = (Get-D20Roll).Result
 
             while($UnusualRoll -ge 15){
-                
+               
                 $i++
                 $UnusualRoll = (Get-D20Roll).Result
 
             }
 
-            (Get-5BSpecialArea -Rerolls $i) + ($NewTable5B.($UnusualRoll).Area)
+            (Get-5BSpecialArea -Rerolls $i) + ($Table5B.($UnusualRoll).Area)
 
         }
-    
+   
         $Type = "Unusual"
         $Length = "Unusual"
         $Width = "Unusual"
 
     }
 
+    #region Exits
     if(!$Unusual){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type}
+    
+    $ExitLocations = [pscustomobject]@{
+   
+        DoorLocations = @()
+        SecretDoorLocations = @()
+
+    }
+
+    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{$ExitLocations.DoorLocations += (Get-ExitLocation).Description}}
+    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{$ExitLocations.SecretDoorLocations += (Get-ExitLocation).Description}}
+
+    $ExitDirections = [pscustomobject]@{
+   
+        DoorDirections = @()
+        SecretDoorDirections = @()
+
+    }
+
+    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.DoorDirections += $_}else{$ExitDirections.DoorDirections += "$($_.split('/')[0])"}}}
+    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.SecretDoorDirections += $_}else{$ExitDirections.SecretDoorDirections += "$($_.split('/')[0])"}}}
+    #endregion
+
+    $RawContents = Get-RoomContents
+    $Contents = (Get-RoomContents).Description
+    $Monster = ''
+    $Treasure = ''
+    #To do: Get-Treasure and Get-Monster
 
     [pscustomobject]@{
-            
+           
         Type = $Type
         Length = $Length
         Width = $Width
         Area = $Area
-        Shape = if($Unusual){$5A}else{$NewTable5.($Table5Roll)."$($Type)".Shape}
+        Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
         Exits = [pscustomobject]@{
 
             Number = $SpecificNumberOfExits
-
-            Locations = ''
+            Locations = $ExitLocations
+            Directions = $ExitDirections
 
         }
+        Contents = $Contents
+        Monster = $Monster
+        Treasure = $Treasure
 
     }
    
@@ -1713,8 +1723,8 @@ http://deltasdnd.blogspot.com/2010/08/dmg-appendix.html
 1. To start with, you should normally begin by going directly to a random room on Table V. (The "Start Areas" on p. 169 are visually arresting, but that's actually a secondary, optional start possibility. You don't want to re-use those a lot.)
 2. The tables probably generate more 45-degree passages and 20'-wide corridors than Gygax himself would actually use by default. Be ready to ignore or override those results a lot if they don't fit well into your map; in particular, I make all 45-degree passages automatically 10' wide (ignoring the fact -- as Gygax did -- that running along vertices on the graph paper, they're really just 7' wide).
 3. Rooms and Chambers (square/rectangular) should, for convenience, always be set up on the cardinal axes -- if accessed off a 45-degree passage, you should probably automatically make them Triangular or Trapezoidal. In addition, all Triangular/Trapezoidal rooms may as well be right-angled, setting them along the grid axes, and giving them a single 45-degree diagonal wall. Any side passage or "door ahead" in a 45-degree corridor should be set along a cardinal-direction, unless it explicitly states the angle at which it should be.
-4. By default, Rooms should have Doors, and Chambers should have Passages (i.e., non-door openings) as exits. This isn't explicitly stated anywhere, but it's implied in places like Table I (corridors empty into chambers but never rooms), Table II (doors open to rooms 4 times more often than chambers), and Table V-C (result of 19-20 indicates exceptional case of "door in chamber, passage in room"). 
-5. Note that the treasure containment tables (Tables V-H through V-J) are copied verbatim from the earlier Monster & Treasure Assortment product. Tables V-I and V-J (guarded by/hidden in) stand out in Appendix A because they don't have any game statistics associated with the entries. Particularly for solo play, I recommend ignoring these tables (per the "if desired" note -- contrast to Table VII: Trick/Trap, etc.) 
+4. By default, Rooms should have Doors, and Chambers should have Passages (i.e., non-door openings) as exits. This isn't explicitly stated anywhere, but it's implied in places like Table I (corridors empty into chambers but never rooms), Table II (doors open to rooms 4 times more often than chambers), and Table V-C (result of 19-20 indicates exceptional case of "door in chamber, passage in room").
+5. Note that the treasure containment tables (Tables V-H through V-J) are copied verbatim from the earlier Monster & Treasure Assortment product. Tables V-I and V-J (guarded by/hidden in) stand out in Appendix A because they don't have any game statistics associated with the entries. Particularly for solo play, I recommend ignoring these tables (per the "if desired" note -- contrast to Table VII: Trick/Trap, etc.)
 6. Also, when making Rooms/Chambers for solo play, I change the generation order to (i) Room shape/size on Table V, (ii) Contents on Table V-F, and last (iii) Exits on Table V-C, etc. This lets any fight be played out before consideration of egress, which cognitively feels better to me (e.g., see the recent discussion on when room size/detail description is appropriate).
 7. Note the somewhat unusual secret-door detection rates (by d20) on Table VII, result 1-5. I use this for all indicated secret door checks in Appendix A.
 8. Finally, I delete the entry on Table III for "passage X's", since I don't like how it treats cardinal-versus-diagonal passages asymmetrically (i.e., biased towards yet more diagonal passages).
