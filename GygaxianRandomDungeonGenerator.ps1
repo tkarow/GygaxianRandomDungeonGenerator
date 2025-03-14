@@ -1440,12 +1440,12 @@ function Get-Table8CRoll {
 
 $Gems = @(
 
-[pscustomobject]@{Min = 1;Max = 25;BaseValue=10;Description="Ornamental Stones";Size="Very small";Class = 1}
-[pscustomobject]@{Min = 26;Max = 50;BaseValue=50;Description="Semi-precious Stones";Size="Small";Class = 2}
-[pscustomobject]@{Min = 51;Max = 70;BaseValue=100;Description="Fancy Stones";Size="Average";Class = 3}
-[pscustomobject]@{Min = 71;Max = 90;BaseValue=500;Description="Fancy Stones (Precious)";Size="Large";Class = 4}
-[pscustomobject]@{Min = 91;Max = 99;BaseValue=1000;Description="Gem Stones";Size="Very Large";Class = 5}
-[pscustomobject]@{Min = 100;Max = 100;BaseValue=5000;Description="Gem Stones (Jewels)";Size="Huge";Class = 6}
+[pscustomobject]@{Min = 1;Max = 25;BaseValue=10;Description="Ornamental";Size="Very small";Class = 1}
+[pscustomobject]@{Min = 26;Max = 50;BaseValue=50;Description="Semi-precious";Size="Small";Class = 2}
+[pscustomobject]@{Min = 51;Max = 70;BaseValue=100;Description="Fancy";Size="Average";Class = 3}
+[pscustomobject]@{Min = 71;Max = 90;BaseValue=500;Description="Precious";Size="Large";Class = 4}
+[pscustomobject]@{Min = 91;Max = 99;BaseValue=1000;Description="Gem";Size="Very Large";Class = 5}
+[pscustomobject]@{Min = 100;Max = 100;BaseValue=5000;Description="Jewel";Size="Huge";Class = 6}
 
 )
 
@@ -1508,18 +1508,18 @@ function Get-GemModifierRoll {
 
 $OrnamentalStones = @{
 
-1 = [pscustomobject]@{Stone = "Azurite";Description = "Stone is opaque and mottled deep blue";ReputedMagicalProperty="-";Value = 10}
-2 = [pscustomobject]@{Stone = "Banded Agate";Description = "Stone is translucent and striped brown and blue and white and reddish";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
-3 = [pscustomobject]@{Stone = "Blue Quartz";Description = "Stone is pale blue";ReputedMagicalProperty="-";Value = 10}
-4 = [pscustomobject]@{Stone = "Eye Agate";Description = "Stone is translucent with circles of gray, white, brown, blue and/or green";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
-5 = [pscustomobject]@{Stone = "Hematite";Description = "Stone is opaque and gray-black";ReputedMagicalProperty="Aids fighters, heals wounds";Value = 10}
-6 = [pscustomobject]@{Stone = "Lapis Lazuli";Description = "Stone is opaque and light and dark blue with yellow flecks";ReputedMagicalProperty="Raises morale, courage";Value = 10}
-7 = [pscustomobject]@{Stone = "Malachite";Description = "Stone is opaque and striated light and dark green";ReputedMagicalProperty="Protection from falling, Wards off spells, evil spirits, and poisons";Value = 10}
-8 = [pscustomobject]@{Stone = "Moss Agate";Description = "pink or yellow-white with grayish or greenish `"moss markings`"";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
-9 = [pscustomobject]@{Stone = "Obsidian";Description = "Stone is opaque and black";ReputedMagicalProperty="-";Value = 10}
-10 = [pscustomobject]@{Stone = "Rhodochrosite";Description = "Stone is opaque and light pink";ReputedMagicalProperty="-";Value = 10}
-11 = [pscustomobject]@{Stone = "Tiger Eye";Description = "Stone is rich brown with golden center under-hue";ReputedMagicalProperty="-";Value = 10}
-12 = [pscustomobject]@{Stone = "Turquoise";Description = "Stone is opaque and light blue-green";ReputedMagicalProperty="Aids horses in all ways (but stone shatters when it operates)";Value = 10}
+1 = [pscustomobject]@{Stone = "Azurite";Description = "Opaque and mottled deep blue";ReputedMagicalProperty="-";Value = 10}
+2 = [pscustomobject]@{Stone = "Banded Agate";Description = "Translucent and striped brown and blue and white and reddish";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
+3 = [pscustomobject]@{Stone = "Blue Quartz";Description = "Pale blue";ReputedMagicalProperty="-";Value = 10}
+4 = [pscustomobject]@{Stone = "Eye Agate";Description = "Translucent with circles of gray, white, brown, blue and/or green";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
+5 = [pscustomobject]@{Stone = "Hematite";Description = "Opaque and gray-black";ReputedMagicalProperty="Aids fighters, heals wounds";Value = 10}
+6 = [pscustomobject]@{Stone = "Lapis Lazuli";Description = "Opaque and light and dark blue with yellow flecks";ReputedMagicalProperty="Raises morale, courage";Value = 10}
+7 = [pscustomobject]@{Stone = "Malachite";Description = "Opaque and striated light and dark green";ReputedMagicalProperty="Protection from falling, Wards off spells, evil spirits, and poisons";Value = 10}
+8 = [pscustomobject]@{Stone = "Moss Agate";Description = "Pink or yellow-white with grayish or greenish `"moss markings`"";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
+9 = [pscustomobject]@{Stone = "Obsidian";Description = "Opaque and black";ReputedMagicalProperty="-";Value = 10}
+10 = [pscustomobject]@{Stone = "Rhodochrosite";Description = "Opaque and light pink";ReputedMagicalProperty="-";Value = 10}
+11 = [pscustomobject]@{Stone = "Tiger Eye";Description = "Rich brown with golden center under-hue";ReputedMagicalProperty="-";Value = 10}
+12 = [pscustomobject]@{Stone = "Turquoise";Description = "Opaque and light blue-green";ReputedMagicalProperty="Aids horses in all ways (but stone shatters when it operates)";Value = 10}
 
 }
 
@@ -1545,19 +1545,19 @@ function Get-OrnamentalStone {
 
 $SemiPreciousStones = @{
 
-1  = [pscustomobject]@{Stone = "Bloodstone";Description = "Stone is opaque and dark gray with red flecks";ReputedMagicalProperty="Weather control";Value = 50}
-2  = [pscustomobject]@{Stone = "Carnelian";Description = "Stone is opaque and orange to reddish brown (also called Sard)";ReputedMagicalProperty="Protection from evil";Value = 50}
-3  = [pscustomobject]@{Stone = "Chalcedony";Description = "Stone is opaque and white";ReputedMagicalProperty="Wards off undead";Value = 50}
-4  = [pscustomobject]@{Stone = "Chrysoprase";Description = "Stone is translucent and apple green to emerald green";ReputedMagicalProperty="Invisibility";Value = 50}
-5  = [pscustomobject]@{Stone = "Citrine";Description = "Stone is pale yellow brown";ReputedMagicalProperty="Invisibility";Value = 50}
-6  = [pscustomobject]@{Stone = "Jasper";Description = "Stone is opaque and blue, black to brown";ReputedMagicalProperty="Protection from venom";Value = 50}
-7  = [pscustomobject]@{Stone = "Moonstone";Description = "Stone is translucent and white with pale blue glow";ReputedMagicalProperty="Causes lycanthropy";Value = 50}
-8  = [pscustomobject]@{Stone = "Onyx";Description = "Stone is opaque and has bands of black and white or pure black or white";ReputedMagicalProperty="Causes discord amongst enemies";Value = 50}
-9  = [pscustomobject]@{Stone = "Rock Crystal";Description = "Stone is clear";ReputedMagicalProperty="Causes discord amongst enemies";Value = 50}
-10  = [pscustomobject]@{Stone = "Sardonyx";Description = "Stone is opaque with bands of red sard and white onyx or brown sard";ReputedMagicalProperty="Protection from evil and causes discord amongst enemies";Value = 50}
-11  = [pscustomobject]@{Stone = "Smoky Quartz";Description = "Stone is a light gray, yellow, or blue (Cairngorm)";ReputedMagicalProperty="-";Value = 50}
-12  = [pscustomobject]@{Stone = "Star Rose Quartz";Description = "Stone is a translucent rosy color with a white `"star`" center";ReputedMagicalProperty="-";Value = 50}
-13  = [pscustomobject]@{Stone = "Zircon";Description = "Stone is clear pale blue-green ";ReputedMagicalProperty="-";Value = 50}
+1  = [pscustomobject]@{Stone = "Bloodstone";Description = "Opaque and dark gray with red flecks";ReputedMagicalProperty="Weather control";Value = 50}
+2  = [pscustomobject]@{Stone = "Carnelian";Description = "Opaque and orange to reddish brown (also called Sard)";ReputedMagicalProperty="Protection from evil";Value = 50}
+3  = [pscustomobject]@{Stone = "Chalcedony";Description = "Opaque and white";ReputedMagicalProperty="Wards off undead";Value = 50}
+4  = [pscustomobject]@{Stone = "Chrysoprase";Description = "Translucent and apple green to emerald green";ReputedMagicalProperty="Invisibility";Value = 50}
+5  = [pscustomobject]@{Stone = "Citrine";Description = "Pale yellow brown";ReputedMagicalProperty="Invisibility";Value = 50}
+6  = [pscustomobject]@{Stone = "Jasper";Description = "Opaque and blue, black to brown";ReputedMagicalProperty="Protection from venom";Value = 50}
+7  = [pscustomobject]@{Stone = "Moonstone";Description = "Translucent and white with pale blue glow";ReputedMagicalProperty="Causes lycanthropy";Value = 50}
+8  = [pscustomobject]@{Stone = "Onyx";Description = "Opaque and has bands of black and white or pure black or white";ReputedMagicalProperty="Causes discord amongst enemies";Value = 50}
+9  = [pscustomobject]@{Stone = "Rock Crystal";Description = "Clear";ReputedMagicalProperty="Causes discord amongst enemies";Value = 50}
+10  = [pscustomobject]@{Stone = "Sardonyx";Description = "Opaque with bands of red sard and white onyx or brown sard";ReputedMagicalProperty="Protection from evil and causes discord amongst enemies";Value = 50}
+11  = [pscustomobject]@{Stone = "Smoky Quartz";Description = "Light gray, yellow, or blue (Cairngorm)";ReputedMagicalProperty="-";Value = 50}
+12  = [pscustomobject]@{Stone = "Star Rose Quartz";Description = "Translucent rosy color with a white `"star`" center";ReputedMagicalProperty="-";Value = 50}
+13  = [pscustomobject]@{Stone = "Zircon";Description = "Clear pale blue-green ";ReputedMagicalProperty="-";Value = 50}
 
 }
 
@@ -1583,20 +1583,20 @@ function Get-SemiPreciousStone {
 
 $FancyStones = @{
 
-1  = [pscustomobject]@{Stone = "Amber";Description = "Stone is watery gold to rich gold";ReputedMagicalProperty = "Wards off diseases";Value = 100}
-2  = [pscustomobject]@{Stone = "Alexandrite";Description = "Stone is dark green";ReputedMagicalProperty = "Good omens";Value = 100}
-3  = [pscustomobject]@{Stone = "Amethyst";Description = "Stone is deep purple";ReputedMagicalProperty = "Prevents drunkenness or drugging";Value = 100}
-4  = [pscustomobject]@{Stone = "Aquamarine";Description = "Stone is pale blue green";ReputedMagicalProperty = "Wards off foes";Value = 500}
-5  = [pscustomobject]@{Stone = "Chrysoberyl";Description = "Stone is yellow green to green";ReputedMagicalProperty = "Protection from possession";Value = 100}
-6  = [pscustomobject]@{Stone = "Coral";Description = "Stone is opaque and crimson";ReputedMagicalProperty = "Calms weather, safety in river crossing, cures madness, stanches bleeding";Value = 100}
-7  = [pscustomobject]@{Stone = "Garnet";Description = "Stone is red or brown-green";ReputedMagicalProperty = "-";Value = 100}
-8  = [pscustomobject]@{Stone = "Jade";Description = "Stone is light green, deep green, green and white, white";ReputedMagicalProperty = "Skill at music and musical instruments";Value = 100}
-9  = [pscustomobject]@{Stone = "Jet";Description = "Stone is opaque and deep black";ReputedMagicalProperty = "-";Value = 100}
-10  = [pscustomobject]@{Stone = "Pearl";Description = "Stone is opaque and lustrous white, yellowish, pinkish, etc.";ReputedMagicalProperty = "-";Value = 100}
-11  = [pscustomobject]@{Stone = "Peridot";Description = "Stone is rich olive green (Chrysolite)";ReputedMagicalProperty = "Wards off enchantments / Wards off spells (Chrysolite)";Value = 500}
-12  = [pscustomobject]@{Stone = "Spinel";Description = "Stone is red, red-brown, or deep green";ReputedMagicalProperty = "-";Value = 100}
-13  = [pscustomobject]@{Stone = "Topaz";Description = "Stone is golden yellow";ReputedMagicalProperty = "Wards off evil spells";Value = 500}
-14  = [pscustomobject]@{Stone = "Tourmaline";Description = "Stone is green pale, blue pale, brown pale, or reddish pale";ReputedMagicalProperty = "-";Value = 100}
+1  = [pscustomobject]@{Stone = "Amber";Description = "Watery gold to rich gold";ReputedMagicalProperty = "Wards off diseases";Value = 100}
+2  = [pscustomobject]@{Stone = "Alexandrite";Description = "Dark green";ReputedMagicalProperty = "Good omens";Value = 100}
+3  = [pscustomobject]@{Stone = "Amethyst";Description = "Deep purple";ReputedMagicalProperty = "Prevents drunkenness or drugging";Value = 100}
+4  = [pscustomobject]@{Stone = "Aquamarine";Description = "Pale blue green";ReputedMagicalProperty = "Wards off foes";Value = 500}
+5  = [pscustomobject]@{Stone = "Chrysoberyl";Description = "Yellow green to green";ReputedMagicalProperty = "Protection from possession";Value = 100}
+6  = [pscustomobject]@{Stone = "Coral";Description = "Opaque and crimson";ReputedMagicalProperty = "Calms weather, safety in river crossing, cures madness, stanches bleeding";Value = 100}
+7  = [pscustomobject]@{Stone = "Garnet";Description = "Red or brown-green";ReputedMagicalProperty = "-";Value = 100}
+8  = [pscustomobject]@{Stone = "Jade";Description = "Light green, deep green, green and white, white";ReputedMagicalProperty = "Skill at music and musical instruments";Value = 100}
+9  = [pscustomobject]@{Stone = "Jet";Description = "Opaque and deep black";ReputedMagicalProperty = "-";Value = 100}
+10  = [pscustomobject]@{Stone = "Pearl";Description = "Opaque and lustrous white, yellowish, pinkish, etc.";ReputedMagicalProperty = "-";Value = 100}
+11  = [pscustomobject]@{Stone = "Peridot";Description = "Rich olive green (Chrysolite)";ReputedMagicalProperty = "Wards off enchantments / Wards off spells (Chrysolite)";Value = 500}
+12  = [pscustomobject]@{Stone = "Spinel";Description = "Red, red-brown, or deep green";ReputedMagicalProperty = "-";Value = 100}
+13  = [pscustomobject]@{Stone = "Topaz";Description = "Golden yellow";ReputedMagicalProperty = "Wards off evil spells";Value = 500}
+14  = [pscustomobject]@{Stone = "Tourmaline";Description = "Green pale, blue pale, brown pale, or reddish pale";ReputedMagicalProperty = "-";Value = 100}
 
 }
 
@@ -1622,12 +1622,12 @@ function Get-FancyStone {
 
 $FancyPreciousStones = @{
 
-1  = [pscustomobject]@{Stone = "Aquamarine";Description = "Stone is pale blue green";ReputedMagicalProperty = "Wards off foes";Value = 500}
-2  = [pscustomobject]@{Stone = "Garnet";Description = "Stone is violet (the most prized)";ReputedMagicalProperty = "-";Value = 500}
-3  = [pscustomobject]@{Stone = "Pearl";Description = "Stone is opaque and pure black (the most prized)";ReputedMagicalProperty = "-";Value = 500}
-4  = [pscustomobject]@{Stone = "Peridot";Description = "Stone is rich olive green (Chrysolite)";ReputedMagicalProperty = "Wards off enchantments / Wards off spells (Chrysolite)";Value = 500}
-5  = [pscustomobject]@{Stone = "Spinel";Description = "Stone is very deep blue (the most prized)";ReputedMagicalProperty = "-";Value = 500}
-6  = [pscustomobject]@{Stone = "Topaz";Description = "Stone is golden yellow";ReputedMagicalProperty = "Wards off evil spells";Value = 500}
+1  = [pscustomobject]@{Stone = "Aquamarine";Description = "Pale blue green";ReputedMagicalProperty = "Wards off foes";Value = 500}
+2  = [pscustomobject]@{Stone = "Garnet";Description = "Violet";ReputedMagicalProperty = "-";Value = 500}
+3  = [pscustomobject]@{Stone = "Pearl";Description = "Opaque and pure black";ReputedMagicalProperty = "-";Value = 500}
+4  = [pscustomobject]@{Stone = "Peridot";Description = "Rich olive green (Chrysolite)";ReputedMagicalProperty = "Wards off enchantments / Wards off spells (Chrysolite)";Value = 500}
+5  = [pscustomobject]@{Stone = "Spinel";Description = "Very deep blue";ReputedMagicalProperty = "-";Value = 500}
+6  = [pscustomobject]@{Stone = "Topaz";Description = "Golden yellow";ReputedMagicalProperty = "Wards off evil spells";Value = 500}
 
 }
 #The above is my interpretation of a table that is implied by the "Gems" table, results 71 - 90
@@ -1654,20 +1654,20 @@ function Get-FancyPreciousStone {
 
 $GemStones = @{
 
-1  = [pscustomobject]@{Stone = "Black Opal";Description = "Stone is translucent dark green with black mottling and golden flecks";ReputedMagicalProperty = "-";Value = 1000}
-2  = [pscustomobject]@{Stone = "Black Sapphire";Description = "Stone is translucent lustrous black with glowing highlights";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 5000}
-3  = [pscustomobject]@{Stone = "Diamond";Description = "Stone is clear blue-white with lesser stones clear white or pale tints";ReputedMagicalProperty = "Invulnerability vs. undead";Value = 5000}
-4  = [pscustomobject]@{Stone = "Emerald";Description = "Stone is deep bright green ";ReputedMagicalProperty = "Wards off foes";Value = 1000}
-5  = [pscustomobject]@{Stone = "Fire Opal";Description = "Stone is translucent fiery red";ReputedMagicalProperty = "-";Value = 1000}
-6  = [pscustomobject]@{Stone = "Jacinth";Description = "Stone is fiery orange (Corundum)";ReputedMagicalProperty = "Luck travelling, wards off plague, protection from fire";Value = 5000}
-7  = [pscustomobject]@{Stone = "Opal";Description = "Stone is translucent pale blue with green and golden mottling";ReputedMagicalProperty = "-";Value = 1000}
-8  = [pscustomobject]@{Stone = "Oriental Amethyst";Description = "Stone is rich purple (Corundum)";ReputedMagicalProperty = "Prevents drunkenness or drugging";Value = 1000}
-9  = [pscustomobject]@{Stone = "Oriental Emerald";Description = "Stone is clear bright green (Corundum)";ReputedMagicalProperty = "-";Value = 5000}
-10  = [pscustomobject]@{Stone = "Oriental Topaz";Description = "Stone is clear fiery yellow (Corundum)";ReputedMagicalProperty = "Wards off evil spells";Value = 1000}
-11  = [pscustomobject]@{Stone = "Ruby";Description = "Stone is clear red to deep crimson (Corundum)";ReputedMagicalProperty = "Gives good luck";Value = 5000}
-12  = [pscustomobject]@{Stone = "Sapphire";Description = "Stone is clear to medium blue (Corundum)";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 1000}
-13  = [pscustomobject]@{Stone = "Star Ruby";Description = "Stone is a translucent ruby with white `"star`" center";ReputedMagicalProperty = "Gives good luck";Value = 1000}
-14  = [pscustomobject]@{Stone = "Star Sapphire";Description = "Stone is a translucent sapphire with white `"star`" center";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 1000}
+1  = [pscustomobject]@{Stone = "Black Opal";Description = "Translucent dark green with black mottling and golden flecks";ReputedMagicalProperty = "-";Value = 1000}
+2  = [pscustomobject]@{Stone = "Black Sapphire";Description = "Translucent lustrous black with glowing highlights";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 5000}
+3  = [pscustomobject]@{Stone = "Diamond";Description = "Clear blue-white with lesser stones clear white or pale tints";ReputedMagicalProperty = "Invulnerability vs. undead";Value = 5000}
+4  = [pscustomobject]@{Stone = "Emerald";Description = "Deep bright green ";ReputedMagicalProperty = "Wards off foes";Value = 1000}
+5  = [pscustomobject]@{Stone = "Fire Opal";Description = "Translucent fiery red";ReputedMagicalProperty = "-";Value = 1000}
+6  = [pscustomobject]@{Stone = "Jacinth";Description = "Fiery orange (Corundum)";ReputedMagicalProperty = "Luck travelling, wards off plague, protection from fire";Value = 5000}
+7  = [pscustomobject]@{Stone = "Opal";Description = "Translucent pale blue with green and golden mottling";ReputedMagicalProperty = "-";Value = 1000}
+8  = [pscustomobject]@{Stone = "Oriental Amethyst";Description = "Rich purple (Corundum)";ReputedMagicalProperty = "Prevents drunkenness or drugging";Value = 1000}
+9  = [pscustomobject]@{Stone = "Oriental Emerald";Description = "Clear bright green (Corundum)";ReputedMagicalProperty = "-";Value = 5000}
+10  = [pscustomobject]@{Stone = "Oriental Topaz";Description = "Clear fiery yellow (Corundum)";ReputedMagicalProperty = "Wards off evil spells";Value = 1000}
+11  = [pscustomobject]@{Stone = "Ruby";Description = "Clear red to deep crimson (Corundum)";ReputedMagicalProperty = "Gives good luck";Value = 5000}
+12  = [pscustomobject]@{Stone = "Sapphire";Description = "Clear to medium blue (Corundum)";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 1000}
+13  = [pscustomobject]@{Stone = "Star Ruby";Description = "Translucent ruby with white `"star`" center";ReputedMagicalProperty = "Gives good luck";Value = 1000}
+14  = [pscustomobject]@{Stone = "Star Sapphire";Description = "Translucent sapphire with white `"star`" center";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 1000}
 
 }
 
@@ -1693,11 +1693,11 @@ function Get-GemStone {
 
 $Jewels = @{
 
-1  = [pscustomobject]@{Stone = "Black Sapphire";Description = "Stone is translucent lustrous black with glowing highlights";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 5000}
-2  = [pscustomobject]@{Stone = "Diamond";Description = "Stone is clear blue-white with lesser stones clear white or pale tints";ReputedMagicalProperty = "Invulnerability vs. undead";Value = 5000}
-3  = [pscustomobject]@{Stone = "Jacinth";Description = "Stone is fiery orange (Corundum)";ReputedMagicalProperty = "Luck travelling, wards off plague, protection from fire";Value = 5000}
-4  = [pscustomobject]@{Stone = "Oriental Emerald";Description = "Stone is clear bright green (Corundum)";ReputedMagicalProperty = "-";Value = 5000}
-5  = [pscustomobject]@{Stone = "Ruby";Description = "Stone is clear red to deep crimson (Corundum)";ReputedMagicalProperty = "Gives good luck";Value = 5000}
+1  = [pscustomobject]@{Stone = "Black Sapphire";Description = "Translucent lustrous black with glowing highlights";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 5000}
+2  = [pscustomobject]@{Stone = "Diamond";Description = "Clear blue-white with lesser stones clear white or pale tints";ReputedMagicalProperty = "Invulnerability vs. undead";Value = 5000}
+3  = [pscustomobject]@{Stone = "Jacinth";Description = "Fiery orange (Corundum)";ReputedMagicalProperty = "Luck travelling, wards off plague, protection from fire";Value = 5000}
+4  = [pscustomobject]@{Stone = "Oriental Emerald";Description = "Clear bright green (Corundum)";ReputedMagicalProperty = "-";Value = 5000}
+5  = [pscustomobject]@{Stone = "Ruby";Description = "Clear red to deep crimson (Corundum)";ReputedMagicalProperty = "Gives good luck";Value = 5000}
 
 }
 #The above is my interpretation of a table that is implied by the "Gems" table, result 00
@@ -1982,8 +1982,11 @@ function Get-Gem {
 
     [pscustomobject]@{
 
-        Class = $GemTable.Result
-        Type = $TypeOfGemTable
+        Class = $GemTable.Result.Description
+        Stone = $TypeOfGemTable.Result.Stone
+        Description = $TypeOfGemTable.Result.Description
+        ReputedMagicalProperty = $TypeOfGemTable.Result.ReputedMagicalProperty
+        BaseValue = $TypeOfGemTable.Result.Value
         ModifierRolls = $ModifierRolls
         ExplodedValue = if($Explode -ge 1){"$($Explode)"}else{'-'}
         ModifiedValue = if($NewValue -ne $Null){$NewValue}else{'-'}
