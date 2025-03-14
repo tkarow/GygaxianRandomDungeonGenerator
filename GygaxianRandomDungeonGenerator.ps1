@@ -131,6 +131,7 @@ function Write-Rolls{
 }
 
 ###################################
+#region Appendix A
 #The following is my adaptation of Advanced Dungeons and Dragons' Dungeon Masters Guide' Appendix A (pg. 169 - 172) into PowerShell tables and functions
 
 #region TABLE I.: PERIODIC CHECK (d20)
@@ -1433,6 +1434,296 @@ function Get-Table8CRoll {
 }
 #endregion
 
+#endregion
+
+#region Gem tables
+
+$Gems = @(
+
+[pscustomobject]@{Min = 1;Max = 25;BaseValue=10;Description="Ornamental Stones";Size="Very small";Class = 1}
+[pscustomobject]@{Min = 26;Max = 50;BaseValue=50;Description="Semi-precious Stones";Size="Small";Class = 2}
+[pscustomobject]@{Min = 51;Max = 70;BaseValue=100;Description="Fancy Stones";Size="Average";Class = 3}
+[pscustomobject]@{Min = 71;Max = 90;BaseValue=500;Description="Fancy Stones (Precious)";Size="Large";Class = 4}
+[pscustomobject]@{Min = 91;Max = 99;BaseValue=1000;Description="Gem Stones";Size="Very Large";Class = 5}
+[pscustomobject]@{Min = 100;Max = 100;BaseValue=5000;Description="Gem Stones (Jewels)";Size="Huge";Class = 6}
+
+)
+
+function Get-GemTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $Gems | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    }
+
+}
+
+$GemModifier = @{
+
+1  = [pscustomobject]@{Description = "Stone increases to next higher base value; roll again ignoring results above 8. Stones above 5,000 gold piece value progress as follows: 10,000 GP, 25,000 GP, 50,000GP, 100,000 GP, 250,000 GP, 500,000 GP, and 1,000,000GP- the absolute maximum. No stone may increase beyond 7 places from its initial base value."}
+2  = [pscustomobject]@{Description = "Stone is double base value. Do not roll again."}
+3  = [pscustomobject]@{Description = "Stone is 10% to 60% above base value. Roll d6 to find new value. Do not roll again on this table."}
+4  = [pscustomobject]@{Description = "Base value shown is unchanged."}
+5  = [pscustomobject]@{Description = "Base value shown is unchanged."}
+6  = [pscustomobject]@{Description = "Base value shown is unchanged."}
+7  = [pscustomobject]@{Description = "Base value shown is unchanged."}
+8  = [pscustomobject]@{Description = "Base value shown is unchanged."}
+9  = [pscustomobject]@{Description = "Stone is 10% to 40% below base value. Roll d4 to find new value. Do not roll again on this table."}
+10  = [pscustomobject]@{Description = "Stone decreases to next lower base value; roll again on this table, ignoring any result below 2. Stones below 10 gold piece value are: 5 GP, 1 GP, 10 SP, 5 SP, and 1 SP. No stone may decrease beyond 5 places from its initial base value."}
+
+}
+#When base value only is known, use the table above
+
+function Get-GemModifierRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = (Get-D10Roll).Result}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $GemModifier.($Roll).Description
+
+    }
+
+}
+
+$OrnamentalStones = @{
+
+1 = [pscustomobject]@{Stone = "Azurite";Description = "Stone is opaque and mottled deep blue";ReputedMagicalProperty="-";Value = 10}
+2 = [pscustomobject]@{Stone = "Banded Agate";Description = "Stone is translucent and striped brown and blue and white and reddish";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
+3 = [pscustomobject]@{Stone = "Blue Quartz";Description = "Stone is pale blue";ReputedMagicalProperty="-";Value = 10}
+4 = [pscustomobject]@{Stone = "Eye Agate";Description = "Stone is translucent with circles of gray, white, brown, blue and/or green";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
+5 = [pscustomobject]@{Stone = "Hematite";Description = "Stone is opaque and gray-black";ReputedMagicalProperty="Aids fighters, heals wounds";Value = 10}
+6 = [pscustomobject]@{Stone = "Lapis Lazuli";Description = "Stone is opaque and light and dark blue with yellow flecks";ReputedMagicalProperty="Raises morale, courage";Value = 10}
+7 = [pscustomobject]@{Stone = "Malachite";Description = "Stone is opaque and striated light and dark green";ReputedMagicalProperty="Protection from falling, Wards off spells, evil spirits, and poisons";Value = 10}
+8 = [pscustomobject]@{Stone = "Moss Agate";Description = "pink or yellow-white with grayish or greenish `"moss markings`"";ReputedMagicalProperty="Restful and safe sleep";Value = 10}
+9 = [pscustomobject]@{Stone = "Obsidian";Description = "Stone is opaque and black";ReputedMagicalProperty="-";Value = 10}
+10 = [pscustomobject]@{Stone = "Rhodochrosite";Description = "Stone is opaque and light pink";ReputedMagicalProperty="-";Value = 10}
+11 = [pscustomobject]@{Stone = "Tiger Eye";Description = "Stone is rich brown with golden center under-hue";ReputedMagicalProperty="-";Value = 10}
+12 = [pscustomobject]@{Stone = "Turquoise";Description = "Stone is opaque and light blue-green";ReputedMagicalProperty="Aids horses in all ways (but stone shatters when it operates)";Value = 10}
+
+}
+
+function Get-OrnamentalStone {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = (Get-D12Roll).Result}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $OrnamentalStones.($Roll)
+
+    }
+
+}
+
+$SemiPreciousStones = @{
+
+1  = [pscustomobject]@{Stone = "Bloodstone";Description = "Stone is opaque and dark gray with red flecks";ReputedMagicalProperty="Weather control";Value = 50}
+2  = [pscustomobject]@{Stone = "Carnelian";Description = "Stone is opaque and orange to reddish brown (also called Sard)";ReputedMagicalProperty="Protection from evil";Value = 50}
+3  = [pscustomobject]@{Stone = "Chalcedony";Description = "Stone is opaque and white";ReputedMagicalProperty="Wards off undead";Value = 50}
+4  = [pscustomobject]@{Stone = "Chrysoprase";Description = "Stone is translucent and apple green to emerald green";ReputedMagicalProperty="Invisibility";Value = 50}
+5  = [pscustomobject]@{Stone = "Citrine";Description = "Stone is pale yellow brown";ReputedMagicalProperty="Invisibility";Value = 50}
+6  = [pscustomobject]@{Stone = "Jasper";Description = "Stone is opaque and blue, black to brown";ReputedMagicalProperty="Protection from venom";Value = 50}
+7  = [pscustomobject]@{Stone = "Moonstone";Description = "Stone is translucent and white with pale blue glow";ReputedMagicalProperty="Causes lycanthropy";Value = 50}
+8  = [pscustomobject]@{Stone = "Onyx";Description = "Stone is opaque and has bands of black and white or pure black or white";ReputedMagicalProperty="Causes discord amongst enemies";Value = 50}
+9  = [pscustomobject]@{Stone = "Rock Crystal";Description = "Stone is clear";ReputedMagicalProperty="Causes discord amongst enemies";Value = 50}
+10  = [pscustomobject]@{Stone = "Sardonyx";Description = "Stone is opaque with bands of red sard and white onyx or brown sard";ReputedMagicalProperty="Protection from evil and causes discord amongst enemies";Value = 50}
+11  = [pscustomobject]@{Stone = "Smoky Quartz";Description = "Stone is a light gray, yellow, or blue (Cairngorm)";ReputedMagicalProperty="-";Value = 50}
+12  = [pscustomobject]@{Stone = "Star Rose Quartz";Description = "Stone is a translucent rosy color with a white `"star`" center";ReputedMagicalProperty="-";Value = 50}
+13  = [pscustomobject]@{Stone = "Zircon";Description = "Stone is clear pale blue-green ";ReputedMagicalProperty="-";Value = 50}
+
+}
+
+function Get-SemiPreciousStone {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 14}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $SemiPreciousStones.($Roll)
+
+    }
+
+}
+
+$FancyStones = @{
+
+1  = [pscustomobject]@{Stone = "Amber";Description = "Stone is watery gold to rich gold";ReputedMagicalProperty = "Wards off diseases";Value = 100}
+2  = [pscustomobject]@{Stone = "Alexandrite";Description = "Stone is dark green";ReputedMagicalProperty = "Good omens";Value = 100}
+3  = [pscustomobject]@{Stone = "Amethyst";Description = "Stone is deep purple";ReputedMagicalProperty = "Prevents drunkenness or drugging";Value = 100}
+4  = [pscustomobject]@{Stone = "Aquamarine";Description = "Stone is pale blue green";ReputedMagicalProperty = "Wards off foes";Value = 500}
+5  = [pscustomobject]@{Stone = "Chrysoberyl";Description = "Stone is yellow green to green";ReputedMagicalProperty = "Protection from possession";Value = 100}
+6  = [pscustomobject]@{Stone = "Coral";Description = "Stone is opaque and crimson";ReputedMagicalProperty = "Calms weather, safety in river crossing, cures madness, stanches bleeding";Value = 100}
+7  = [pscustomobject]@{Stone = "Garnet";Description = "Stone is red or brown-green";ReputedMagicalProperty = "-";Value = 100}
+8  = [pscustomobject]@{Stone = "Jade";Description = "Stone is light green, deep green, green and white, white";ReputedMagicalProperty = "Skill at music and musical instruments";Value = 100}
+9  = [pscustomobject]@{Stone = "Jet";Description = "Stone is opaque and deep black";ReputedMagicalProperty = "-";Value = 100}
+10  = [pscustomobject]@{Stone = "Pearl";Description = "Stone is opaque and lustrous white, yellowish, pinkish, etc.";ReputedMagicalProperty = "-";Value = 100}
+11  = [pscustomobject]@{Stone = "Peridot";Description = "Stone is rich olive green (Chrysolite)";ReputedMagicalProperty = "Wards off enchantments / Wards off spells (Chrysolite)";Value = 500}
+12  = [pscustomobject]@{Stone = "Spinel";Description = "Stone is red, red-brown, or deep green";ReputedMagicalProperty = "-";Value = 100}
+13  = [pscustomobject]@{Stone = "Topaz";Description = "Stone is golden yellow";ReputedMagicalProperty = "Wards off evil spells";Value = 500}
+14  = [pscustomobject]@{Stone = "Tourmaline";Description = "Stone is green pale, blue pale, brown pale, or reddish pale";ReputedMagicalProperty = "-";Value = 100}
+
+}
+
+function Get-FancyStone {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 15}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $FancyStones.($Roll)
+
+    }
+
+}
+
+$FancyPreciousStones = @{
+
+1  = [pscustomobject]@{Stone = "Aquamarine";Description = "Stone is pale blue green";ReputedMagicalProperty = "Wards off foes";Value = 500}
+2  = [pscustomobject]@{Stone = "Garnet";Description = "Stone is violet (the most prized)";ReputedMagicalProperty = "-";Value = 500}
+3  = [pscustomobject]@{Stone = "Pearl";Description = "Stone is opaque and pure black (the most prized)";ReputedMagicalProperty = "-";Value = 500}
+4  = [pscustomobject]@{Stone = "Peridot";Description = "Stone is rich olive green (Chrysolite)";ReputedMagicalProperty = "Wards off enchantments / Wards off spells (Chrysolite)";Value = 500}
+5  = [pscustomobject]@{Stone = "Spinel";Description = "Stone is very deep blue (the most prized)";ReputedMagicalProperty = "-";Value = 500}
+6  = [pscustomobject]@{Stone = "Topaz";Description = "Stone is golden yellow";ReputedMagicalProperty = "Wards off evil spells";Value = 500}
+
+}
+#The above is my interpretation of a table that is implied by the "Gems" table, results 71 - 90
+
+function Get-FancyPreciousStone {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 7}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $FancyPreciousStones.($Roll)
+
+    }
+
+}
+
+$GemStones = @{
+
+1  = [pscustomobject]@{Stone = "Black Opal";Description = "Stone is translucent dark green with black mottling and golden flecks";ReputedMagicalProperty = "-";Value = 1000}
+2  = [pscustomobject]@{Stone = "Black Sapphire";Description = "Stone is translucent lustrous black with glowing highlights";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 5000}
+3  = [pscustomobject]@{Stone = "Diamond";Description = "Stone is clear blue-white with lesser stones clear white or pale tints";ReputedMagicalProperty = "Invulnerability vs. undead";Value = 5000}
+4  = [pscustomobject]@{Stone = "Emerald";Description = "Stone is deep bright green ";ReputedMagicalProperty = "Wards off foes";Value = 1000}
+5  = [pscustomobject]@{Stone = "Fire Opal";Description = "Stone is translucent fiery red";ReputedMagicalProperty = "-";Value = 1000}
+6  = [pscustomobject]@{Stone = "Jacinth";Description = "Stone is fiery orange (Corundum)";ReputedMagicalProperty = "Luck travelling, wards off plague, protection from fire";Value = 5000}
+7  = [pscustomobject]@{Stone = "Opal";Description = "Stone is translucent pale blue with green and golden mottling";ReputedMagicalProperty = "-";Value = 1000}
+8  = [pscustomobject]@{Stone = "Oriental Amethyst";Description = "Stone is rich purple (Corundum)";ReputedMagicalProperty = "Prevents drunkenness or drugging";Value = 1000}
+9  = [pscustomobject]@{Stone = "Oriental Emerald";Description = "Stone is clear bright green (Corundum)";ReputedMagicalProperty = "-";Value = 5000}
+10  = [pscustomobject]@{Stone = "Oriental Topaz";Description = "Stone is clear fiery yellow (Corundum)";ReputedMagicalProperty = "Wards off evil spells";Value = 1000}
+11  = [pscustomobject]@{Stone = "Ruby";Description = "Stone is clear red to deep crimson (Corundum)";ReputedMagicalProperty = "Gives good luck";Value = 5000}
+12  = [pscustomobject]@{Stone = "Sapphire";Description = "Stone is clear to medium blue (Corundum)";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 1000}
+13  = [pscustomobject]@{Stone = "Star Ruby";Description = "Stone is a translucent ruby with white `"star`" center";ReputedMagicalProperty = "Gives good luck";Value = 1000}
+14  = [pscustomobject]@{Stone = "Star Sapphire";Description = "Stone is a translucent sapphire with white `"star`" center";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 1000}
+
+}
+
+function Get-GemStone {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 15}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $GemStones.($Roll)
+
+    }
+
+}
+
+$Jewels = @{
+
+1  = [pscustomobject]@{Stone = "Black Sapphire";Description = "Stone is translucent lustrous black with glowing highlights";ReputedMagicalProperty = "Aids understanding of problems, kills spiders, boosts magical abilities";Value = 5000}
+2  = [pscustomobject]@{Stone = "Diamond";Description = "Stone is clear blue-white with lesser stones clear white or pale tints";ReputedMagicalProperty = "Invulnerability vs. undead";Value = 5000}
+3  = [pscustomobject]@{Stone = "Jacinth";Description = "Stone is fiery orange (Corundum)";ReputedMagicalProperty = "Luck travelling, wards off plague, protection from fire";Value = 5000}
+4  = [pscustomobject]@{Stone = "Oriental Emerald";Description = "Stone is clear bright green (Corundum)";ReputedMagicalProperty = "-";Value = 5000}
+5  = [pscustomobject]@{Stone = "Ruby";Description = "Stone is clear red to deep crimson (Corundum)";ReputedMagicalProperty = "Gives good luck";Value = 5000}
+
+}
+#The above is my interpretation of a table that is implied by the "Gems" table, result 00
+
+function Get-Jewel {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 6}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $Jewels.($Roll)
+
+    }
+
+}
+
+#endregion
+
 ###################################
 #The following are tools that I have created designed to more quickly flesh out a random dungeon based on the above
 
@@ -1535,6 +1826,167 @@ function Get-Treasure {
             #To do: Get-Gem-DMG pg. 25 
 
         }
+
+    }
+
+}
+
+function Get-Gem {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$GemTableRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$GemModifierRoll
+   
+    )
+
+    $BonusValue = $Null
+    $NewValue = $Null
+    $ModifierRolls = @()
+
+    if(!$GemTableRoll){$GemTableRoll = (Get-D100Roll).Result}
+    if(!$GemModifierRoll){$GemModifierRoll = (Get-D10Roll).Result}
+    $ModifierRolls += $GemModifierRoll
+
+    $GemTable = Get-GemTableRoll -Roll $GemTableRoll
+
+    $TypeOfGemTable = switch($GemTable.Result.Class){
+    
+        1 {Get-OrnamentalStone}
+        2 {Get-SemiPreciousStone}
+        3 {Get-FancyStone}
+        4 {Get-FancyPreciousStone}
+        5 {Get-GemStone}
+        6 {Get-Jewel}
+
+    }
+
+    $GemModifier = Get-GemModifierRoll -Roll $GemModifierRoll
+
+    if($GemModifier.Roll -eq 1){
+
+        $i = 0
+
+        while(($GemModifier.Roll -eq 1) -and ($i -le 7)){
+               
+            $i++
+            $GemModifier = Get-GemModifierRoll -Roll (Get-Random -Minimum 1 -Maximum 8)
+            $ModifierRolls += ($GemModifier).Roll
+            
+        }
+
+        $Explode = 0
+        if(($GemTable.Result.Class + $i) -gt 6){$Explode = $i - 6}
+
+        if($GemTable.Result.Class -le 6){
+        
+            $TypeOfGemTable = switch($GemTable.Result.Class + $i){
+    
+                1 {Get-OrnamentalStone}
+                2 {Get-SemiPreciousStone}
+                3 {Get-FancyStone}
+                4 {Get-FancyPreciousStone}
+                5 {Get-GemStone}
+                6 {Get-Jewel}
+
+            }
+
+        }else{
+        
+            $TypeOfGemTable = Get-Jewel
+
+        }
+
+        if($Explode -gt 0){
+            
+            $NewValue = switch($Explode){
+            
+                1 {10000}
+                2 {25000}
+                3 {50000}
+                4 {100000}
+                5 {250000}
+                6 {500000}
+                7 {1000000}
+
+            }
+
+        }
+
+    }elseif($GemModifier.Roll -eq 2){
+    
+        $NewValue = $TypeOfGemTable.Result.Value * 2
+
+    }elseif($GemModifier.Roll -eq 3){
+    
+        $BonusValue = ((Get-D6Roll).Result * .1) + 1
+        if($NewValue -eq $Null){$NewValue = $TypeOfGemTable.Result.Value * $BonusValue}else{$NewValue = $NewValue * $BonusValue}
+
+    }elseif($GemModifier.Roll -eq 9){
+
+        $BonusValue = 1 - ((Get-D4Roll).Result * .1)
+        if($NewValue -eq $Null){$NewValue = $TypeOfGemTable.Result.Value * $BonusValue}else{$NewValue = $NewValue * $BonusValue}
+
+    }elseif($GemModifier.Roll -eq 10){
+
+        $i = 0
+
+        while(($GemModifier.Roll -eq 10) -and ($i -le 5)){
+               
+            $i++
+            $GemModifier = Get-GemModifierRoll -Roll (Get-Random -Minimum 3 -Maximum 11)
+            $ModifierRolls += ($GemModifier).Roll
+            
+        }
+
+        $Explode = 0
+        if(($GemTable.Result.Class - $i) -lt 1){$Explode = $i}
+
+        if(($GemTable.Result.Class - $i) -ge 1){
+        
+            $TypeOfGemTable = switch($GemTable.Result.Class - $i){
+    
+                1 {Get-OrnamentalStone}
+                2 {Get-SemiPreciousStone}
+                3 {Get-FancyStone}
+                4 {Get-FancyPreciousStone}
+                5 {Get-GemStone}
+                6 {Get-Jewel}
+
+            }
+
+        }else{
+        
+            $TypeOfGemTable = Get-OrnamentalStone
+
+        }
+
+        if($Explode -gt 0){
+            
+            $NewValue = switch($Explode){
+            
+                1 {5}
+                2 {1}
+                3 {1}
+                4 {.5}
+                5 {.1}
+
+            }
+
+        }
+
+    }
+
+    [pscustomobject]@{
+
+        Class = $GemTable.Result
+        Type = $TypeOfGemTable
+        ModifierRolls = $ModifierRolls
+        ExplodedValue = if($Explode -ge 1){"$($Explode)"}else{'-'}
+        ModifiedValue = if($NewValue -ne $Null){$NewValue}else{'-'}
 
     }
 
