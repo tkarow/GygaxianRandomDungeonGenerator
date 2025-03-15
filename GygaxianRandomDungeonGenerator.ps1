@@ -2234,6 +2234,7 @@ function Get-Room {
     $Unusual = $False
     $Container = "N/A"
     $Treasure = @()
+    $DetailedTreasure = @()
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
     if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
@@ -2311,8 +2312,8 @@ function Get-Room {
 
     }
 
-    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{$ExitLocations.DoorLocations += (Get-ExitLocation).Description}}
-    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{$ExitLocations.SecretDoorLocations += (Get-ExitLocation).Description}}
+    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{$ExitLocations.DoorLocations += (Get-ExitLocation).Description}}else{$ExitLocations.DoorLocations = "N/A"}
+    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{$ExitLocations.SecretDoorLocations += (Get-ExitLocation).Description}}else{$ExitLocations.SecretDoorLocations = "N/A"}
 
     $ExitDirections = [pscustomobject]@{
    
@@ -2321,19 +2322,21 @@ function Get-Room {
 
     }
 
-    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.DoorDirections += $_}else{$ExitDirections.DoorDirections += "$($_.split('/')[0])"}}}
-    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.SecretDoorDirections += $_}else{$ExitDirections.SecretDoorDirections += "$($_.split('/')[0])"}}}
+    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.DoorDirections += $_}else{$ExitDirections.DoorDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.DoorDirections = "N/A"}
+    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.SecretDoorDirections += $_}else{$ExitDirections.SecretDoorDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.SecretDoorDirections = "N/A"}
     #endregion
 
     $RawContents = Get-RoomContents
     $Contents = (Get-RoomContents -Roll $Table5FRoll).Description
     $Monster = if($Contents -like "Monster*"){$True}else{$False}
-    if($Contents -like "*treasure*"){if($Monster){$Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Monster $True -Level $Level).Loot}else{$Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Monster $False -Level $Level).Loot}}
+    if($Contents -like "*treasure*"){if($Monster){$Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Monster $True -Level $Level).Loot}else{$FoundTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Monster $False -Level $Level;$Treasure += ($FoundTreasure).Loot;$DetailedTreasure += ($FoundTreasure).DetailedLoot}}
     if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A"}
+    if(!$DetailedTreasure){$DetailedTreasure = "N/A"}
     #To do: Get-Monster
 
     [pscustomobject]@{
            
+        Level = $Level
         Type = $Type
         Length = $Length
         Width = $Width
@@ -2350,6 +2353,7 @@ function Get-Room {
         Monster = $Monster
         Container = $Container
         Treasure = $Treasure
+        DetailedTreasure = $DetailedTreasure
 
     }
    
