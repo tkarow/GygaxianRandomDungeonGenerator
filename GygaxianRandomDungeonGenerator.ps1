@@ -1799,6 +1799,36 @@ function Get-JewelryPieceRoll {
 
 #endregion
 
+#region Monster tables
+
+$DungeonLevel1MonsterTable = @(
+
+[pscustomobject]@{Min = 1;Max = 2;Monster="Giant ant";Number="1-4"}
+[pscustomobject]@{Min = 3;Max = 4;Monster="Badger";Number="1-4"}
+[pscustomobject]@{Min = 5;Max = 14;Monster="Fire beetle";Number="1-4"}
+[pscustomobject]@{Min = 15;Max = 15;Monster="Manes demon";Number="1-4"}
+[pscustomobject]@{Min = 16;Max = 17;Monster="Dwarf";Number="4-14"}
+[pscustomobject]@{Min = 18;Max = 18;Monster="Ear seeker";Number="1"}
+[pscustomobject]@{Min = 19;Max = 19;Monster="Elf";Number="3-11 (d6+d4+1)"}
+[pscustomobject]@{Min = 20;Max = 21;Monster="Gnome";Number="5-15"}
+[pscustomobject]@{Min = 22;Max = 26;Monster="Goblin";Number="6-15"}
+[pscustomobject]@{Min = 27;Max = 28;Monster="Hobbit";Number="9-16"}
+[pscustomobject]@{Min = 29;Max = 33;Monster="Hobgoblin";Number="2-8"}
+[pscustomobject]@{Min = 34;Max = 48;Monster="Human";Number="?"}
+[pscustomobject]@{Min = 49;Max = 54;Monster="Kobold";Number="6-18"}
+[pscustomobject]@{Min = 55;Max = 66;Monster="Orc";Number="7-12"}
+[pscustomobject]@{Min = 67;Max = 70;Monster="Piercer";Number="1-3"}
+[pscustomobject]@{Min = 71;Max = 83;Monster="Giant rat";Number="5-20"}
+[pscustomobject]@{Min = 84;Max = 85;Monster="Rot grub";Number="1-3"}
+[pscustomobject]@{Min = 86;Max = 96;Monster="Shrieker";Number="1-2"}
+[pscustomobject]@{Min = 97;Max = 98;Monster="Skeleton";Number="1-4"}
+[pscustomobject]@{Min = 99;Max = 100;Monster="Zombie";Number="1-3"}
+
+)
+#The above is NOT derrived from the Dungeon Master's Guide! Where did it come from!?
+
+#endregion
+
 ###################################
 #The following are tools that I have created designed to more quickly flesh out a random dungeon based on the above
 
@@ -2424,4 +2454,8 @@ Passages: The vast majority of passages, corridors, and tunnels are 10' wide, ra
 Central Areas: A common feature shared across all the sets is that each provides 3 sections that can be joined to create an enormous central area location -- perhaps a grand Arena/Cavern/Temple area. (Respectively these are sections ILF, ILO, and ILO in each of the 3 sets.) If joined, each of the versions of the huge central feature is about 22 squares on each side or somewhat larger (i.e., over 200 feet square).
 
 Diagonals: One issue that motivated this overall article was the burning question: "How many diagonal features did Gygax expect to use on a typical dungeon map?". While design elements in the four cardinal directions (NSEW) are easy to deal with on graph paper, those on a non-cardinal 45 degree axis (NE, NW, SE, SW) tend to aggravate me, my players, my geometry sensibilities, and my software projects (see here). So I'll pay particularly close attention to those elements, to see how widespread they were expected to be.
+
+###
+
+Mad props to https://1eonline.info/
 #>
