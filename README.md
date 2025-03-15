@@ -1,1 +1,1 @@
-After watching some random dungeon generation on YouTube, (specifically https://www.youtube.com/@cowanb65) I thought it might be nice to have a methof of utilizing the contents in Advanced Dungeons and Dragons' Dungeon Masters Guide's Appendix A (pg. 169 - 172) into PowerShell
+After watching some random dungeon generation on YouTube, (specifically https://www.youtube.com/@cowanb65) I thought it might be nice to have a method of utilizing the contents in Advanced Dungeons and Dragons' Dungeon Masters Guide's Appendix A (pg. 169 - 172) into PowerShell
