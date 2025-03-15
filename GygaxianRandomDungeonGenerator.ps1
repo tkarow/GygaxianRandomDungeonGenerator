@@ -846,11 +846,11 @@ function Get-Table5FRoll {
 #*See also TABLES V. H. and I. or J.
 $Table5G = @(
 
-[pscustomobject]@{Min = 1;Max = 25;NoMonster = [pscustomobject]@{Description='1,000 copper pieces/level';Currency=[pscustomobject]@{Amount=1000;Type='Copper pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
-[pscustomobject]@{Min = 26;Max = 50;NoMonster = [pscustomobject]@{Description='1,000 silver pieces/level';Currency=[pscustomobject]@{Amount=1000;Type='Silver pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
-[pscustomobject]@{Min = 51;Max = 65;NoMonster = [pscustomobject]@{Description='750 electrum pieces/level';Currency=[pscustomobject]@{Amount=750;Type='Electrum pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
-[pscustomobject]@{Min = 66;Max = 80;NoMonster = [pscustomobject]@{Description='250 gold pieces/level';Currency=[pscustomobject]@{Amount=250;Type='Gold pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
-[pscustomobject]@{Min = 81;Max = 90;NoMonster = [pscustomobject]@{Description='100 platinum pieces/level';Currency=[pscustomobject]@{Amount=100;Type='Platinum pieces'}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 1;Max = 25;NoMonster = [pscustomobject]@{Description='1,000 copper pieces/level';Currency=[pscustomobject]@{Amount=1000;Type='Copper pieces';Value=10}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 26;Max = 50;NoMonster = [pscustomobject]@{Description='1,000 silver pieces/level';Currency=[pscustomobject]@{Amount=1000;Type='Silver pieces';Value=100}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 51;Max = 65;NoMonster = [pscustomobject]@{Description='750 electrum pieces/level';Currency=[pscustomobject]@{Amount=750;Type='Electrum pieces';Value=375}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 66;Max = 80;NoMonster = [pscustomobject]@{Description='250 gold pieces/level';Currency=[pscustomobject]@{Amount=250;Type='Gold pieces';Value=250}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
+[pscustomobject]@{Min = 81;Max = 90;NoMonster = [pscustomobject]@{Description='100 platinum pieces/level';Currency=[pscustomobject]@{Amount=100;Type='Platinum pieces';Value=500}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
 [pscustomobject]@{Min = 91;Max = 94;NoMonster = [pscustomobject]@{Description='1-4 gems/level';Currency=[pscustomobject]@{Amount=$Null;Type=$Null}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
 [pscustomobject]@{Min = 95;Max = 97;NoMonster = [pscustomobject]@{Description='1 piece jewelry/level';Currency=[pscustomobject]@{Amount=$Null;Type=$Null}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
 [pscustomobject]@{Min = 98;Max = 100;NoMonster = [pscustomobject]@{Description='Magic (roll once on Magic Items Table)';Currency=[pscustomobject]@{Amount=$Null;Type=$Null}};WMonster = [pscustomobject]@{Description='Take two rolls on "Without Monster" Table, add 10% to the total of each roll.'}}
@@ -886,6 +886,7 @@ function Get-Table5GRoll {
 
             Amount = $Loot.Amount * $Level
             Type = $Loot.Type
+            Value = $Loot.Value * $Level
 
         }
    
@@ -1881,27 +1882,57 @@ function Get-Treasure {
 
     if((!$Level) -or ($Level -eq $Null)){$Level = 1}
 
-    if(!$Table5GRoll){$Table5GRoll = (Get-D20Roll).Result}
+    if(!$Table5GRoll){$Table5GRoll = (Get-D100Roll).Result}
 
-    if($Monster){$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $True}else{$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $False -Level $Level}
+    if($Monster -eq $True){$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $True}else{$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $False -Level $Level}
 
+    $DetailedLoot = @()
     $Loot = @()
 
     if($Treasure.Roll -le 90){
     
-        $Loot += $Treasure.Loot
+        $Loot += [pscustomobject]@{
+        
+            Item = $Treasure.Loot.Type
+            Amount = $Treasure.Loot.Amount
+            Value = $Treasure.Loot.Value
+
+        }
+
+        $DetailedLoot += $Treasure.Loot
 
     }elseif(($Treasure.Roll -ge 91) -and ($Treasure.Roll -le 94)){
     
-        1..((Get-D4Roll).Result * $Level) | %{$Loot += Get-Gem}
+        1..((Get-D4Roll).Result * $Level) | %{$Gem = Get-Gem;$Loot += [pscustomobject]@{
+        
+                Item = $Gem.Item
+                Amount = 1
+                Value = if($Gem.ModifiedValue -notlike '-'){$Gem.ModifiedValue}else{$Gem.BaseValue}}
+
+                $DetailedLoot += $Gem
+            
+            }
 
     }elseif(($Treasure.Roll -ge 95) -and ($Treasure.Roll -le 97)){
     
-        1..(1 * $Level) | %{$Loot += Get-Jewelry}
+        1..(1 * $Level) | %{$Jewelry = Get-Jewelry;$Loot += [pscustomobject]@{
+        
+                Item = $Jewelry.Item
+                Amount = 1
+                Value = $Jewelry.Value}
+
+                $DetailedLoot += $Jewelry
+                
+            }
 
     }
 
-    $Loot
+    [pscustomobject]@{
+
+        Loot = $Loot
+        DetailedLoot = $DetailedLoot
+
+    }
 
 }
 
@@ -2057,7 +2088,7 @@ function Get-Gem {
     [pscustomobject]@{
 
         Class = $GemTable.Result.Description
-        Stone = $TypeOfGemTable.Result.Stone
+        Item = $TypeOfGemTable.Result.Stone
         Description = $TypeOfGemTable.Result.Description
         ReputedMagicalProperty = $TypeOfGemTable.Result.ReputedMagicalProperty
         BaseValue = $TypeOfGemTable.Result.Value
@@ -2157,7 +2188,7 @@ function Get-Jewelry {
 
         [pscustomobject]@{
 
-            Piece = $Type
+            Item = $Type
             BaseValue = $JewelryTable.Result.BaseValue
             Variance = $Variance
             Value = $Value
