@@ -859,7 +859,6 @@ $Table5G = @(
 
 function Get-Table5GRoll {
 
-    [alias("Get-Treasure")]
     param(
 
         [Parameter(Mandatory=$False)]
@@ -1724,6 +1723,81 @@ function Get-Jewel {
 
 #endregion
 
+#region Jewelry tables
+
+$Jewelry = @(
+
+[pscustomobject]@{Min = 1;Max = 10;BaseValue = 100;TopValue = 1000;Description = "Ivory or wrought silver";VarianceDie = 6;VarianceValue = 150;Class = 1;Material = @("Ivory","Wrought silver");Gems = $False}
+[pscustomobject]@{Min = 11;Max = 20;BaseValue = 200;TopValue = 1200;Description = "Wrought silver and gold";VarianceDie = 10;VarianceValue = 100;Class = 2;Material = @("Wrought silver and gold");Gems = $False}
+[pscustomobject]@{Min = 21;Max = 40;BaseValue = 300;TopValue = 1800;Description = "Wrought gold";VarianceDie = 6;VarianceValue = 250;Class = 3;Material = @("Wrought gold");Gems = $False}
+[pscustomobject]@{Min = 41;Max = 50;BaseValue = 500;TopValue = 3000;Description = "Jade, coral or wrought platinum";VarianceDie = 10;VarianceValue = 250;Class = 4;Material = @("Jade","Coral","Wrought Platinum");Gems = $False}
+[pscustomobject]@{Min = 51;Max = 70;BaseValue = 1000;TopValue = 6000;Description = "Silver with gems";VarianceDie = 8;VarianceValue = 625;Class = 5;Material = @("Silver");Gems = $True}
+[pscustomobject]@{Min = 71;Max = 90;BaseValue = 2000;TopValue = 8000;Description = "Gold with gems";VarianceDie = 6;VarianceValue = 1000;Class = 6;Material = @("Gold");Gems = $True}
+[pscustomobject]@{Min = 91;Max = 100;BaseValue = 2000;TopValue = 12000;Description = "Platinum with gems";VarianceDie = 8;VarianceValue = 1250;Class = 7;Material = @("Platinum");Gems = $True}
+
+)
+#I had to guess how to determine a specific value for a value in the DMG, as no explicit explanation is given, (as usual!). I chose the smallest die that would cleanly divide the variance provided in the book, (pg. 26).
+
+function Get-JewelryTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $Jewelry | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+    $Material = $Result.Material[(Get-Random -Minimum 0 ($Result.Material.Count))]
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $Result
+        Material = $Material
+
+    }
+
+}
+
+$JewelryPieces = @{
+
+    1  = [pscustomobject]@{Description = "Bracelet"}
+    2  = [pscustomobject]@{Description = "Brooch"}
+    3  = [pscustomobject]@{Description = "Crown"}
+    4  = [pscustomobject]@{Description = "Earrings"}
+    5  = [pscustomobject]@{Description = "Necklace"}
+    6  = [pscustomobject]@{Description = "Pendant"}
+    7  = [pscustomobject]@{Description = "Ring"}
+    8  = [pscustomobject]@{Description = "Tiara"}
+
+}
+#The above is not a table in the DMG per se, but is mentioned in the text discussing jewelry: "The Dungeon Master can, of course, name what each piece of jewelry is (bracelet, brooch, crown, earrings, necklace, pendant, ring, tiara, etc.),giving its substance and the number and value of its stones." (pg. 26)
+
+function Get-JewelryPieceRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = (Get-D8Roll).Result}
+
+    [pscustomobject]@{
+
+        Description = $JewelryPieces.($Roll).Description
+
+    }
+
+}
+
+#endregion
+
 ###################################
 #The following are tools that I have created designed to more quickly flesh out a random dungeon based on the above
 
@@ -1819,15 +1893,15 @@ function Get-Treasure {
 
     }elseif(($Treasure.Roll -ge 91) -and ($Treasure.Roll -le 94)){
     
-        $Loot += [pscustomobject]@{
+        1..((Get-D4Roll).Result * $Level) | %{$Loot += Get-Gem}
 
-            Amount = (Get-D4Roll).Result * $Level
-            Type = "Gems"
-            #To do: Get-Gem-DMG pg. 25 
-
-        }
+    }elseif(($Treasure.Roll -ge 95) -and ($Treasure.Roll -le 97)){
+    
+        1..(1 * $Level) | %{$Loot += Get-Jewelry}
 
     }
+
+    $Loot
 
 }
 
@@ -1990,6 +2064,108 @@ function Get-Gem {
         ModifierRolls = $ModifierRolls
         ExplodedValue = if($Explode -ge 1){"$($Explode)"}else{'-'}
         ModifiedValue = if($NewValue -ne $Null){$NewValue}else{'-'}
+
+    }
+
+}
+
+function Get-Jewelry {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$JewelryTableRoll,
+        [Parameter(Mandatory=$False)]
+        [int]$JewelryTablePieceRoll,
+        [Parameter(Mandatory=$False)]
+        [int]$ReRolls,
+        [Parameter(Mandatory=$False)]
+        [bool]$MaxValue
+
+    )
+
+    $GemBonusValue = 0
+    $NewRoll = $Null
+    if(!$Rerolls){$Rerolls = 0}
+    $Rerolls = $Rerolls
+    $Exceptional = $Null
+    $Variance = 0
+
+    if(!$JewelryTableRoll){$JewelryTableRoll = (Get-D100Roll).Result}
+
+    $JewelryTable = Get-JewelryTableRoll -Roll $JewelryTableRoll
+
+    $Variance = switch($JewelryTable.Result.VarianceDie){
+    
+        6 {(Get-D6Roll).Result * $JewelryTable.Result.VarianceValue}
+        8 {(Get-D8Roll).Result * $JewelryTable.Result.VarianceValue}
+        10 {(Get-D10Roll).Result * $JewelryTable.Result.VarianceValue}
+
+    }
+
+    $Value = $JewelryTable.Result.BaseValue + $Variance
+
+    if($MaxValue){
+
+        $Variance = $JewelryTable.Result.VarianceDie * $JewelryTable.Result.VarianceValue
+        $Value = $JewelryTable.Result.TopValue
+        
+    }
+
+    $Type = "$((Get-JewelryPieceRoll -Roll $JewelryTablePieceRoll).Description)"
+
+    if((Get-D10Roll).Result -eq 1){$Exceptional = $True}
+
+    if(($Exceptional -eq $True) -and ($Value -ge $JewelryTable.Result.TopValue)){
+    
+        $Rerolls++
+        $NewRoll = (($JewelryTable.Result.Max) + 1)
+        if($NewRoll -gt 100){$NewRoll = 100}
+        if($NewRoll -eq 100){Get-Jewelry -JewelryTableRoll $NewRoll -ReRolls $Rerolls -MaxValue $True}else{Get-Jewelry -JewelryTableRoll $NewRoll -Rerolls $Rerolls}
+        
+    }else{
+
+        if((($JewelryTable.Result.Description -like "*gems*")) -and (Get-D8Roll).Result -eq 1){$ExceptionalGem = $True}
+
+        if($ExceptionalGem -eq $True){
+        
+            $GemBonus = 1
+            $GemReroll = $True
+
+            while(($GemBonus -le 8) -and ($GemReroll -eq $True)){
+            
+                switch($GemBonus) {
+                
+                    1 {$GemBonusValue = 5000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    2 {$GemBonusValue = 10000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    3 {$GemBonusValue = 20000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    4 {$GemBonusValue = 40000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    5 {$GemBonusValue = 80000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    6 {$GemBonusValue = 160000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    7 {$GemBonusValue = 320000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+                    8 {$GemBonusValue = 640000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
+
+                }
+
+            }
+
+        }
+
+        $Type = "$($JewelryTable.Material) $($Type.ToLower())$(if($Exceptional -eq $True){' of exceptional quality'})$(if($JewelryTable.Result.Gems -eq $True){' with gems'})$(if($GemBonusValue -gt 0){' of exceptional quality'})"
+        $Value = if(($Exceptional -eq $True) -and (($Value -lt $JewelryTable.Result.TopValue))){$JewelryTable.Result.TopValue}else{$Value}
+        $Value = $Value + $GemBonusValue
+
+        [pscustomobject]@{
+
+            Piece = $Type
+            BaseValue = $JewelryTable.Result.BaseValue
+            Variance = $Variance
+            Value = $Value
+            TopValue = $JewelryTable.Result.TopValue
+            GemBonus = $GemBonusValue
+            Rerolls = $Rerolls
+
+        }
 
     }
 
