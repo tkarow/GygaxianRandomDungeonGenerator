@@ -2313,9 +2313,9 @@ function Get-Room {
 
     $RawContents = Get-RoomContents
     $Contents = (Get-RoomContents).Description
-    $Monster = ''
-    $Treasure = ''
-    #To do: Get-Treasure and Get-Monster
+    $Monster = if($Contents -like "Monster*"){$True}else{$False}
+    $Treasure = if($Contents -like "*treasure*"){if($Monster){(Get-Treasure -Monster $True).Loot}else{(Get-Treasure -Monster $False).Loot}}
+    #To do: Get-Monster
 
     [pscustomobject]@{
            
