@@ -1915,13 +1915,13 @@ function Get-Treasure {
 
     }elseif(($Treasure.Roll -ge 95) -and ($Treasure.Roll -le 97)){
     
-        1..(1 * $Level) | %{$Jewelry = Get-Jewelry;$Loot += [pscustomobject]@{
+        1..(1 * $Level) | %{$JewelryLoot = Get-Jewelry;$Loot += [pscustomobject]@{
         
-                Item = $Jewelry.Item
+                Item = $JewelryLoot.Item
                 Amount = 1
-                Value = $Jewelry.Value}
+                Value = $JewelryLoot.Value}
 
-                $DetailedLoot += $Jewelry
+                $DetailedLoot += $JewelryLoot
                 
             }
 
@@ -2208,6 +2208,9 @@ function Get-Room {
     param(
 
         [Parameter(Mandatory=$False)]
+        [int]$Level,
+        
+        [Parameter(Mandatory=$False)]
         [int]$Table5Roll,
 
         [Parameter(Mandatory=$False)]
@@ -2217,17 +2220,28 @@ function Get-Room {
         [int]$Table5BRoll,
 
         [Parameter(Mandatory=$False)]
-        [int]$Table5CRoll
+        [int]$Table5CRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5FRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5GRoll
    
     )
 
+    if(($Level -like $Null) -or (!$Level)){$Level = 1}
     $Unusual = $False
+    $Container = "N/A"
+    $Treasure = @()
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
     if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
 
     if(!$Table5Roll){$Table5Roll = (Get-D20Roll).Result}
     if(!$Table5CRoll){$Table5CRoll = (Get-D20Roll).Result}
+    if(!$Table5FRoll){$Table5FRoll = (Get-D20Roll).Result}
+    if(!$Table5GRoll){$Table5GRoll = (Get-D20Roll).Result}
    
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
@@ -2312,9 +2326,10 @@ function Get-Room {
     #endregion
 
     $RawContents = Get-RoomContents
-    $Contents = (Get-RoomContents).Description
+    $Contents = (Get-RoomContents -Roll $Table5FRoll).Description
     $Monster = if($Contents -like "Monster*"){$True}else{$False}
-    $Treasure = if($Contents -like "*treasure*"){if($Monster){(Get-Treasure -Monster $True).Loot}else{(Get-Treasure -Monster $False).Loot}}
+    if($Contents -like "*treasure*"){if($Monster){$Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Monster $True -Level $Level).Loot}else{$Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Monster $False -Level $Level).Loot}}
+    if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A"}
     #To do: Get-Monster
 
     [pscustomobject]@{
@@ -2333,6 +2348,7 @@ function Get-Room {
         }
         Contents = $Contents
         Monster = $Monster
+        Container = $Container
         Treasure = $Treasure
 
     }
