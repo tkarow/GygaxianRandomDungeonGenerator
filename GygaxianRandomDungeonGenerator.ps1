@@ -1847,6 +1847,8 @@ function Get-DungeonRandomMonsterLevel1Roll {
 
     if($DungeonRandomMonsterLevel1TableResult.Lowest -lt $Level){$Relevant = $DungeonRandomMonsterLevel1TableResult.Else}else{$Relevant = $DungeonRandomMonsterLevel1TableResult}
 
+    $NumberAppearing = $Relevant.Number
+
     if($Relevant.Monster -ne "Human"){
 
         if($Roll -ne 19){$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
@@ -1857,7 +1859,7 @@ function Get-DungeonRandomMonsterLevel1Roll {
     [pscustomobject]@{
     
         Roll = $Roll
-        Result = $Relevant
+        Encounter = $Relevant.Monster
         NumberAppearing = $NumberAppearing
 
     }
@@ -1866,10 +1868,10 @@ function Get-DungeonRandomMonsterLevel1Roll {
 
 $HumanSubtable = @(
 
-[pscustomobject]@{Min = 1;Max = 25;Monster="Bandit";Number="5-15"}
-[pscustomobject]@{Min = 26;Max = 30;Monster="Berserker";Number="3-9"}
-[pscustomobject]@{Min = 31;Max = 45;Monster="Brigand";Number="3-9"}
-[pscustomobject]@{Min = 46;Max = 100;Monster="Character";Number="-"}
+[pscustomobject]@{Min = 1;Max = 25;Human ="Bandit";Number = "5-15";Base=3;VarianceDie = 6;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 26;Max = 30;Human ="Berserker";Number = "3-9";Base=1;VarianceDie = 4;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 31;Max = 45;Human ="Brigand";Number = "3-9";Base=1;VarianceDie = 4;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 46;Max = 100;Human ="NPC party";Number = "?"}
 
 )
 
@@ -1887,16 +1889,21 @@ function Get-HumanSubtableRoll {
 
     $HumanSubtableResult = $HumanSubtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
+    $NumberAppearing = $HumanSubtableResult.Number
+
+    if($HumanSubtableResult.Human -notlike "*NPC*"){$NumberAppearing = $HumanSubtableResult.Base + ((Get-Random -Minimum 1 -Maximum ($HumanSubtableResult.VarianceDie + 1)) * $HumanSubtableResult.VarianceDiceNumber)}
+
     [pscustomobject]@{
     
         Roll = $Roll
-        Result = $HumanSubtableResult
+        Encounter = $HumanSubtableResult.Human
+        NumberAppearing = $NumberAppearing
 
     }
 
 }
 
-$HumanSubtable = @(
+$Characterubtable = @(
 
 [pscustomobject]@{Min = 1;Max = 17;Monster="Cleric";MaximumNumberPerParty=3}
 [pscustomobject]@{Min = 18;Max = 20;Monster="Druid";MaximumNumberPerParty=2}
@@ -1912,6 +1919,140 @@ $HumanSubtable = @(
 )
 #Number Of Characters In Party: There will always be 2-5 characters in a character group, with men-at-arms or henchmen to round the party out to 9. Roll d4, and add 1 to the result in order to find the number of characters, then dice on the Character Subtable to find the profession of each, ignoring rolls which are contradictory (a paladin and an assassin, for instance) or exceed the maximum number of a character class possible in any given party. The number of characters subtracted from 9 gives the number of men-at-arms or henchmen accompanying the characters.
 #Level Of Characters: The level of each character will be equal to that of the level of the dungeon or the level of monster, whichever is greater, through the 4th level. Thereafter it will be between 7th and 12th, determined by a roll of d6 +6, and adjusted as follows: If the total is higher than the level of the dungeon, reduce it by -1. If it is lower than the level of the dungeon, adjust it upwards by +1, but do not exceed 12 levels unless the dungeon level is 16th or deeper.
+
+function Get-CharacterSubtableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoPaladin,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoAssassin,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoCleric,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoDruid,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoFighter,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoRanger,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoMagicUser,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoIllusionist,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoThief,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoMonk,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoBard
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $ForbiddenNumbers = @()
+
+    if($NoCleric){1..17 | %{$ForbiddenNumbers += $_}}
+    if($NoDruid){18..20 | %{$ForbiddenNumbers += $_}}
+    if($NoFighter){21..60 | %{$ForbiddenNumbers += $_}}
+    if($NoPaladin){61..62 | %{$ForbiddenNumbers += $_}}
+    if($NoRanger){63..65 | %{$ForbiddenNumbers += $_}}
+    if($NoMagicUser){66..86 | %{$ForbiddenNumbers += $_}}
+    if($NoIllusionist){87..88 | %{$ForbiddenNumbers += $_}}
+    if($NoThief){89..98 | %{$ForbiddenNumbers += $_}}
+    if($NoAssassin){99 | %{$ForbiddenNumbers += $_}}
+    if(($NoMonk) -or ($NoBard)){100 | %{$ForbiddenNumbers += $_}}
+
+    while($ForbiddenNumbers -contains $Roll){
+    
+        $Roll = (Get-D100Roll).Result
+
+    }
+
+    $CharacterubtableResult = $Characterubtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Character = $CharacterubtableResult.Monster
+
+    if($Character -like "Monk or Bard"){if((Get-D2Roll).Result -eq 1){$Character = "Monk"}else{$Character = "Bard"}}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        NPC = $Character
+        MaximumNumberPerParty = $CharacterubtableResult.MaximumNumberPerParty
+
+    }
+
+}
+
+function Get-NPCPartyRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $NumberInParty = 1 + (Get-D4Roll).Result
+
+    $ClericBan = $False
+    $DruidBan = $False
+    $FighterBan = $False
+    $PaladinBan = $False
+    $RangerBan = $False
+    $MagicUserBan = $False
+    $IllusionistBan = $False
+    $ThiefBan = $False
+    $AssassinBan = $False
+    $MonkBan = $False
+    $BardBan = $False
+
+    $NPCParty = @()
+
+    1..$NumberInParty | %{
+
+        if(($NPCParty.NPC | ?{$_ -like "Cleric"} | Measure).Count -ge 3){$ClericBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Druid"} | Measure).Count -ge 2){$DruidBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Fighter"} | Measure).Count -ge 5){$FighterBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Paladin"} | Measure).Count -ge 2){$PaladinBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Ranger"} | Measure).Count -ge 2){$RangerBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Magic-user"} | Measure).Count -ge 3){$MagicUserBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Illusionist"} | Measure).Count -ge 1){$IllusionistBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Thief"} | Measure).Count -ge 4){$ThiefBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Assassin"} | Measure).Count -ge 2){$AssassinBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Monk"} | Measure).Count -ge 1){$MonkBan = $True}
+        if(($NPCParty.NPC | ?{$_ -like "Bard"} | Measure).Count -ge 1){$BardBan = $True}
+
+        if(($NPCParty.NPC | ?{$_ -like "Paladin"} | Measure).Count -gt 0){
+        
+            $AssassinBan = $True
+            
+        }elseif(($NPCParty.NPC | ?{$_ -like "Assassin"} | Measure).Count -gt 0){
+        
+            $PaladinBan = $True
+            
+        }
+        
+        $PotentialPartyMember = Get-CharacterSubtableRoll -NoCleric $ClericBan -NoDruid $DruidBan -NoFighter $FighterBan -NoPaladin $PaladinBan -NoRanger $RangerBan -NoMagicUser $MagicUserBan -NoIllusionist $IllusionistBan -NoThief $ThiefBan -NoAssassin $AssassinBan -NoMonk $MonkBan -NoBard $BardBan
+            
+        $NPCParty += $PotentialPartyMember
+            
+    }
+
+    $NPCPartyOutput = $NPCParty.NPC
+    $NPCPartyOutput += "Henchmen x $((9 - $NumberInParty))"
+
+    $NPCPartyOutput
+
+}
 
 #endregion
 
@@ -1980,6 +2121,19 @@ function Get-SpecificNumberOfExits {
 }
 
 function Get-Monster {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+
+    )
+
+    $MonsterRoll = Get-DungeonRandomMonsterLevel1Roll -Level $Level -roll 34
+
+    if($MonsterRoll.Result.Human -like "Human"){$MonsterRoll = Get-HumanSubtableRoll}
+
+    if($MonsterRoll.Result.Monster -like "Character"){$MonsterRoll = Get-CharacterSubtableRoll}
 
 }
 
