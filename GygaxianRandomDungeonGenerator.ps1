@@ -132,7 +132,7 @@ function Write-Rolls{
 
 ###################################
 #region Appendix A
-#The following is my adaptation of Advanced Dungeons and Dragons' Dungeon Masters Guide' Appendix A (pg. 169 - 172) into PowerShell tables and functions
+#The following is my adaptation of Advanced Dungeons and Dragons' Dungeon Masters Guide's Appendix A (pg. 169 - 172) into PowerShell tables and functions
 
 #region TABLE I.: PERIODIC CHECK (d20)
 $Table1 = @{
@@ -1801,31 +1801,117 @@ function Get-JewelryPieceRoll {
 
 #region Monster tables
 
-$DungeonLevel1MonsterTable = @(
+$DungeonRandomMonsterLevel1Table = @(
 
-[pscustomobject]@{Min = 1;Max = 2;Monster="Giant ant";Number="1-4"}
-[pscustomobject]@{Min = 3;Max = 4;Monster="Badger";Number="1-4"}
-[pscustomobject]@{Min = 5;Max = 14;Monster="Fire beetle";Number="1-4"}
-[pscustomobject]@{Min = 15;Max = 15;Monster="Manes demon";Number="1-4"}
-[pscustomobject]@{Min = 16;Max = 17;Monster="Dwarf";Number="4-14"}
-[pscustomobject]@{Min = 18;Max = 18;Monster="Ear seeker";Number="1"}
-[pscustomobject]@{Min = 19;Max = 19;Monster="Elf";Number="3-11 (d6+d4+1)"}
-[pscustomobject]@{Min = 20;Max = 21;Monster="Gnome";Number="5-15"}
-[pscustomobject]@{Min = 22;Max = 26;Monster="Goblin";Number="6-15"}
-[pscustomobject]@{Min = 27;Max = 28;Monster="Hobbit";Number="9-16"}
-[pscustomobject]@{Min = 29;Max = 33;Monster="Hobgoblin";Number="2-8"}
-[pscustomobject]@{Min = 34;Max = 48;Monster="Human";Number="?"}
-[pscustomobject]@{Min = 49;Max = 54;Monster="Kobold";Number="6-18"}
-[pscustomobject]@{Min = 55;Max = 66;Monster="Orc";Number="7-12"}
-[pscustomobject]@{Min = 67;Max = 70;Monster="Piercer";Number="1-3"}
-[pscustomobject]@{Min = 71;Max = 83;Monster="Giant rat";Number="5-20"}
-[pscustomobject]@{Min = 84;Max = 85;Monster="Rot grub";Number="1-3"}
-[pscustomobject]@{Min = 86;Max = 96;Monster="Shrieker";Number="1-2"}
-[pscustomobject]@{Min = 97;Max = 98;Monster="Skeleton";Number="1-4"}
-[pscustomobject]@{Min = 99;Max = 100;Monster="Zombie";Number="1-3"}
+[pscustomobject]@{Min = 1;Max = 2;Monster="Giant ant";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 3;Max = 4;Monster="Badger";Number="1-4";Lowest=2;Base=0;VarianceDie = 4;VarianceDiceNumber = 1;Else=[pscustomobject]@{Monster="Hobgoblin";Number="2-8";Base=2;VarianceDie = 6;VarianceDiceNumber = 3}}
+[pscustomobject]@{Min = 5;Max = 14;Monster="Fire beetle";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 15;Max = 15;Monster="Manes demon";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 16;Max = 17;Monster="Dwarf";Number="4-14";Lowest=100;Base=2;VarianceDie = 6;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 18;Max = 18;Monster="Ear seeker";Number="1";Lowest=100;Base=1;VarianceDie = 0;VarianceDiceNumber = 0}
+[pscustomobject]@{Min = 19;Max = 19;Monster="Elf";Number="3-11";Lowest=100;Base=1;VarianceDie = 4,6;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 20;Max = 21;Monster="Gnome";Number="5-15";Lowest=100;Base=4;VarianceDie = 10;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 22;Max = 26;Monster="Goblin";Number="6-15";Lowest=100;Base=5;VarianceDie = 10;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 27;Max = 28;Monster="Halfling";Number="9-16";Lowest=4;Base=8;VarianceDie = 8;VarianceDiceNumber = 1;Else=[pscustomobject]@{Monster="Giant rat";Number="5-20"}}
+[pscustomobject]@{Min = 29;Max = 33;Monster="Hobgoblin";Number="2-8";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 34;Max = 48;Monster="Human";Number="?";Lowest=100}
+[pscustomobject]@{Min = 49;Max = 54;Monster="Kobold";Number="6-18";Lowest=100;Base=2;VarianceDie = 4;VarianceDiceNumber = 4}
+[pscustomobject]@{Min = 55;Max = 66;Monster="Orc";Number="7-12";Lowest=100;Base=6;VarianceDie = 6;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 67;Max = 70;Monster="Piercer";Number="1-3";Lowest=100;Base=1;VarianceDie = 2;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 71;Max = 83;Monster="Giant rat";Number="5-20";Lowest=100;Base=2;VarianceDie = 6;VarianceDiceNumber = 3}
+[pscustomobject]@{Min = 84;Max = 85;Monster="Rot grub";Number="1-3";Lowest=100;Base=1;VarianceDie = 2;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 86;Max = 96;Monster="Shrieker";Number="1-2";Lowest=100;Base=0;VarianceDie = 2;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 97;Max = 98;Monster="Skeleton";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 99;Max = 100;Monster="Zombie";Number="1-3";Lowest=100;Base=1;VarianceDie = 2;VarianceDiceNumber = 1}
 
 )
-#The above is NOT derrived from the Dungeon Master's Guide! Where did it come from!?
+#The above is derrived from the Advanced Dungeons and Dragons' Dungeon Masters Guide's Appendix C pg. 175
+
+function Get-DungeonRandomMonsterLevel1Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    if(($Level -like $Null) -or (!$Level)){$Level = 1}
+
+    $DungeonRandomMonsterLevel1TableResult = $DungeonRandomMonsterLevel1Table | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    if($DungeonRandomMonsterLevel1TableResult.Lowest -lt $Level){$Relevant = $DungeonRandomMonsterLevel1TableResult.Else}else{$Relevant = $DungeonRandomMonsterLevel1TableResult}
+
+    if($Relevant.Monster -ne "Human"){
+
+        if($Roll -ne 19){$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
+        if($Roll -eq 19){$NumberAppearing = (Get-D6Roll).Result + (Get-D4Roll).Result + 1}
+
+    }
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $Relevant
+        NumberAppearing = $NumberAppearing
+
+    }
+
+}
+
+$HumanSubtable = @(
+
+[pscustomobject]@{Min = 1;Max = 25;Monster="Bandit";Number="5-15"}
+[pscustomobject]@{Min = 26;Max = 30;Monster="Berserker";Number="3-9"}
+[pscustomobject]@{Min = 31;Max = 45;Monster="Brigand";Number="3-9"}
+[pscustomobject]@{Min = 46;Max = 100;Monster="Character";Number="-"}
+
+)
+
+function Get-HumanSubtableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $HumanSubtableResult = $HumanSubtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $HumanSubtableResult
+
+    }
+
+}
+
+$HumanSubtable = @(
+
+[pscustomobject]@{Min = 1;Max = 17;Monster="Cleric";MaximumNumberPerParty=3}
+[pscustomobject]@{Min = 18;Max = 20;Monster="Druid";MaximumNumberPerParty=2}
+[pscustomobject]@{Min = 21;Max = 60;Monster="Fighter";MaximumNumberPerParty=5}
+[pscustomobject]@{Min = 61;Max = 62;Monster="Paladin";MaximumNumberPerParty=2}
+[pscustomobject]@{Min = 63;Max = 65;Monster="Ranger";MaximumNumberPerParty=2}
+[pscustomobject]@{Min = 66;Max = 86;Monster="Magic-user";MaximumNumberPerParty=3}
+[pscustomobject]@{Min = 87;Max = 88;Monster="Illusionist";MaximumNumberPerParty=1}
+[pscustomobject]@{Min = 89;Max = 98;Monster="Thief";MaximumNumberPerParty=4}
+[pscustomobject]@{Min = 99;Max = 99;Monster="Assassin";MaximumNumberPerParty=2}
+[pscustomobject]@{Min = 100;Max = 100;Monster="Monk or Bard";MaximumNumberPerParty=1}
+
+)
+#Number Of Characters In Party: There will always be 2-5 characters in a character group, with men-at-arms or henchmen to round the party out to 9. Roll d4, and add 1 to the result in order to find the number of characters, then dice on the Character Subtable to find the profession of each, ignoring rolls which are contradictory (a paladin and an assassin, for instance) or exceed the maximum number of a character class possible in any given party. The number of characters subtracted from 9 gives the number of men-at-arms or henchmen accompanying the characters.
+#Level Of Characters: The level of each character will be equal to that of the level of the dungeon or the level of monster, whichever is greater, through the 4th level. Thereafter it will be between 7th and 12th, determined by a roll of d6 +6, and adjusted as follows: If the total is higher than the level of the dungeon, reduce it by -1. If it is lower than the level of the dungeon, adjust it upwards by +1, but do not exceed 12 levels unless the dungeon level is 16th or deeper.
 
 #endregion
 
