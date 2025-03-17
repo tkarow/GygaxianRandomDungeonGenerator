@@ -1803,18 +1803,18 @@ function Get-JewelryPieceRoll {
 
 $MagicItemType = @(
 
-[pscustomobject]@{Min = 1;Max = 20;Type = "Potions (A.)"}
-[pscustomobject]@{Min = 21;Max = 35;Type = "Scrolls (B.)"}
-[pscustomobject]@{Min = 36;Max = 40;Type = "Rings (C.)"}
-[pscustomobject]@{Min = 41;Max = 45;Type = "Rods, Staves & Wands (D.)"}
-[pscustomobject]@{Min = 46;Max = 48;Type = "Miscellaneous Magic (E.1.)"}
-[pscustomobject]@{Min = 49;Max = 51;Type = "Miscellaneous Magic (E.2.)"}
-[pscustomobject]@{Min = 52;Max = 54;Type = "Miscellaneous Magic (E.3.)"}
-[pscustomobject]@{Min = 55;Max = 57;Type = "Miscellaneous Magic (E.4.)"}
-[pscustomobject]@{Min = 58;Max = 60;Type = "Miscellaneous Magic (E.6.)"}
-[pscustomobject]@{Min = 61;Max = 75;Type = "Armor & Shields (F.)"}
-[pscustomobject]@{Min = 76;Max = 86;Type = "Swords (G.)"}
-[pscustomobject]@{Min = 87;Max = 100;Type = "Miscellaneous Weapons (H.)"}
+[pscustomobject]@{Min = 1;Max = 20;Type = "Potions (A.)";ShortName = "Potion"}
+[pscustomobject]@{Min = 21;Max = 35;Type = "Scrolls (B.)";ShortName = "Scroll"}
+[pscustomobject]@{Min = 36;Max = 40;Type = "Rings (C.)";ShortName = "Magic ring"}
+[pscustomobject]@{Min = 41;Max = 45;Type = "Rods, Staves & Wands (D.)";ShortName = "Magic wand"}
+[pscustomobject]@{Min = 46;Max = 48;Type = "Miscellaneous Magic (E.1.)";ShortName = "Wonderous item"}
+[pscustomobject]@{Min = 49;Max = 51;Type = "Miscellaneous Magic (E.2.)";ShortName = "Wonderous item"}
+[pscustomobject]@{Min = 52;Max = 54;Type = "Miscellaneous Magic (E.3.)";ShortName = "Wonderous item"}
+[pscustomobject]@{Min = 55;Max = 57;Type = "Miscellaneous Magic (E.4.)";ShortName = "Wonderous item"}
+[pscustomobject]@{Min = 58;Max = 60;Type = "Miscellaneous Magic (E.5.)";ShortName = "Wonderous item"}
+[pscustomobject]@{Min = 61;Max = 75;Type = "Armor & Shields (F.)";ShortName = "Magic armor"}
+[pscustomobject]@{Min = 76;Max = 86;Type = "Swords (G.)";ShortName = "Magic sword"}
+[pscustomobject]@{Min = 87;Max = 100;Type = "Miscellaneous Weapons (H.)";ShortName = "Magic weapon"}
 
 )
 
@@ -2368,16 +2368,34 @@ function Get-Treasure {
 
     }elseif(($Treasure.Roll -ge 95) -and ($Treasure.Roll -le 97)){
     
-        1..(1 * $Level) | %{$JewelryLoot = Get-Jewelry;$Loot += [pscustomobject]@{
+        1..(1 * $Level) | %{$JewelryLoot = Get-Jewelry
         
-                Item = $JewelryLoot.Item
-                Amount = 1
-                Value = $JewelryLoot.Value}
+            $Loot += [pscustomobject]@{
+        
+                    Item = $JewelryLoot.Item
+                    Amount = 1
+                    Value = $JewelryLoot.Value
+                
+                }
 
                 $DetailedLoot += $JewelryLoot
                 
             }
 
+    }elseif($Treasure.Roll -ge 98){
+        
+        $MagicItem = Get-MagicItemTypeRoll
+
+        $Loot += [pscustomobject]@{
+        
+            Item = $MagicItem.ShortName
+            Amount = 1
+            Value = "Varies"
+
+        }
+
+        $DetailedLoot += $MagicItem
+                
     }
 
     [pscustomobject]@{
