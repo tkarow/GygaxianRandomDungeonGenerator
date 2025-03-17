@@ -1135,8 +1135,8 @@ $Table7 = @{
 7  = [pscustomobject]@{Description = "Pit, 10' deep, 3 in 6 to fall in."}
 8  = [pscustomobject]@{Description = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
 9  = [pscustomobject]@{Description = "20' x 20' elevator room (party has entered door directly ahead and is in room), descends 1 level and will not ascend for 30 turns."}
-10 = [pscustomobject]@{Description = "As 9. above, but room descends 2 levels"}
-11 = [pscustomobject]@{Description = "As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."}
+10 = [pscustomobject]@{Description = "20' x 20' elevator room (party has entered door directly ahead and is in room), descends 2 levels and will not ascend for 30 turns."}
+11 = [pscustomobject]@{Description = "20' x 20' elevator room (party has entered door directly ahead and is in room), descends 2-5 levels; 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."}
 12 = [pscustomobject]@{Description = "Wall 10' behind slides across passage blocking it for from 40-60 turns."}
 13 = [pscustomobject]@{Description = "Oil (equal to one flask) pours on random person from hole in ceiling, followed by flaming cinder (2-12 h.p. damage unless successful save vs. magic is made, which indicates only 1-3 h.p. damage)."}
 14 = [pscustomobject]@{Description = "Pit, 10' deep, 3 in 6 to fall in, pit walls move together to crush victim(s) in 2-5 rounds."}
@@ -1152,6 +1152,7 @@ $Table7 = @{
 20 = [pscustomobject]@{Description = "Chute down 1 level (cannot be ascended in any manner)."}
 
 }
+#I changed wording above! Result 10 originally read "As 9.above, but room descends 2 levels" and result 11 originally read "As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."
 
 function Get-Table7Roll {
 
@@ -2767,7 +2768,10 @@ function Get-Room {
         [int]$Table5FRoll,
 
         [Parameter(Mandatory=$False)]
-        [int]$Table5GRoll
+        [int]$Table5GRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table7Roll
    
     )
 
@@ -2865,6 +2869,8 @@ function Get-Room {
         $Monster = $True
         $Monsters = (Get-Monster -Level $Level).Encounter
     
+        $Contents = "Monster(s)"
+
     }else{
     
         $Monsters = "N/A"
@@ -2880,9 +2886,13 @@ function Get-Room {
             $Table5GRoll = (Get-D100Roll).Result
             $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10).Loot
 
+            $Contents = "Monster(s) and treasure"
+
         }else{
     
             $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level).Loot
+
+            $Contents = "Treasure"
 
         }
         
@@ -2892,7 +2902,15 @@ function Get-Room {
     
         $Trick = Get-Table7Roll -Roll $Table7Roll
 
-        if($Trick.IllusionaryWall -like "N/A"){$Contents = $Trick.Description}else{$Contents = "Illusionary wall hides a $($Trick.IllusionaryWall.ToLower())"}
+        if($Trick.IllusionaryWall -like "N/A"){
+        
+            $Contents = $Trick.Description
+            
+        }else{
+        
+            $Contents = "Illusionary wall hides a $($Trick.IllusionaryWall.ToLower())"
+            
+        }
         
     }
 
@@ -2900,7 +2918,9 @@ function Get-Room {
     
         $Contents = $Contents.Stairs
 
-    }else{$Contents = "N/A"}
+    }
+
+    if($Contents.Description -like "Empty"){$Contents = "Empty"}
 
     if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A";$DetailedTreasure = "N/A"}
 
