@@ -2960,6 +2960,21 @@ Mad props to https://1eonline.info/
 
 ###
 
-Chambers are areas where the exits are passages; rooms are areas where the exits are doors
-SuStel, https://forum.rpg.net/index.php?threads/lets-read-the-ad-d-dungeon-masters-guide-1e.841119/page-28
+"Chambers are areas where the exits are passages; rooms are areas where the exits are doors"
+
+-SuStel, https://forum.rpg.net/index.php?threads/lets-read-the-ad-d-dungeon-masters-guide-1e.841119/page-28
+
+###
+
+ "Hallways serve multiple purposes:
+
+    They let the DM explain why nearby monsters don't join in combat. If all the rooms were adjacent, monsters in nearby rooms would peek in to see what all the ruckus was about. (The DM can still do this, but this gives them plausible deniability if they don't want to.)
+
+    Hallways take up a little more time during exploration, making the party mark more torches
+
+    Traps and secret passages fit quite nicely into hallways. They keep rooms from being too crowded.
+
+    If the party needs to flee from the dungeon, hallways increase the distance to the exit and give the DM a little more opportunity to have something move into a previously-explored area."
+
+-thomar, https://www.reddit.com/r/osr/comments/17avhwq/whats_with_all_the_corridors/
 #>
