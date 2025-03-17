@@ -832,10 +832,43 @@ function Get-Table5FRoll {
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
 
+    if($Roll -eq 18){
+
+        $SpecialDieRoll = (Get-D20Roll).Result
+
+        switch($SpecialDieRoll){
+        
+                1 {$Stairs = "Stairs up 1 level"}
+                2 {$Stairs = "Stairs up 1 level"}
+                3 {$Stairs = "Stairs up 1 level"}
+                4 {$Stairs = "Stairs up 1 level"}
+                5 {$Stairs = "Stairs up 1 level"}
+                #6 is a missing result in the DMG! I have included it as "Stairs up 2 levels".
+                6 {$Stairs = "Stairs up 2 levels"}
+                7 {$Stairs = "Stairs up 2 levels"}
+                8 {$Stairs = "Stairs up 2 levels"}
+                9 {$Stairs = "Stairs down 1 level"}
+                10 {$Stairs = "Stairs down 1 level"}
+                11 {$Stairs = "Stairs down 1 level"}
+                12 {$Stairs = "Stairs down 1 level"}
+                13 {$Stairs = "Stairs down 1 level"}
+                14 {$Stairs = "Stairs down 1 level"}
+                15 {$Stairs = "Stairs down 2 levels"}
+                16 {$Stairs = "Stairs down 2 levels"}
+                17 {$Stairs = "Stairs down 2 levels"}
+                18 {$Stairs = "Stairs down 2 levels"}
+                19 {$Stairs = "Stairs down 2 levels"}
+                20 {$Stairs = "Stairs down 3 levels"}
+
+        }
+
+    }
+
     [pscustomobject]@{
    
         Roll = $Roll;
         Description = $Table5F.($Roll).Description
+        Stairs = if($Stairs){$Stairs}else{"N/A"}
    
     }
 
@@ -2780,29 +2813,21 @@ function Get-Room {
     #region Exits
     if(!$Unusual){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type}
     
-    $ExitLocations = [pscustomobject]@{
+    $ExitLocations = @()
+    $SecretDoorLocations = @()
+
+    if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{$ExitLocations += (Get-ExitLocation).Description}}else{$ExitLocations = "N/A"}
+    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{$SecretDoorLocations += (Get-ExitLocation).Description}}else{$SecretDoorLocations = "N/A"}
    
-        ExitLocations = @()
-        SecretDoorLocations = @()
+    $ExitDirections = @()
+    $SecretDoorDirections = @()
 
-    }
-
-    if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{$ExitLocations.ExitLocations += (Get-ExitLocation).Description}}else{$ExitLocations.ExitLocations = "N/A"}
-    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{$ExitLocations.SecretDoorLocations += (Get-ExitLocation).Description}}else{$ExitLocations.SecretDoorLocations = "N/A"}
-
-    $ExitDirections = [pscustomobject]@{
-   
-        ExitDirections = @()
-        SecretDoorDirections = @()
-
-    }
-
-    if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.ExitDirections += $_}else{$ExitDirections.ExitDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.ExitDirections = "N/A"}
-    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.SecretDoorDirections += $_}else{$ExitDirections.SecretDoorDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.SecretDoorDirections = "N/A"}
+    if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections += $_}else{$ExitDirections += "$($_.split('/')[0])"}}}else{$ExitDirections = "N/A"}
+    if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$SecretDoorDirections += $_}else{$SecretDoorDirections += "$($_.split('/')[0])"}}}else{$SecretDoorDirections = "N/A"}
     #endregion
 
-    $RawContents = Get-RoomContents
-    $Contents = (Get-RoomContents -Roll $Table5FRoll).Description
+    $Contents = Get-RoomContents -Roll $Table5FRoll
+
     if($Contents -like "Monster*"){
     
         $Monster = $True
@@ -2831,6 +2856,12 @@ function Get-Room {
         
     }
 
+    if($Contents.Description -like "Special*"){
+    
+        $Contents = $Contents.Stairs
+
+    }else{$Contents = "N/A"}
+
     if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A";$DetailedTreasure = "N/A"}
 
     [pscustomobject]@{
@@ -2841,9 +2872,13 @@ function Get-Room {
         Width = $Width
         Area = $Area
         Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
-        NumberOfExits = $SpecificNumberOfExits
+        Exits = $SpecificNumberOfExits.Exits
         ExitLocations = $ExitLocations
         ExitDirections = $ExitDirections
+        SecretDoors = $SpecificNumberOfExits.SecretDoors
+        SecretDoorLocations = $SecretDoorLocations
+        SecretDoorDirections = $SecretDoorDirections
+        Passage = $SpecificNumberOfExits.Passage
         Contents = $Contents
         Monsters = $Monsters
         Container = $Container
