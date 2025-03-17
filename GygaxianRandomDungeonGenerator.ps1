@@ -1799,6 +1799,103 @@ function Get-JewelryPieceRoll {
 
 #endregion
 
+#region Magic Items
+
+$MagicItemType = @(
+
+[pscustomobject]@{Min = 1;Max = 20;Type = "Potions (A.)"}
+[pscustomobject]@{Min = 21;Max = 35;Type = "Potions (B.)"}
+[pscustomobject]@{Min = 36;Max = 40;Type = "Rings (C.)"}
+[pscustomobject]@{Min = 41;Max = 45;Type = "Rods, Staves & Wands (D.)"}
+[pscustomobject]@{Min = 46;Max = 48;Type = "Miscellaneous Magic (E.1.)"}
+[pscustomobject]@{Min = 49;Max = 51;Type = "Miscellaneous Magic (E.2.)"}
+[pscustomobject]@{Min = 52;Max = 54;Type = "Miscellaneous Magic (E.3.)"}
+[pscustomobject]@{Min = 55;Max = 57;Type = "Miscellaneous Magic (E.4.)"}
+[pscustomobject]@{Min = 58;Max = 60;Type = "Miscellaneous Magic (E.6.)"}
+[pscustomobject]@{Min = 61;Max = 75;Type = "Armor & Shields (F.)"}
+[pscustomobject]@{Min = 76;Max = 86;Type = "Swords (G.)"}
+[pscustomobject]@{Min = 87;Max = 100;Type = "Miscellaneous Weapons (H.)"}
+
+)
+
+function Get-MagicItemTypeRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MagicItemType | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
+$Potions3A = @(
+
+[pscustomobject]@{Min = 1;Max = 3;Item = "Potion of Animal Control";XP = 250;Value = 400}
+[pscustomobject]@{Min = 4;Max = 6;Item = "Potion of Clairaudience";XP = 250;Value = 400}
+[pscustomobject]@{Min = 7;Max = 9;Item = "Potion of Clairvoyance";XP = 300;Value = 500}
+[pscustomobject]@{Min = 10;Max = 12;Item = "Potion of Climbing";XP = 300;Value = 500}
+[pscustomobject]@{Min = 13;Max = 15;Item = "Potion of Delusion";XP = 0;Value = 150}
+[pscustomobject]@{Min = 16;Max = 18;Item = "Potion of Diminution";XP = 300;Value = 500}
+[pscustomobject]@{Min = 19;Max = 20;Item = "Potion of Dragon Control";XP = "500 - 1000";Value = "5000 - 9000"}
+[pscustomobject]@{Min = 21;Max = 23;Item = "Potion of ESP";XP = 500;Value = 850}
+[pscustomobject]@{Min = 24;Max = 26;Item = "Potion of Extra-Healing";XP = 400;Value = 800}
+[pscustomobject]@{Min = 27;Max = 29;Item = "Potion of Fire Resistance";XP = 250;Value = 400}
+[pscustomobject]@{Min = 30;Max = 32;Item = "Potion of Flying";XP = 500;Value = 750}
+[pscustomobject]@{Min = 33;Max = 34;Item = "Potion of Gaseous Form";XP = 300;Value = 400}
+[pscustomobject]@{Min = 35;Max = 36;Item = "Potion of Giant Control";XP = "400 - 900";Value = "1000 - 6000"}
+[pscustomobject]@{Min = 37;Max = 39;Item = "Potion of Giant Strength";XP = "500 - 750";Value = "900 - 1400"}
+[pscustomobject]@{Min = 40;Max = 41;Item = "Potion of Growth";XP = 250;Value = 300}
+[pscustomobject]@{Min = 42;Max = 47;Item = "Potion of Healing";XP = 200;Value = 400}
+[pscustomobject]@{Min = 48;Max = 49;Item = "Potion of Heroism";XP = 300;Value = 500}
+[pscustomobject]@{Min = 50;Max = 51;Item = "Potion of Human Control";XP = 500;Value = 900}
+[pscustomobject]@{Min = 52;Max = 54;Item = "Potion of Invisibility";XP = 250;Value = 500}
+[pscustomobject]@{Min = 55;Max = 57;Item = "Potion of Invulnerability";XP = 350;Value = 500}
+[pscustomobject]@{Min = 58;Max = 60;Item = "Potion of Levitation";XP = 250;Value = 400}
+[pscustomobject]@{Min = 61;Max = 63;Item = "Potion of Longevity";XP = 500;Value = 1000}
+[pscustomobject]@{Min = 64;Max = 66;Item = "Oil of Etherealness";XP = 600;Value = 1500}
+[pscustomobject]@{Min = 67;Max = 69;Item = "Oil of Slipperiness";XP = 400;Value = 750}
+[pscustomobject]@{Min = 70;Max = 72;Item = "Philter of Love";XP = 200;Value = 300}
+[pscustomobject]@{Min = 73;Max = 75;Item = "Philter of Persuasiveness";XP = 400;Value = 850}
+[pscustomobject]@{Min = 76;Max = 78;Item = "Potion of Plant Control";XP = 250;Value = 300}
+[pscustomobject]@{Min = 79;Max = 81;Item = "Potion of Polymorph (self)";XP = 200;Value = 350}
+[pscustomobject]@{Min = 82;Max = 84;Item = "Potion of Poison";XP = 0;Value = 0}
+[pscustomobject]@{Min = 85;Max = 87;Item = "Potion of Speed";XP = 200;Value = 450}
+[pscustomobject]@{Min = 88;Max = 90;Item = "Potion of Super-Heroism";XP = 450;Value = 750}
+[pscustomobject]@{Min = 91;Max = 93;Item = "Potion of Sweet Water";XP = 200;Value = 250}
+[pscustomobject]@{Min = 94;Max = 96;Item = "Potion of Treasure Finding";XP = 600;Value = 2000}
+[pscustomobject]@{Min = 97;Max = 97;Item = "Potion of Undead Control";XP = 700;Value = 2500}
+[pscustomobject]@{Min = 98;Max = 100;Item = "Potion of Water Breathing";XP = 400;Value = 900}
+
+)
+
+function Get-Table3ARoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $Potions3A | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
+#endregion
+
 #region Monster tables
 
 $DungeonRandomMonsterLevel1Table = @(
@@ -2163,9 +2260,8 @@ function Get-Monster {
 
     [pscustomobject]@{
 
-        DetailedEncounter = if($Party -ne ""){$Party}else{$MonsterRoll}
-        SimpleEncounter = $SimpleEncounter
-        RawPartyInfo = if($SimpleEncounter -like "NPC party"){$MonsterRoll}else{"N/A"}
+        Encounter = if($Party -ne ""){"NPC party ($($Party))"}else{$SimpleEncounter}
+        #RawPartyInfo = if($SimpleEncounter -like "NPC party"){$MonsterRoll}else{"N/A"}
 
     }
 
@@ -2542,8 +2638,6 @@ function Get-Room {
     $Unusual = $False
     $Container = "N/A"
     $Treasure = @()
-    $DetailedTreasure = @()
-    $DetailedMonsters = @()
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
     if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
@@ -2640,13 +2734,11 @@ function Get-Room {
     if($Contents -like "Monster*"){
     
         $Monster = $True
-        $Monsters = Get-Monster -Level $Level
-        $DetailedMonsters += $Monsters.DetailedEncounter
-        $Monsters = $Monsters.SimpleEncounter
+        $Monsters = (Get-Monster -Level $Level).Encounter
     
     }else{
     
-        $Monsters = "N/A";$DetailedMonsters = "N/A"
+        $Monsters = "N/A"
         
     }
 
@@ -2684,7 +2776,6 @@ function Get-Room {
         Monsters = $Monsters
         Container = $Container
         Treasure = $Treasure
-        DetailedMonsters = $DetailedMonsters
 
     }
    
@@ -2759,4 +2850,9 @@ Diagonals: One issue that motivated this overall article was the burning questio
 ###
 
 Mad props to https://1eonline.info/
+
+###
+
+Chambers are areas where the exits are passages; rooms are areas where the exits are doors
+SuStel, https://forum.rpg.net/index.php?threads/lets-read-the-ad-d-dungeon-masters-guide-1e.841119/page-28
 #>
