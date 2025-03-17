@@ -1851,7 +1851,8 @@ function Get-DungeonRandomMonsterLevel1Roll {
 
     if($Relevant.Monster -ne "Human"){
 
-        if($Roll -ne 19){$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
+        if(($Roll -ne 19) -and ($Roll -ne 18)){$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
+        if($Roll -eq 18){$NumberAppearing = 1}
         if($Roll -eq 19){$NumberAppearing = (Get-D6Roll).Result + (Get-D4Roll).Result + 1}
 
     }
@@ -2129,11 +2130,44 @@ function Get-Monster {
 
     )
 
-    $MonsterRoll = Get-DungeonRandomMonsterLevel1Roll -Level $Level -roll 34
+    $Party = ""
 
-    if($MonsterRoll.Result.Human -like "Human"){$MonsterRoll = Get-HumanSubtableRoll}
+    $MonsterRoll = Get-DungeonRandomMonsterLevel1Roll -Level $Level
 
-    if($MonsterRoll.Result.Monster -like "Character"){$MonsterRoll = Get-CharacterSubtableRoll}
+    if($MonsterRoll.Encounter -like "Human"){$MonsterRoll = Get-HumanSubtableRoll}
+
+    if($MonsterRoll.Encounter -notlike "NPC Party"){$SimpleEncounter = "$($MonsterRoll.Encounter) x $($MonsterRoll.NumberAppearing)"}else{$SimpleEncounter = $MonsterRoll.Encounter}
+
+    if($MonsterRoll.Encounter -like "NPC Party"){
+    
+        $MonsterRoll = Get-NPCPartyRoll
+        
+        foreach($NPC in ($MonsterRoll | sort | Get-Unique)){
+        
+            if($NPC -notlike "Henchmen*"){
+            
+                $Party = "$($Party)$($NPC)$(if(($MonsterRoll | ?{$_ -like $NPC} | Measure).Count -gt 1){' x '})$(if(($MonsterRoll | ?{$_ -like $NPC} | Measure).Count -gt 1){($MonsterRoll | ?{$_ -like $NPC} | Measure).Count}), "
+                
+            }else{
+            
+                $Party = "$($Party)$($NPC), "
+                
+            }
+
+        }
+            
+            $Party = $Party.Trim()
+            if($Party -like "*,"){$Party = "$($Party.Substring(0,($Party.Length - 1)))"}
+
+    }
+
+    [pscustomobject]@{
+
+        DetailedEncounter = if($Party -ne ""){$Party}else{$MonsterRoll}
+        SimpleEncounter = $SimpleEncounter
+        RawPartyInfo = if($SimpleEncounter -like "NPC party"){$MonsterRoll}else{"N/A"}
+
+    }
 
 }
 
@@ -2143,10 +2177,10 @@ function Get-Treasure {
 
         [Parameter(Mandatory=$False)]
         [int]$Table5GRoll,
-        [Parameter(Mandatory=$True)]
-        [bool]$Monster,
         [Parameter(Mandatory=$False)]
-        [int]$Level
+        [int]$Level,
+        [Parameter(Mandatory=$False)]
+        [int]$RollBonus
 
     )
 
@@ -2154,7 +2188,11 @@ function Get-Treasure {
 
     if(!$Table5GRoll){$Table5GRoll = (Get-D100Roll).Result}
 
-    if($Monster -eq $True){$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $True}else{$Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $False -Level $Level}
+    if($RollBonus){$Table5GRoll = $Table5GRoll + $RollBonus}
+
+    if($Table5GRoll -gt 100){$Table5GRoll = 100}
+
+    $Treasure = Get-Table5GRoll -Roll $Table5GRoll -Monster $False -Level $Level
 
     $DetailedLoot = @()
     $Loot = @()
@@ -2505,6 +2543,7 @@ function Get-Room {
     $Container = "N/A"
     $Treasure = @()
     $DetailedTreasure = @()
+    $DetailedMonsters = @()
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
     if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
@@ -2512,7 +2551,7 @@ function Get-Room {
     if(!$Table5Roll){$Table5Roll = (Get-D20Roll).Result}
     if(!$Table5CRoll){$Table5CRoll = (Get-D20Roll).Result}
     if(!$Table5FRoll){$Table5FRoll = (Get-D20Roll).Result}
-    if(!$Table5GRoll){$Table5GRoll = (Get-D20Roll).Result}
+    if(!$Table5GRoll){$Table5GRoll = (Get-D100Roll).Result}
    
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
@@ -2598,11 +2637,37 @@ function Get-Room {
 
     $RawContents = Get-RoomContents
     $Contents = (Get-RoomContents -Roll $Table5FRoll).Description
-    $Monster = if($Contents -like "Monster*"){$True}else{$False}
-    if($Contents -like "*treasure*"){if($Monster){$Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Monster $True -Level $Level).Loot}else{$FoundTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Monster $False -Level $Level;$Treasure += ($FoundTreasure).Loot;$DetailedTreasure += ($FoundTreasure).DetailedLoot}}
-    if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A"}
-    if(!$DetailedTreasure){$DetailedTreasure = "N/A"}
-    #To do: Get-Monster
+    if($Contents -like "Monster*"){
+    
+        $Monster = $True
+        $Monsters = Get-Monster -Level $Level
+        $DetailedMonsters += $Monsters.DetailedEncounter
+        $Monsters = $Monsters.SimpleEncounter
+    
+    }else{
+    
+        $Monsters = "N/A";$DetailedMonsters = "N/A"
+        
+    }
+
+    if($Contents -like "*treasure*"){
+    
+        if($Monster -eq $True){
+    
+            $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10).Loot
+            
+            $Table5GRoll = (Get-D100Roll).Result
+            $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10).Loot
+
+        }else{
+    
+            $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level).Loot
+
+        }
+        
+    }
+
+    if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A";$DetailedTreasure = "N/A"}
 
     [pscustomobject]@{
            
@@ -2612,18 +2677,14 @@ function Get-Room {
         Width = $Width
         Area = $Area
         Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
-        Exits = [pscustomobject]@{
-
-            Number = $SpecificNumberOfExits
-            Locations = $ExitLocations
-            Directions = $ExitDirections
-
-        }
+        NumberOfExits = $SpecificNumberOfExits
+        ExitLocations = $ExitLocations
+        ExitDirections = $ExitDirections
         Contents = $Contents
-        Monster = $Monster
+        Monsters = $Monsters
         Container = $Container
         Treasure = $Treasure
-        DetailedTreasure = $DetailedTreasure
+        DetailedMonsters = $DetailedMonsters
 
     }
    
