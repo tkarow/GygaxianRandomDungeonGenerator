@@ -1165,10 +1165,42 @@ function Get-Table7Roll {
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
 
+    $IllusionaryWallHides = "N/A"
+
+    if($Roll -eq 19){
+    
+        switch((Get-D20Roll).Result){
+
+            1 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
+            2 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
+            3 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
+            4 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
+            5 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
+            6 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
+            7 {$IllusionaryWallHides = "Chute down 1 level"}
+            8 {$IllusionaryWallHides = "Chute down 1 level"}
+            9 {$IllusionaryWallHides = "Chute down 1 level"}
+            10 {$IllusionaryWallHides = "Chute down 1 level"}
+            11 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            12 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            13 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            14 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            15 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            16 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            17 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            18 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            19 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+            20 {$IllusionaryWallHides = "Chamber with monster and treasure"}
+
+        }
+
+    }
+
     [pscustomobject]@{
    
         Roll = $Roll;
         Description = $Table7.($Roll).Description
+        IllusionaryWall = $IllusionaryWallHides
    
     }
 
@@ -2828,7 +2860,7 @@ function Get-Room {
 
     $Contents = Get-RoomContents -Roll $Table5FRoll
 
-    if($Contents -like "Monster*"){
+    if($Contents.Description -like "Monster*"){
     
         $Monster = $True
         $Monsters = (Get-Monster -Level $Level).Encounter
@@ -2839,7 +2871,7 @@ function Get-Room {
         
     }
 
-    if($Contents -like "*treasure*"){
+    if($Contents.Description -like "*treasure*"){
     
         if($Monster -eq $True){
     
@@ -2853,6 +2885,14 @@ function Get-Room {
             $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level).Loot
 
         }
+        
+    }
+
+    if($Contents.Description -like "Trick*"){
+    
+        $Trick = Get-Table7Roll -Roll $Table7Roll
+
+        if($Trick.IllusionaryWall -like "N/A"){$Contents = $Trick.Description}else{$Contents = "Illusionary wall hides a $($Trick.IllusionaryWall.ToLower())"}
         
     }
 
@@ -2977,4 +3017,12 @@ Mad props to https://1eonline.info/
     If the party needs to flee from the dungeon, hallways increase the distance to the exit and give the DM a little more opportunity to have something move into a previously-explored area."
 
 -thomar, https://www.reddit.com/r/osr/comments/17avhwq/whats_with_all_the_corridors/
+
+###
+
+https://odd74.proboards.com/thread/11578/gygax-od-additions
+
+https://www.dropbox.com/scl/fi/9zcleb51bh3tcmdf61b45/Gygax-OD-D-Additions.pdf?rlkey=bikxgoxbi03au3cnlp4hyv0oe&e=1&dl=0
+https://pastebin.com/s9yCRPGq
+###
 #>
