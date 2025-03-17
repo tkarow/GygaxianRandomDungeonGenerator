@@ -1804,7 +1804,7 @@ function Get-JewelryPieceRoll {
 $MagicItemType = @(
 
 [pscustomobject]@{Min = 1;Max = 20;Type = "Potions (A.)"}
-[pscustomobject]@{Min = 21;Max = 35;Type = "Potions (B.)"}
+[pscustomobject]@{Min = 21;Max = 35;Type = "Scrolls (B.)"}
 [pscustomobject]@{Min = 36;Max = 40;Type = "Rings (C.)"}
 [pscustomobject]@{Min = 41;Max = 45;Type = "Rods, Staves & Wands (D.)"}
 [pscustomobject]@{Min = 46;Max = 48;Type = "Miscellaneous Magic (E.1.)"}
@@ -1836,7 +1836,7 @@ function Get-MagicItemTypeRoll {
 
 }
 
-$Potions3A = @(
+$Table3A = @(
 
 [pscustomobject]@{Min = 1;Max = 3;Item = "Potion of Animal Control";XP = 250;Value = 400}
 [pscustomobject]@{Min = 4;Max = 6;Item = "Potion of Clairaudience";XP = 250;Value = 400}
@@ -1888,7 +1888,56 @@ function Get-Table3ARoll {
     if($Roll -gt 100){$Roll = 100}
     if(!$Roll){$Roll = (Get-D100Roll).Result}
 
-    $Result = $Potions3A | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+    $Result = $Table3A | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
+$Table3B = @(
+
+[pscustomobject]@{Min = 1;Max = 10;Item = "1 scroll";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 11;Max = 16;Item = "1 scroll";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 17;Max = 19;Item = "1 scroll";SpellLevelRange = "2-9 or 2-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 20;Max = 24;Item = "2 scrolls";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 25;Max = 27;Item = "2 scrolls";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 28;Max = 32;Item = "3 scrolls";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 33;Max = 35;Item = "3 scrolls";SpellLevelRange = "2-9 or 2-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 36;Max = 39;Item = "4 scrolls";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 40;Max = 42;Item = "4 scrolls";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 43;Max = 46;Item = "5 scrolls";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 47;Max = 49;Item = "5 scrolls";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 50;Max = 52;Item = "6 scrolls";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 53;Max = 54;Item = "6 scrolls";SpellLevelRange = "3-8 or 3-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 55;Max = 57;Item = "7 scrolls";SpellLevelRange = "1-8";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 58;Max = 59;Item = "7 scrolls";SpellLevelRange = "2-9";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 60;Max = 60;Item = "7 scrolls";SpellLevelRange = "4-9 or 4-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 61;Max = 62;Item = "1 scroll (Protection - Demons)";SpellLevelRange = "";XPValue = "2500";Value = "12500"}
+[pscustomobject]@{Min = 63;Max = 64;Item = "1 scroll (Protection - Devils)";SpellLevelRange = "";XPValue = "2500";Value = "12500"}
+[pscustomobject]@{Min = 65;Max = 70;Item = "1 scroll (Protection - Elementals)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 71;Max = 76;Item = "1 scroll (Protection - Lycanthropes)";SpellLevelRange = "";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 77;Max = 82;Item = "1 scroll (Protection - Magic)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 83;Max = 87;Item = "1 scroll (Protection - Petrification)";SpellLevelRange = "";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 88;Max = 92;Item = "1 scroll (Protection - Possession)";SpellLevelRange = "";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 93;Max = 97;Item = "1 scroll (Protection - Undead)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 98;Max = 100;Item = "1 cursed scroll";SpellLevelRange = "";XPValue = "0";Value = "0"}
+
+)
+#*30% of all scrolls are of clerical nature (dice 71-00), and 25% of all clerical scrolls are druidical. 10% of all magic-user scrolls are illusionist. This applies only to scrolls 01-60 above. Asterisked numbers indicate clerical spell levels.
+
+function Get-Table3BRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $Table3B | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
     $Result
 
