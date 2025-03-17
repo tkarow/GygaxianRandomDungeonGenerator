@@ -184,7 +184,7 @@ function Get-Table1Roll {
 
 #region TABLE II.: DOORS (d20)
 #Always check width of passage (TABLE III. A.)
-#Location of Door:
+#Location of exit:
 $Table2 = @{
 
 1  = [pscustomobject]@{Description = "Left"}
@@ -212,7 +212,7 @@ $Table2 = @{
 
 function Get-Table2Roll {
 
-    [alias("Get-LocationOfDoorRoll")]
+    [alias("Get-LocationOfDoorRoll","Get-LocationOfExitRoll")]
     param(
 
         [Parameter(Mandatory=$False)]
@@ -1817,6 +1817,7 @@ $MagicItemType = @(
 [pscustomobject]@{Min = 87;Max = 100;Type = "Miscellaneous Weapons (H.)";ShortName = "Magic weapon"}
 
 )
+#The above is found in the Advanced Dungeons and Dragons' Dungeon Masters Guide's Table 3 (pg. 121). The below are subtables on its following pages, (to pg. 125) related to the above.
 
 function Get-MagicItemTypeRoll {
 
@@ -1942,6 +1943,8 @@ function Get-Table3BRoll {
     $Result
 
 }
+
+#To do: tables 3C - 3H
 
 #endregion
 
@@ -2201,6 +2204,8 @@ function Get-NPCPartyRoll {
 
 }
 
+#To do: Tables for moster level 2 and above
+
 #endregion
 
 ###################################
@@ -2240,26 +2245,26 @@ function Get-SpecificNumberOfExits {
     $SecretDoors = 0
     if(!$Roll){$5CRoll = Get-NumberOfExits}else{$5CRoll = Get-NumberOfExits -Roll $Roll}
 
-    if($5CRoll.Roll -le 15){$DoorsNumber = $5CRoll.Description}
-    if(($5CRoll.Roll -eq 16) -or ($5CRoll.Roll -eq 17) -or ($5CRoll.Roll -eq 18)){$DoorsNumber = (Get-D4Roll).Result}
-    if($5CRoll.Description -like "0*"){$DoorsNumber = 0;1..((($Width * 2) + ($Length * 2)) / 10) | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}}
+    if($5CRoll.Roll -le 15){$ExitsNumber = $5CRoll.Description}
+    if(($5CRoll.Roll -eq 16) -or ($5CRoll.Roll -eq 17) -or ($5CRoll.Roll -eq 18)){$ExitsNumber = (Get-D4Roll).Result}
+    if($5CRoll.Description -like "0*"){$ExitsNumber = 0;1..((($Width * 2) + ($Length * 2)) / 10) | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}}
     if(($5CRoll.Roll -eq 19) -or ($5CRoll.Roll -eq 20)){
    
-        if($Type -eq "Chamber"){$DoorsNumber = 1}
-        if($Type -eq "Room"){$DoorsNumber = 0;$Passage = $True}
+        if($Type -eq "Chamber"){$ExitsNumber = 1}
+        if($Type -eq "Room"){$ExitsNumber = 0;$Passage = $True}
 
     }
 
     if($Type -eq "Unusual"){
    
-        $DoorsNumber = "?"
+        $ExitsNumber = "?"
         $SecretDoors = "?"
 
     }
 
     [pscustomobject]@{
    
-        Doors = $DoorsNumber
+        Exits = $ExitsNumber
         SecretDoors = $SecretDoors
         Passage = $Passage
 
@@ -2777,22 +2782,22 @@ function Get-Room {
     
     $ExitLocations = [pscustomobject]@{
    
-        DoorLocations = @()
+        ExitLocations = @()
         SecretDoorLocations = @()
 
     }
 
-    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{$ExitLocations.DoorLocations += (Get-ExitLocation).Description}}else{$ExitLocations.DoorLocations = "N/A"}
+    if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{$ExitLocations.ExitLocations += (Get-ExitLocation).Description}}else{$ExitLocations.ExitLocations = "N/A"}
     if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{$ExitLocations.SecretDoorLocations += (Get-ExitLocation).Description}}else{$ExitLocations.SecretDoorLocations = "N/A"}
 
     $ExitDirections = [pscustomobject]@{
    
-        DoorDirections = @()
+        ExitDirections = @()
         SecretDoorDirections = @()
 
     }
 
-    if($SpecificNumberOfExits.Doors -gt 0){1..$SpecificNumberOfExits.Doors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.DoorDirections += $_}else{$ExitDirections.DoorDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.DoorDirections = "N/A"}
+    if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.ExitDirections += $_}else{$ExitDirections.ExitDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.ExitDirections = "N/A"}
     if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections.SecretDoorDirections += $_}else{$ExitDirections.SecretDoorDirections += "$($_.split('/')[0])"}}}else{$ExitDirections.SecretDoorDirections = "N/A"}
     #endregion
 
