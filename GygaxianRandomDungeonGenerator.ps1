@@ -1003,6 +1003,8 @@ $Table5I = @{
 20 = [pscustomobject]@{Description = "Symbol"}
 
 }
+#"Appendix A suggests that 35% of all treasure is guarded by poison." -https://dnd.sinister.net/revisiting-poison/
+#Me: Where??
 
 function Get-Table5IRoll {
 
@@ -2779,6 +2781,7 @@ function Get-Room {
     $Unusual = $False
     $Container = "N/A"
     $Treasure = @()
+    $DetailedTreasure = @()
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
     if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
@@ -2881,16 +2884,22 @@ function Get-Room {
     
         if($Monster -eq $True){
     
-            $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10).Loot
+            $RolledTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10
+            $Treasure += $RolledTreasure.Loot
+            $DetailedTreasure += $RolledTreasure.DetailedLoot
             
             $Table5GRoll = (Get-D100Roll).Result
-            $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10).Loot
+            $RolledTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10
+            $Treasure += $RolledTreasure.Loot
+            $DetailedTreasure += $RolledTreasure.DetailedLoot
 
             $Contents = "Monster(s) and treasure"
 
         }else{
     
-            $Treasure += (Get-Treasure -Table5GRoll $Table5GRoll -Level $Level).Loot
+            $RolledTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Level $Level
+            $Treasure += $RolledTreasure.Loot
+            $DetailedTreasure += $RolledTreasure.DetailedLoot
 
             $Contents = "Treasure"
 
@@ -2922,7 +2931,16 @@ function Get-Room {
 
     if($Contents.Description -like "Empty"){$Contents = "Empty"}
 
-    if($Treasure){$Container = (Get-Table5HRoll).Description}else{$Treasure = "N/A";$DetailedTreasure = "N/A"}
+    if($Treasure){
+    
+        $Container = (Get-Table5HRoll).Description
+        
+    }else{
+    
+        $Treasure = "N/A"
+        $DetailedTreasure = "N/A"
+        
+    }
 
     [pscustomobject]@{
            
@@ -2943,6 +2961,7 @@ function Get-Room {
         Monsters = $Monsters
         Container = $Container
         Treasure = $Treasure
+        DetailedTreasure = $DetailedTreasure
 
     }
    
@@ -3044,5 +3063,16 @@ https://odd74.proboards.com/thread/11578/gygax-od-additions
 
 https://www.dropbox.com/scl/fi/9zcleb51bh3tcmdf61b45/Gygax-OD-D-Additions.pdf?rlkey=bikxgoxbi03au3cnlp4hyv0oe&e=1&dl=0
 https://pastebin.com/s9yCRPGq
+
+https://oldschoolessentials.necroticgnome.com/srd/index.php/Dungeon_Adventuring
+
 ###
+
+"It's obvious why treasure isn't lying open; if it were, someone would have taken it by now."
+https://initiativeone.blogspot.com/2013/08/hiding-treasure.html
+
+###
+
+On traps:
+https://dmdavid.com/tag/the-history-of-traps-in-dungeons-dragons/
 #>
