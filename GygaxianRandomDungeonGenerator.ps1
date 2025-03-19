@@ -2966,7 +2966,9 @@ function Get-Room {
     
         $Container = (Get-Table5HRoll -Roll $Table5HRoll).Description
 
+        #region This is logic I made up. The DMG indicates that treasure being guarded or hidden is to be rolled "if desired". I think that having one or the other 100% of the time is silly and unintended. I also think that allowing for an escalating probability of dangerous/hidden treasure to increase as the dungeon level increases makes sense, so I have wirrten some logic for what sounds fair to me below. This may need to be amended/revisited in the future.
         if(((((Get-D100Roll).Result) -le (50 + ($Level - 1) * 10))) -and ($Container -notlike "Loose")){
+        #endregion
         
             if((Get-D20Roll).Result -le 8){$TreasureTrap = (Get-Table5IRoll -Roll $Table5IRoll).Description}else{$HiddenByIn = (Get-Table5JRoll -Roll $Table5JRoll).Sentence}
             
