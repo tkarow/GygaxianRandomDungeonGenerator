@@ -1064,12 +1064,27 @@ function Get-Table5JRoll {
    
     )
 
-   if(!$Roll){$Roll = (Get-D20Roll).Result}
+    if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+    switch($Table5J.($Roll).Description){
+   
+        "Invisibility" {$Sentence = "Treasure is magically invisible"}
+        "Illusion (to change or hide appearance)" {$Sentence = "Treasure is disguised by a magic illusion"}
+        "Secret space under container" {$Sentence = "Treasure is in a secret space under its container"}
+        "Inside ordinary item in plain view" {$Sentence = "N/A"}
+        "Disguised to appear as something else" {$Sentence = "Treasure has been disguised to appear as something else"}
+        "Under a heap of trash/dung" {$Sentence = "Treasure is under a heap of $(if((Get-D2Roll).Result -eq 1){'trash'}else{'dung'})"}
+        "Under a loose stone in the floor" {$Sentence = "Treasure is under a loose stone in the floor"}
+        "Behind a loose stone in the wall" {$Sentence = "Treasure is behind a loose stone in the wall"}
+        "In a secret room nearby" {$Sentence = "Treasure is in a secret room nearby"}
+
+   }
 
     [pscustomobject]@{
    
         Roll = $Roll;
         Description = $Table5J.($Roll).Description
+        Sentence = $Sentence
    
     }
 
@@ -1128,11 +1143,11 @@ function Get-Table6Roll {
 #region TABLE VII.: TRICK/TRAP (d20)
 $Table7 = @{
 
-1  = [pscustomobject]@{Description = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
-2  = [pscustomobject]@{Description = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
-3  = [pscustomobject]@{Description = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
-4  = [pscustomobject]@{Description = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
-5  = [pscustomobject]@{Description = "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."}
+1  = [pscustomobject]@{Description = "Secret Door: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.); If secret door is undetected then pit, 10' deep, 3 in 6 to fall in."}
+2  = [pscustomobject]@{Description = "Secret Door: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.); If secret door is undetected then pit, 10' deep, 3 in 6 to fall in."}
+3  = [pscustomobject]@{Description = "Secret Door: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.); If secret door is undetected then pit, 10' deep, 3 in 6 to fall in."}
+4  = [pscustomobject]@{Description = "Secret Door: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.); If secret door is undetected then pit, 10' deep, 3 in 6 to fall in."}
+5  = [pscustomobject]@{Description = "Secret Door: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.); If secret door is undetected then pit, 10' deep, 3 in 6 to fall in."}
 6  = [pscustomobject]@{Description = "Pit, 10' deep, 3 in 6 to fall in."}
 7  = [pscustomobject]@{Description = "Pit, 10' deep, 3 in 6 to fall in."}
 8  = [pscustomobject]@{Description = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
@@ -1154,7 +1169,9 @@ $Table7 = @{
 20 = [pscustomobject]@{Description = "Chute down 1 level (cannot be ascended in any manner)."}
 
 }
-#I changed wording above! Result 10 originally read "As 9.above, but room descends 2 levels" and result 11 originally read "As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."
+#I changed wording above!
+#Result 1-5 originally read "Secret Door unless unlocated: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20 (then see TABLE II.). Unlocated secret doors go to die 6,7 below."
+#Result 10 originally read "As 9.above, but room descends 2 levels" and result 11 originally read "As above, but room descends 2-5 levels - 1 upon entering and 1 additional level each time an unsuccessful attempt at door opening is made, or until it descends as far as it can. This will not ascend for 60 turns."
 
 function Get-Table7Roll {
 
@@ -2773,13 +2790,24 @@ function Get-Room {
         [int]$Table5GRoll,
 
         [Parameter(Mandatory=$False)]
-        [int]$Table7Roll
+        [int]$Table7Roll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5HRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5IRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table5JRoll
    
     )
 
     if(($Level -like $Null) -or (!$Level)){$Level = 1}
     $Unusual = $False
     $Container = "N/A"
+    $TreasureTrap = "N/A"
+    $HiddenByIn = "N/A"
     $Treasure = @()
     $DetailedTreasure = @()
 
@@ -2790,6 +2818,9 @@ function Get-Room {
     if(!$Table5CRoll){$Table5CRoll = (Get-D20Roll).Result}
     if(!$Table5FRoll){$Table5FRoll = (Get-D20Roll).Result}
     if(!$Table5GRoll){$Table5GRoll = (Get-D100Roll).Result}
+    if(!$Table5HRoll){$Table5HRoll = (Get-D20Roll).Result}
+    if(!$Table5IRoll){$Table5IRoll = (Get-D20Roll).Result}
+    if(!$Table5JRoll){$Table5JRoll = (Get-D20Roll).Result}
    
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
@@ -2931,15 +2962,21 @@ function Get-Room {
 
     if($Contents.Description -like "Empty"){$Contents = "Empty"}
 
-    if($Treasure){
+    if($Contents -like "*treasure*"){
     
-        $Container = (Get-Table5HRoll).Description
+        $Container = (Get-Table5HRoll -Roll $Table5HRoll).Description
+
+        if(((((Get-D100Roll).Result) -le (50 + ($Level - 1) * 10))) -and ($Container -notlike "Loose")){
+        
+            if((Get-D20Roll).Result -le 8){$TreasureTrap = (Get-Table5IRoll -Roll $Table5IRoll).Description}else{$HiddenByIn = (Get-Table5JRoll -Roll $Table5JRoll).Sentence}
+            
+        }
         
     }else{
     
         $Treasure = "N/A"
         $DetailedTreasure = "N/A"
-        
+
     }
 
     [pscustomobject]@{
@@ -2961,6 +2998,8 @@ function Get-Room {
         Monsters = $Monsters
         Container = $Container
         Treasure = $Treasure
+        TreasureTrap = $TreasureTrap
+        TreasureHiddenByIn = $HiddenByIn
         DetailedTreasure = $DetailedTreasure
 
     }
@@ -2971,6 +3010,8 @@ function Get-Room {
 
 #To do:
 
+#I think irregularly-shaped rooms/chambers do not allow further rolls properly- I think the "Type" not being "Room" or "Chamber" despite being one or the other has broken some things down the line
+#Passage True/False with exits: 0 must be revised. This should be exits: 1, and a note somewhere indicating that it is the opposite of wat it normally would be, (i.e. a room normally has doors as exits, but in this case it has a hallway/corridor, and vice versa for a chamber)
 #Standardize English- capitalization, parenthetical grammar, spacing, etc.
 #Standardize PowerShell syntax- spacing, line breaks, capitalization, etc.
 #Add a new element for each table roll that will make sub-rolls for a result when appropriate
