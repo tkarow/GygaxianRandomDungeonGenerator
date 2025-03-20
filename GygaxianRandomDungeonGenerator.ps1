@@ -2335,8 +2335,8 @@ function Get-SpecificNumberOfExits {
     if($5CRoll.Description -like "0*"){$ExitsNumber = 0;1..((($Width * 2) + ($Length * 2)) / 10) | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}}
     if(($5CRoll.Roll -eq 19) -or ($5CRoll.Roll -eq 20)){
    
-        if($Type -eq "Chamber"){$ExitsNumber = 1}
-        if($Type -eq "Room"){$ExitsNumber = 0;$Passage = $True}
+        if($Type -eq "Chamber"){$ExitsNumber = 1;$Passage = $True}
+        if($Type -eq "Room"){$ExitsNumber = 1;$Passage = $True}
 
     }
 
@@ -2894,6 +2894,11 @@ function Get-Room {
 
     if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections += $_}else{$ExitDirections += "$($_.split('/')[0])"}}}else{$ExitDirections = "N/A"}
     if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$SecretDoorDirections += $_}else{$SecretDoorDirections += "$($_.split('/')[0])"}}}else{$SecretDoorDirections = "N/A"}
+    
+    if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "door"}
+    if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $True)){$ExitType = "passage"}
+    if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "passage"}
+    if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "door"}
     #endregion
 
     $Contents = Get-RoomContents -Roll $Table5FRoll
@@ -2989,13 +2994,12 @@ function Get-Room {
         Width = $Width
         Area = $Area
         Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
-        Exits = $SpecificNumberOfExits.Exits
+        Exits = "$($SpecificNumberOfExits.Exits) $($ExitType)$(if(($SpecificNumberOfExits.Exits -ne 1) -and ($SpecificNumberOfExits.Exits -ne "?")){"s"})"
         ExitLocations = $ExitLocations
         ExitDirections = $ExitDirections
         SecretDoors = $SpecificNumberOfExits.SecretDoors
         SecretDoorLocations = $SecretDoorLocations
         SecretDoorDirections = $SecretDoorDirections
-        Passage = $SpecificNumberOfExits.Passage
         Contents = $Contents
         Monsters = $Monsters
         Container = $Container
@@ -3013,7 +3017,6 @@ function Get-Room {
 #To do:
 
 #I think irregularly-shaped rooms/chambers do not allow further rolls properly- I think the "Type" not being "Room" or "Chamber" despite being one or the other has broken some things down the line
-#Passage True/False with exits: 0 must be revised. This should be exits: 1, and a note somewhere indicating that it is the opposite of wat it normally would be, (i.e. a room normally has doors as exits, but in this case it has a hallway/corridor, and vice versa for a chamber)
 #Standardize English- capitalization, parenthetical grammar, spacing, etc.
 #Standardize PowerShell syntax- spacing, line breaks, capitalization, etc.
 #Add a new element for each table roll that will make sub-rolls for a result when appropriate
