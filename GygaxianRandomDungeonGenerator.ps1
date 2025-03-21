@@ -3023,6 +3023,9 @@ function Get-Room {
     if($Contents.Description -like "Empty"){$Contents = "Empty"}
     if(($Pool -eq $True) -and ($Contents -ne "Empty")){$Contents = "$($Contents) with pool"}
     if(($Pool -eq $True) -and ($Contents -eq "Empty")){$Contents = "Pool"}
+    #I am not 100% sure what a "shaft" is supposed to be/how it works. Suprise, surprise, there is no explanation in the DMG! I tried looking for it online and in other books, and mostly the word is used as a part of a weapon, rather than a feature of a dungeon. My best guess based on the available information, is that it is functionally similar to a chute, which is a one way staircase downward. No specifics on how many levels, of course!
+    if(($Shaft -eq $True) -and ($Contents -ne "Empty")){$Contents = "$($Contents) with shaft"}
+    if(($Shaft -eq $True) -and ($Contents -eq "Empty")){$Contents = "Shaft"}
 
     if($Contents -like "*treasure*"){
     
@@ -3065,7 +3068,6 @@ function Get-Room {
         TreasureHiddenByIn = $HiddenByIn
         DetailedTreasure = $DetailedTreasure
         PoolDetails = $PoolDescription
-        Shaft = $Shaft
 
     }
    
