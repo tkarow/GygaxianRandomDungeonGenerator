@@ -2828,6 +2828,7 @@ function Get-Room {
     $DetailedTreasure = @()
     $CircleRoll = ""
     $Pool = $False
+    $PoolDescription = "N/A"
     $Shaft = $False
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
@@ -2913,9 +2914,10 @@ function Get-Room {
         $PoolRoll = ''
         $PoolRoll = Get-Table8ARoll -Roll $Table8ARoll
 
-        if(($PoolRoll.Roll -ge 11) -and ($PoolRoll.Roll -le 18)){$Monster = $True;$Pool = "Pool"}
-        if($PoolRoll.Description -like "*treasure*"){$TreasurePresent = $True;$Pool = "Pool"}
-        if($PoolRoll.Description -like "*Magical*"){$Pool = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).Description)"}
+        if($PoolRoll.Roll -le 10){$PoolDescription = "Pool"}
+        if(($PoolRoll.Roll -ge 11) -and ($PoolRoll.Roll -le 18)){$Monster = $True;$PoolDescription = "Pool"}
+        if($PoolRoll.Description -like "*treasure*"){$TreasurePresent = $True;$PoolDescription = "Pool"}
+        if($PoolRoll.Description -like "*Magical*"){$PoolDescription = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).Description)"}
         
     }else{
     
@@ -2952,7 +2954,7 @@ function Get-Room {
         $Monster = $True
         $Monsters = (Get-Monster -Level $Level).Encounter
     
-        $Contents = "Monster(s)$(if($Pool -ne "N/A"){' with pool'})"
+        $Contents = "Monster(s)"
 
     }else{
     
@@ -2973,7 +2975,7 @@ function Get-Room {
             $Treasure += $RolledTreasure.Loot
             $DetailedTreasure += $RolledTreasure.DetailedLoot
 
-            $Contents = "Monster(s) and treasure$(if($Pool -ne "N/A"){' with pool'})"
+            $Contents = "Monster(s) and treasure"
 
         }else{
     
@@ -3010,6 +3012,8 @@ function Get-Room {
     }
 
     if($Contents.Description -like "Empty"){$Contents = "Empty"}
+    if(($Pool -eq $True) -and ($Contents -ne "Empty")){$Contents = "$($Contents) with pool"}
+    if(($Pool -eq $True) -and ($Contents -eq "Empty")){$Contents = "Pool"}
 
     if($Contents -like "*treasure*"){
     
@@ -3051,7 +3055,7 @@ function Get-Room {
         TreasureTrap = $TreasureTrap
         TreasureHiddenByIn = $HiddenByIn
         DetailedTreasure = $DetailedTreasure
-        Pool = $Pool
+        PoolDetails = $PoolDescription
         Shaft = $Shaft
 
     }
