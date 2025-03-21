@@ -3080,6 +3080,10 @@ function Get-Room {
 
 #To do:
 
+#Include trap specifics & gas detail (using table VII.A.)
+#Monsters beyond level 1
+#Magic item tables
+#Get-Passage
 #Standardize English- capitalization, parenthetical grammar, spacing, etc.
 #Standardize PowerShell syntax- spacing, line breaks, capitalization, etc.
 #Add a new element for each table roll that will make sub-rolls for a result when appropriate
