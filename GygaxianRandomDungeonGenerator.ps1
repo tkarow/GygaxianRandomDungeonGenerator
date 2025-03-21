@@ -2817,6 +2817,9 @@ function Get-Room {
     $HiddenByIn = "N/A"
     $Treasure = @()
     $DetailedTreasure = @()
+    $CircleRoll = ""
+    $Pool = $False
+    $Shaft = $False
 
     if($MyInvocation.InvocationName -eq "Get-Room"){$Type = "Room"}
     if($MyInvocation.InvocationName -eq "Get-Chamber"){$Type = "Chamber"}
@@ -2836,7 +2839,6 @@ function Get-Room {
         if(!$Table5BRoll){$Table5BRoll = (Get-D20Roll).Result}
 
         $5A = $Table5A.($Table5ARoll).Shape
-        #TO DO: If Circular, 1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.
         $5B = $Table5B.($Table5BRoll).Area
         $Area = $5B
    
@@ -2889,6 +2891,9 @@ function Get-Room {
     }
 
     $Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
+    if($Shape -eq "Circular"){$CircleRoll = (Get-D20Roll).Result}
+    if($CircleRoll -le 5){$Pool = $True}
+    if(($CircleRoll -eq 8) -or ($CircleRoll -eq 9) -or ($CircleRoll -eq 10)){$Shaft = $True}
 
     #region Exits
     if(($Shape -like "Square") -or ($Shape -like "Rectangular")){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Area $Area}
@@ -3017,6 +3022,8 @@ function Get-Room {
         TreasureTrap = $TreasureTrap
         TreasureHiddenByIn = $HiddenByIn
         DetailedTreasure = $DetailedTreasure
+        Pool = $Pool
+        Shaft = $Shaft
 
     }
    
@@ -3026,7 +3033,6 @@ function Get-Room {
 
 #To do:
 
-#I think irregularly-shaped rooms/chambers do not allow further rolls properly- I think the "Type" not being "Room" or "Chamber" despite being one or the other has broken some things down the line
 #Standardize English- capitalization, parenthetical grammar, spacing, etc.
 #Standardize PowerShell syntax- spacing, line breaks, capitalization, etc.
 #Add a new element for each table roll that will make sub-rolls for a result when appropriate
