@@ -1186,6 +1186,21 @@ function Get-Table7Roll {
     if(!$Roll){$Roll = (Get-D20Roll).Result}
 
     $IllusionaryWallHides = "N/A"
+    $Gas = "N/A"
+    $Arrows = "N/A"
+    $Spear = "N/A"
+    $Blocking = "N/A"
+    $Crush = "N/A"
+
+    if($Roll -eq 12){$Blocking = "Wall 10' behind slides across passage blocking it for $(Get-Random -Minimum 40 -Maximum 61) turns."}
+
+    if($Roll -eq 14){$Crush = "Pit, 10' deep, 3 in 6 to fall in, pit walls move together to crush victim(s) in $((Get-D4Roll).Result + 1) rounds."}
+
+    if($Roll -eq 15){$ArrowNumber = Get-Random -Minimum 1 -Maximum 4;$PoisonedArrowNumber = 0;1..$ArrowNumber | %{if((Get-D20Roll).Result -eq 1){$PoisonedArrowNumber++}};$Arrows = "Arrow trap: $($ArrowNumber) arrow$(if($ArrowNumber -gt 1){"s"})$(if($PoisonedArrowNumber -gt 1){", $($PoisonedArrowNumber) are poisoned"}elseif($PoisonedArrowNumber -eq 1){", 1 is poisoned"})."}
+
+    if($Roll -eq 16){$SpearNumber = Get-Random -Minimum 1 -Maximum 4;$PoisonedSpearNumber = 0;1..$SpearNumber | %{if((Get-D20Roll).Result -eq 1){$PoisonedSpearNumber++}};$Spear = "Spear trap: $($SpearNumber) spear$(if($SpearNumber -gt 1){"s"})$(if($PoisonedSpearNumber -gt 1){", $($PoisonedSpearNumber) are poisoned"}elseif($PoisonedSpearNumber -eq 1){", 1 is poisoned"})."}
+
+    if($Roll -eq 17){$Gas = "Gas: $((Get-Gas).Description) Party has detected it, but must breathe it to continue along corridor, as it covers 60' ahead. Mark map accordingly regardless of turning back or not."}
 
     if($Roll -eq 19){
     
@@ -1220,7 +1235,9 @@ function Get-Table7Roll {
    
         Roll = $Roll;
         Description = $Table7.($Roll).Description
+        Specific = "$(if($IllusionaryWallHides -notlike "N/A"){$IllusionaryWallHides}elseif($Gas -notlike "N/A"){$Gas}elseif($Arrows -notlike "N/A"){$Arrows}elseif($Spear -notlike "N/A"){$Spear}elseif($Blocking -notlike "N/A"){$Blocking}elseif($Crush -notlike "N/A"){$Crush}else{$Table7.($Roll).Description})"
         IllusionaryWall = $IllusionaryWallHides
+        Gas = $Gas
    
     }
 
@@ -1237,8 +1254,8 @@ $Table7A = @{
 5  = [pscustomobject]@{Description = "Only effect is to obscure vision when passing through."}
 6  = [pscustomobject]@{Description = "Only effect is to obscure vision when passing through."}
 7  = [pscustomobject]@{Description = "Only effect is to obscure vision when passing through."}
-8  = [pscustomobject]@{Description = "Blindsfor 1-6 turns after passing through."}
-9  = [pscustomobject]@{Description = "Blindsfor 1-6 turns after passing through."}
+8  = [pscustomobject]@{Description = "Blinds for 1-6 turns after passing through."}
+9  = [pscustomobject]@{Description = "Blinds for 1-6 turns after passing through."}
 10 = [pscustomobject]@{Description = "Fear: run back 120' feet unless saving throw versus magic is made."}
 11 = [pscustomobject]@{Description = "Fear: run back 120' feet unless saving throw versus magic is made."}
 12 = [pscustomobject]@{Description = "Fear: run back 120' feet unless saving throw versus magic is made."}
@@ -3007,7 +3024,7 @@ function Get-Room {
 
         if($Trick.IllusionaryWall -like "N/A"){
         
-            $Contents = $Trick.Description
+            $Contents = $Trick.Specific
             
         }else{
         
@@ -3080,7 +3097,7 @@ function Get-Room {
 
 #To do:
 
-#Include trap specifics & gas detail (using table VII.A.)
+#How many specifics should I pre-determine? Should I roll for all instances of a range, such as for damage? This will require some deliberation...
 #Monsters beyond level 1
 #Magic item tables
 #Get-Passage
