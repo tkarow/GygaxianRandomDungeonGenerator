@@ -2322,13 +2322,16 @@ function Get-SpecificNumberOfExits {
         [Parameter(Mandatory=$False)]
         [int]$Width,
         [Parameter(Mandatory=$False)]
-        [int]$Length
+        [int]$Length,
+        [Parameter(Mandatory=$False)]
+        [int]$Area
 
     )
 
     $Passage = $False
     $SecretDoors = 0
-    if(!$Roll){$5CRoll = Get-NumberOfExits}else{$5CRoll = Get-NumberOfExits -Roll $Roll}
+    if($Length -and $Width){$Area = $Length * $Width}
+    if(!$Roll){$5CRoll = Get-NumberOfExits -RoomArea $Area}else{$5CRoll = Get-NumberOfExits -Roll $Roll -RoomArea $Area}
 
     if($5CRoll.Roll -le 15){$ExitsNumber = $5CRoll.Description}
     if(($5CRoll.Roll -eq 16) -or ($5CRoll.Roll -eq 17) -or ($5CRoll.Roll -eq 18)){$ExitsNumber = (Get-D4Roll).Result}
@@ -2340,12 +2343,16 @@ function Get-SpecificNumberOfExits {
 
     }
 
+    <#
+
     if($Type -eq "Unusual"){
    
         $ExitsNumber = "?"
         $SecretDoors = "?"
 
     }
+
+    #>
 
     [pscustomobject]@{
    
@@ -2831,6 +2838,7 @@ function Get-Room {
         $5A = $Table5A.($Table5ARoll).Shape
         #TO DO: If Circular, 1-5 has pool (see TABLE VIII. A. and C. if appropriate), 6-7 has well, 8-10 has shaft, and 1 1-20 is normal.
         $5B = $Table5B.($Table5BRoll).Area
+        $Area = $5B
    
     }
 
@@ -2874,14 +2882,16 @@ function Get-Room {
 
         }
    
-        $Type = "Unusual"
+        #$Type = "Unusual"
         $Length = "Unusual"
         $Width = "Unusual"
 
     }
 
+    $Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
+
     #region Exits
-    if(!$Unusual){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type}
+    if(($Shape -like "Square") -or ($Shape -like "Rectangular")){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Area $Area}
     
     $ExitLocations = @()
     $SecretDoorLocations = @()
@@ -2898,7 +2908,7 @@ function Get-Room {
     if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "door"}
     if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $True)){$ExitType = "passage"}
     if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "passage"}
-    if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "door"}
+    if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $True)){$ExitType = "door"}
     #endregion
 
     $Contents = Get-RoomContents -Roll $Table5FRoll
@@ -2993,7 +3003,7 @@ function Get-Room {
         Length = $Length
         Width = $Width
         Area = $Area
-        Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
+        Shape = $Shape
         Exits = "$($SpecificNumberOfExits.Exits) $($ExitType)$(if(($SpecificNumberOfExits.Exits -ne 1) -and ($SpecificNumberOfExits.Exits -ne "?")){"s"})"
         ExitLocations = $ExitLocations
         ExitDirections = $ExitDirections
