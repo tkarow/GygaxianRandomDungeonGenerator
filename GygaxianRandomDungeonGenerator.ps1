@@ -1507,12 +1507,21 @@ function Get-Table8CRoll {
    
     )
 
+    $TransporterPoolRoll = ''
+    $AddSub = ''
+    $AlignmentRoll = ''
     if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+    if($Table8C.($Roll).Description -like "Turns gold to platinum*"){$PoolSpecificScenario=if((Get-D20Roll).Result -le 11){"Turns gold to platinum, one time only."}else{"Turns gold to lead, one time only."}}
+    if($Table8C.($Roll).Description -like "Will, on a one-time only basis, add*"){$PoolSpecificScenario="Will, on a one-time only basis, $(if((Get-D6Roll).Result -le 3){$AddSub="add"}else{$AddSub="subtract"};$AddSub) $(Get-Random -Minimum 1 -Maximum 4) $(if($AddSub -like "add"){"to"}else{"from"}) $(switch((Get-D6Roll).Result){1{"Strength"};2{"Intelligence"};3{"Wisdom"};4{"Dexterity"};5{"Constitution"};6{"Charisma"}}) of all who stand within it."}
+    if($Table8C.($Roll).Description -like "Talking pool which will*"){$AlignmentRoll=(Get-D20Roll).Result;if(($AlignmentRoll -ge 1) -and ($AlignmentRoll -le 6)){$PoolAlignment = "lawful good"}elseif(($AlignmentRoll -ge 7) -and ($AlignmentRoll -le 9)){$PoolAlignment = "lawful evil"}elseif(($AlignmentRoll -ge 10) -and ($AlignmentRoll -le 12)){$PoolAlignment = "chaotic good"}elseif(($AlignmentRoll -ge 18) -and ($AlignmentRoll -le 20)){$PoolAlignment = "neutral"};$PoolSpecificScenario="Talking pool which will grant 1 wish to characters of its alignment and damage others from 1-20 points. Wish can be withheld for up to 1 day. Pool's alignment is: $($PoolAlignment)"}
+    if($Table8C.($Roll).Description -like "Transporter pool*"){$TransporterPoolRoll=(Get-D20Roll).Result;$PoolSpecificScenario=if($TransporterPoolRoll -le 7){"Transporter pool: back to surface"}elseif(($TransporterPoolRoll -ge 8) -and ($TransporterPoolRoll -le 12)){"Transporter pool: elsewhere on level"}elseif(($TransporterPoolRoll -ge 13) -and ($TransporterPoolRoll -le 16)){"Transporter pool: 1 level down"}elseif($TransporterPoolRoll -ge 17){"Transporter pool: 100 miles away for outdoor adventure"}}
 
     [pscustomobject]@{
    
         Roll = $Roll;
         Description = $Table8C.($Roll).Description
+        PoolSpecificScenario = $PoolSpecificScenario
    
     }
 
@@ -2917,7 +2926,7 @@ function Get-Room {
         if($PoolRoll.Roll -le 10){$PoolDescription = "Pool"}
         if(($PoolRoll.Roll -ge 11) -and ($PoolRoll.Roll -le 18)){$Monster = $True;$PoolDescription = "Pool"}
         if($PoolRoll.Description -like "*treasure*"){$TreasurePresent = $True;$PoolDescription = "Pool"}
-        if($PoolRoll.Description -like "*Magical*"){$PoolDescription = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).Description)"}
+        if($PoolRoll.Description -like "*Magical*"){$PoolDescription = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).PoolSpecificScenario)"}
         
     }else{
     
