@@ -2954,7 +2954,10 @@ function Get-Room {
     if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $True)){$ExitType = "passage"}
     if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "passage"}
     if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $True)){$ExitType = "door"}
+    if($Shape -like "Cave"){$ExitType = "exit"}
     #endregion
+
+    if($Shape -like "Cave"){$Type = "Cave"}
 
     $Contents = Get-RoomContents -Roll $Table5FRoll
 
