@@ -2806,7 +2806,16 @@ function Get-Room {
         [int]$Table5IRoll,
 
         [Parameter(Mandatory=$False)]
-        [int]$Table5JRoll
+        [int]$Table5JRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table8ARoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table8BRoll,
+
+        [Parameter(Mandatory=$False)]
+        [int]$Table8CRoll
    
     )
 
@@ -2831,6 +2840,9 @@ function Get-Room {
     if(!$Table5HRoll){$Table5HRoll = (Get-D20Roll).Result}
     if(!$Table5IRoll){$Table5IRoll = (Get-D20Roll).Result}
     if(!$Table5JRoll){$Table5JRoll = (Get-D20Roll).Result}
+    if(!$Table8ARoll){$Table8ARoll = (Get-D20Roll).Result}
+    if(!$Table8BRoll){$Table8BRoll = (Get-D20Roll).Result}
+    if(!$Table8CRoll){$Table8CRoll = (Get-D20Roll).Result}
    
     if($Table5Roll -ge 18){$Unusual = $True}
     if($Unusual){
@@ -2860,6 +2872,7 @@ function Get-Room {
    
     }
 
+    #region Unusual
     if($Unusual){
    
         $Area = if($Table5BRoll -le 14){
@@ -2894,6 +2907,22 @@ function Get-Room {
     if($Shape -eq "Circular"){$CircleRoll = (Get-D20Roll).Result}
     if($CircleRoll -le 5){$Pool = $True}
     if(($CircleRoll -eq 8) -or ($CircleRoll -eq 9) -or ($CircleRoll -eq 10)){$Shaft = $True}
+
+    if($Pool -eq $True){
+    
+        $PoolRoll = ''
+        $PoolRoll = Get-Table8ARoll -Roll $Table8ARoll
+
+        if(($PoolRoll.Roll -ge 11) -and ($PoolRoll.Roll -le 18)){$Monster = $True;$Pool = "Pool"}
+        if($PoolRoll.Description -like "*treasure*"){$Treasure = $True;$Pool = "Pool"}
+        if($PoolRoll.Description -like "*Magical*"){$Pool = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).Description)"}
+        
+    }else{
+    
+        $Pool = "N/A"
+        
+    }
+    #endregion
 
     #region Exits
     if(($Shape -like "Square") -or ($Shape -like "Rectangular")){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Area $Area}
