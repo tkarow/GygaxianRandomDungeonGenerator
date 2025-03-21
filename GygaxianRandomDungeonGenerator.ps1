@@ -1340,12 +1340,12 @@ $Table8A = @{
 10 = [pscustomobject]@{Description = "Pool, no monster"}
 11 = [pscustomobject]@{Description = "Pool, monster"}
 12 = [pscustomobject]@{Description = "Pool, monster"}
-13 = [pscustomobject]@{Description = "Pool, monster8 treasure"}
-14 = [pscustomobject]@{Description = "Pool, monster8 treasure"}
-15 = [pscustomobject]@{Description = "Pool, monster8 treasure"}
-16 = [pscustomobject]@{Description = "Pool, monster8 treasure"}
-17 = [pscustomobject]@{Description = "Pool, monster8 treasure"}
-18 = [pscustomobject]@{Description = "Pool, monster8 treasure"}
+13 = [pscustomobject]@{Description = "Pool, monster & treasure"}
+14 = [pscustomobject]@{Description = "Pool, monster & treasure"}
+15 = [pscustomobject]@{Description = "Pool, monster & treasure"}
+16 = [pscustomobject]@{Description = "Pool, monster & treasure"}
+17 = [pscustomobject]@{Description = "Pool, monster & treasure"}
+18 = [pscustomobject]@{Description = "Pool, monster & treasure"}
 19 = [pscustomobject]@{Description = "Magical pool (See TABLE VIII. C.)"}
 20 = [pscustomobject]@{Description = "Magical pool (See TABLE VIII. C.)"}
 
@@ -2914,7 +2914,7 @@ function Get-Room {
         $PoolRoll = Get-Table8ARoll -Roll $Table8ARoll
 
         if(($PoolRoll.Roll -ge 11) -and ($PoolRoll.Roll -le 18)){$Monster = $True;$Pool = "Pool"}
-        if($PoolRoll.Description -like "*treasure*"){$Treasure = $True;$Pool = "Pool"}
+        if($PoolRoll.Description -like "*treasure*"){$TreasurePresent = $True;$Pool = "Pool"}
         if($PoolRoll.Description -like "*Magical*"){$Pool = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).Description)"}
         
     }else{
@@ -2947,12 +2947,12 @@ function Get-Room {
 
     $Contents = Get-RoomContents -Roll $Table5FRoll
 
-    if($Contents.Description -like "Monster*"){
+    if(($Contents.Description -like "Monster*") -or ($Monster -eq $True)){
     
         $Monster = $True
         $Monsters = (Get-Monster -Level $Level).Encounter
     
-        $Contents = "Monster(s)"
+        $Contents = "Monster(s)$(if($Pool -ne "N/A"){' with pool'})"
 
     }else{
     
@@ -2960,7 +2960,7 @@ function Get-Room {
         
     }
 
-    if($Contents.Description -like "*treasure*"){
+    if(($Contents.Description -like "*treasure*") -or ($TreasurePresent -eq $True)){
     
         if($Monster -eq $True){
     
@@ -2973,7 +2973,7 @@ function Get-Room {
             $Treasure += $RolledTreasure.Loot
             $DetailedTreasure += $RolledTreasure.DetailedLoot
 
-            $Contents = "Monster(s) and treasure"
+            $Contents = "Monster(s) and treasure$(if($Pool -ne "N/A"){' with pool'})"
 
         }else{
     
