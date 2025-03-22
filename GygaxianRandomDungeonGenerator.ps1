@@ -3325,7 +3325,7 @@ function Get-Room {
 
 #How many specifics should I pre-determine? Should I roll for all instances of a range, such as for damage? This will require some deliberation...
 #Monsters beyond level 3
-#Add random race for NPCs (20%) see DMG page 176
+#Add multi-classes NPCs? Worry more about race/class combinations? See DMG page 176
 #Magic item tables
 #Get-Passage
 #Standardize English- capitalization, parenthetical grammar, spacing, etc.
