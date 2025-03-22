@@ -2323,6 +2323,11 @@ function Get-NPCPartyRoll {
 
     if(($Level -like $Null) -or (!$Level)){$Level = 1}
 
+    #DMG pg. 175:
+    if($Level -le 4){if($Level -ge $MonsterLevel){$LevelOfCharacters = $Level}else{$LevelOfCharacters = $MonsterLevel}}
+    if($Level -gt 4){$LevelOfCharacters = ((Get-D6Roll).Result) + 6;if($LevelOfCharacters -gt $Level){$LevelOfCharacters--}elseif($LevelOfCharacters -lt $Level){$LevelOfCharacters++}}
+    if(($LevelOfCharacters -gt 12) -and ($Level -le 15)){$LevelOfCharacters = 12}
+
     $NumberInParty = 1 + (Get-D4Roll).Result
 
     $ClericBan = $False
@@ -2376,11 +2381,6 @@ function Get-NPCPartyRoll {
     $NPCPartyOutput = $NPCParty
     #DMG pg. 175:
     if($Level -le 3){$NPCPartyOutput += "Henchmen x $((9 - $NumberInParty))"}else{$NPCPartyOutput += "Men-at-arms x $((9 - $NumberInParty))"}
-
-    #DMG pg. 175:
-    if($Level -le 4){if($Level -ge $MonsterLevel){$LevelOfCharacters = $Level}else{$LevelOfCharacters = $MonsterLevel}}
-    if($Level -gt 4){$LevelOfCharacters = ((Get-D6Roll).Result) + 6;if($LevelOfCharacters -gt $Level){$LevelOfCharacters--}elseif($LevelOfCharacters -lt $Level){$LevelOfCharacters++}}
-    if(($LevelOfCharacters -gt 12) -and ($Level -le 15)){$LevelOfCharacters = 12}
 
     [pscustomobject]@{
         
