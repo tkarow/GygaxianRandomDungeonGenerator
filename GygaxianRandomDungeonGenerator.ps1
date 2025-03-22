@@ -2312,7 +2312,9 @@ function Get-NPCPartyRoll {
         [Parameter(Mandatory=$False)]
         [int]$Roll,
         [Parameter(Mandatory=$False)]
-        [int]$Level
+        [int]$Level,
+        [Parameter(Mandatory=$False)]
+        [int]$MonsterLevel
    
     )
 
@@ -2375,7 +2377,17 @@ function Get-NPCPartyRoll {
     #DMG pg. 175:
     if($Level -le 3){$NPCPartyOutput += "Henchmen x $((9 - $NumberInParty))"}else{$NPCPartyOutput += "Men-at-arms x $((9 - $NumberInParty))"}
 
-    $NPCPartyOutput
+    #DMG pg. 175:
+    if($Level -le 4){if($Level -ge $MonsterLevel){$LevelOfCharacters = $Level}else{$LevelOfCharacters = $MonsterLevel}}
+    if($Level -gt 4){$LevelOfCharacters = ((Get-D6Roll).Result) + 6;if($LevelOfCharacters -gt $Level){$LevelOfCharacters--}elseif($LevelOfCharacters -lt $Level){$LevelOfCharacters++}}
+    if(($LevelOfCharacters -gt 12) -and ($Level -le 15)){$LevelOfCharacters = 12}
+
+    [pscustomobject]@{
+        
+        NPCPartyOutput = $NPCPartyOutput
+        LevelOfCharacters = $LevelOfCharacters
+
+    }
 
 }
 
@@ -2634,9 +2646,9 @@ function Get-Monster {
 
     if($MonsterRoll.Encounter -like "NPC Party"){
     
-        $MonsterRoll = Get-NPCPartyRoll
+        $MonsterRoll = Get-NPCPartyRoll -Level $Level -MonsterLevel $MonsterLevel
         
-        foreach($NPC in ($MonsterRoll | sort | Get-Unique)){
+        foreach($NPC in ($MonsterRoll.NPCPartyOutput | sort | Get-Unique)){
         
             if(($NPC -notlike "Henchmen*") -and ($NPC -notlike "Men-at*")){
             
@@ -2657,7 +2669,7 @@ function Get-Monster {
 
     [pscustomobject]@{
 
-        MonsterLevel = $MonsterLevel
+        MonsterLevel = if($Party -ne ""){$MonsterRoll.LevelOfCharacters}else{$MonsterLevel}
         Encounter = if($Party -ne ""){"NPC party ($($Party))"}else{$SimpleEncounter}
         #RawPartyInfo = if($SimpleEncounter -like "NPC party"){$MonsterRoll}else{"N/A"}
 
