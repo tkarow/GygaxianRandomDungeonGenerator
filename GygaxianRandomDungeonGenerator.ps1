@@ -2080,7 +2080,7 @@ $DungeonRandomMonsterLevel1Table = @(
 [pscustomobject]@{Min = 1;Max = 2;Monster="Giant ant";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
 [pscustomobject]@{Min = 3;Max = 4;Monster="Badger";Number="1-4";Lowest=2;Base=0;VarianceDie = 4;VarianceDiceNumber = 1;Else=[pscustomobject]@{Monster="Hobgoblin";Number="2-8";Base=2;VarianceDie = 6;VarianceDiceNumber = 3}}
 [pscustomobject]@{Min = 5;Max = 14;Monster="Fire beetle";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
-[pscustomobject]@{Min = 15;Max = 15;Monster="Manes demon";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 15;Max = 15;Monster="Manes";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
 [pscustomobject]@{Min = 16;Max = 17;Monster="Dwarf";Number="4-14";Lowest=100;Base=2;VarianceDie = 6;VarianceDiceNumber = 2}
 [pscustomobject]@{Min = 18;Max = 18;Monster="Ear seeker";Number="1";Lowest=100;Base=1;VarianceDie = 0;VarianceDiceNumber = 0}
 [pscustomobject]@{Min = 19;Max = 19;Monster="Elf";Number="3-11";Lowest=100;Base=1;VarianceDie = 4,6;VarianceDiceNumber = 1}
@@ -2334,7 +2334,7 @@ $DungeonRandomMonsterLevel2Table = @(
 [pscustomobject]@{Min = 1;Max = 1;Monster="Giant badger";Number="1-4";Lowest=3;Base=0;VarianceDie = 4;VarianceDiceNumber = 1;Else=[pscustomobject]@{Monster="Gnoll";Number="4-10";Lowest=100;Base=2;VarianceDie = 4;VarianceDiceNumber = 2}}
 [pscustomobject]@{Min = 2;Max = 16;Monster="Giant centipede";Number="3-13";Lowest=100;Base=1;VarianceDie = 6;VarianceDiceNumber = 2}
 [pscustomobject]@{Min = 17;Max = 27;Monster="NPC Party";Number="?";Lowest=100}
-[pscustomobject]@{Min = 28;Max = 29;Monster="Lemure devil";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 28;Max = 29;Monster="Lemure";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
 [pscustomobject]@{Min = 30;Max = 31;Monster="Gas spore";Number="1-2";Lowest=100;Base=0;VarianceDie = 2;VarianceDiceNumber = 1}
 [pscustomobject]@{Min = 32;Max = 38;Monster="Gnoll";Number="4-10";Lowest=100;Base=2;VarianceDie = 4;VarianceDiceNumber = 2}
 [pscustomobject]@{Min = 39;Max = 46;Monster="Piercer";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
@@ -3243,6 +3243,8 @@ function Get-Room {
 
 #How many specifics should I pre-determine? Should I roll for all instances of a range, such as for damage? This will require some deliberation...
 #Monsters beyond level 1
+#Add dragon subtable
+#Add random race for NPCs (20%) see DMG page 176
 #Magic item tables
 #Get-Passage
 #Standardize English- capitalization, parenthetical grammar, spacing, etc.
