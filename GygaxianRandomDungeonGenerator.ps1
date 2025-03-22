@@ -11,6 +11,18 @@ function Get-D2Roll{
 
 }
 
+function Get-D3Roll{
+
+    [pscustomobject]@{
+   
+    Min = 1
+    Max = 3
+    Result = Get-Random -Minimum 1 -Maximum 4
+   
+    }
+
+}
+
 function Get-D4Roll{
 
     [pscustomobject]@{
@@ -1192,6 +1204,8 @@ function Get-Table7Roll {
     $Blocking = "N/A"
     $Crush = "N/A"
 
+    #To do: Add a roll for table II (maps) for results 1-5 above
+
     if($Roll -eq 12){$Blocking = "Wall 10' behind slides across passage blocking it for $(Get-Random -Minimum 40 -Maximum 61) turns."}
 
     if($Roll -eq 14){$Crush = "Pit, 10' deep, 3 in 6 to fall in, pit walls move together to crush victim(s) in $((Get-D4Roll).Result + 1) rounds."}
@@ -2315,7 +2329,65 @@ function Get-NPCPartyRoll {
 
 }
 
-#To do: Tables for moster level 2 and above
+$DungeonRandomMonsterLevel2Table = @(
+
+[pscustomobject]@{Min = 1;Max = 1;Monster="Giant badger";Number="1-4";Lowest=3;Base=0;VarianceDie = 4;VarianceDiceNumber = 1;Else=[pscustomobject]@{Monster="Gnoll";Number="4-10";Lowest=100;Base=2;VarianceDie = 4;VarianceDiceNumber = 2}}
+[pscustomobject]@{Min = 2;Max = 16;Monster="Giant centipede";Number="3-13";Lowest=100;Base=1;VarianceDie = 6;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 17;Max = 27;Monster="NPC Party";Number="?";Lowest=100}
+[pscustomobject]@{Min = 28;Max = 29;Monster="Lemure devil";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 30;Max = 31;Monster="Gas spore";Number="1-2";Lowest=100;Base=0;VarianceDie = 2;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 32;Max = 38;Monster="Gnoll";Number="4-10";Lowest=100;Base=2;VarianceDie = 4;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 39;Max = 46;Monster="Piercer";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 47;Max = 58;Monster="Giant rat";Number="6-24";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 6}
+[pscustomobject]@{Min = 59;Max = 60;Monster="Rot grub";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 61;Max = 72;Monster="Shrieker";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 73;Max = 77;Monster="Stirge";Number="5-15";Lowest=100;Base=3;VarianceDie = 6;VarianceDiceNumber = 2}
+[pscustomobject]@{Min = 78;Max = 87;Monster="Giant toad";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 88;Max = 100;Monster="Troglodyte";Number="2-8";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 2}
+
+)
+
+function Get-DungeonRandomMonsterLevel2Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    if(($Level -like $Null) -or (!$Level)){$Level = 1}
+
+    $DungeonRandomMonsterLevel2TableResult = $DungeonRandomMonsterLevel2Table | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    if($DungeonRandomMonsterLevel2TableResult.Lowest -lt $Level){$Relevant = $DungeonRandomMonsterLevel2TableResult.Else}else{$Relevant = $DungeonRandomMonsterLevel2TableResult}
+
+    $NumberAppearing = $Relevant.Number
+
+    if($Relevant.Monster -ne "NPC Party"){
+
+        if($Roll -eq 1){$NumberAppearing = 1}
+        if($Roll -ne 1){$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
+        
+
+    }
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Encounter = $Relevant.Monster
+        NumberAppearing = $NumberAppearing
+
+    }
+
+}
+
+#To do: Tables for moster level 3 and above
 
 #endregion
 
@@ -2400,8 +2472,15 @@ function Get-Monster {
     )
 
     $Party = ""
+    $MonsterLevel = ""
 
-    $MonsterRoll = Get-DungeonRandomMonsterLevel1Roll -Level $Level
+    $DungeonLevelRoll = (Get-D20Roll).Result
+
+    #region Dungeon level 1
+    if(($Level -eq 1) -and ($DungeonLevelRoll -le 16)){$MonsterLevel = 1;$MonsterRoll = Get-DungeonRandomMonsterLevel1Roll -Level $Level}
+    if(($Level -eq 1) -and ($DungeonLevelRoll -ge 17) -and ($DungeonLevelRoll -le 19)){$MonsterLevel = 2;$MonsterRoll = Get-DungeonRandomMonsterLevel2Roll -Level $Level}
+    if(($Level -eq 1) -and ($DungeonLevelRoll -eq 20)){$MonsterLevel = 3;$MonsterRoll = Get-DungeonRandomMonsterLevel3Roll -Level $Level}
+    #endregion
 
     if($MonsterRoll.Encounter -like "Human"){$MonsterRoll = Get-HumanSubtableRoll}
 
@@ -2432,6 +2511,7 @@ function Get-Monster {
 
     [pscustomobject]@{
 
+        MonsterLevel = $MonsterLevel
         Encounter = if($Party -ne ""){"NPC party ($($Party))"}else{$SimpleEncounter}
         #RawPartyInfo = if($SimpleEncounter -like "NPC party"){$MonsterRoll}else{"N/A"}
 
@@ -2932,7 +3012,7 @@ function Get-Room {
 
     $Shape = if($Unusual){$5A}else{$Table5.($Table5Roll)."$($Type)".Shape}
     if($Shape -eq "Circular"){$CircleRoll = (Get-D20Roll).Result}
-    if($CircleRoll -le 5){$Pool = $True}
+    if(($Shape -eq "Circular") -and ($CircleRoll -le 5)){$Pool = $True}
     if(($CircleRoll -eq 8) -or ($CircleRoll -eq 9) -or ($CircleRoll -eq 10)){$Shaft = $True}
 
     if($Pool -eq $True){
