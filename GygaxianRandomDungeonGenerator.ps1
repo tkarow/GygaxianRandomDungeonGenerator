@@ -2178,7 +2178,7 @@ function Get-HumanSubtableRoll {
 
 }
 
-$Characterubtable = @(
+$CharacterSubtable = @(
 
 [pscustomobject]@{Min = 1;Max = 17;Monster="Cleric";MaximumNumberPerParty=3}
 [pscustomobject]@{Min = 18;Max = 20;Monster="Druid";MaximumNumberPerParty=2}
@@ -2248,9 +2248,9 @@ function Get-CharacterSubtableRoll {
 
     }
 
-    $CharacterubtableResult = $Characterubtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+    $CharacterSubtableResult = $CharacterSubtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
-    $Character = $CharacterubtableResult.Monster
+    $Character = $CharacterSubtableResult.Monster
 
     if($Character -like "Monk or Bard"){if((Get-D2Roll).Result -eq 1){$Character = "Monk"}else{$Character = "Bard"}}
 
@@ -2258,7 +2258,7 @@ function Get-CharacterSubtableRoll {
     
         Roll = $Roll
         NPC = $Character
-        MaximumNumberPerParty = $CharacterubtableResult.MaximumNumberPerParty
+        MaximumNumberPerParty = $CharacterSubtableResult.MaximumNumberPerParty
 
     }
 
@@ -2434,17 +2434,49 @@ function Get-DungeonRandomMonsterLevel3Roll {
     if($Relevant.Monster -ne "NPC Party"){
 
         if($Relevant.Number -eq "1"){$NumberAppearing = 1}else{$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
-        #if(($Roll -ge 31) -and ($Roll -le 32)){$NumberAppearing = 1}
-        #if(($Roll -ge 35) -and ($Roll -le 40)){$NumberAppearing = 1}
-        #if(($Roll -ge 55) -and ($Roll -le 60)){$NumberAppearing = 1}
 
     }
+
+    if($Relevant.Monster -like "Dragon"){$Relevant.Monster = "$((Get-DragonLevel3Roll).Description) dragon"}
 
     [pscustomobject]@{
     
         Roll = $Roll
         Encounter = $Relevant.Monster
         NumberAppearing = $NumberAppearing
+
+    }
+
+}
+
+$DragonLevel3Subtable = @(
+
+[pscustomobject]@{Min = 1;Max = 28;DragonType="Black";AgeCategory="Very young";HitDice=1}
+[pscustomobject]@{Min = 29;Max = 62;DragonType="Brass";AgeCategory="Very young";HitDice=1}
+[pscustomobject]@{Min = 63;Max = 100;DragonType="White";AgeCategory="Very young";HitDice=1}
+
+)
+
+function Get-DragonLevel3Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $DragonLevel3SubtableResult = $DragonLevel3Subtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Color = $DragonLevel3SubtableResult.DragonType
+        Age = $DragonLevel3SubtableResult.AgeCategory
+        Description = "$($DragonLevel3SubtableResult.AgeCategory) $($DragonLevel3SubtableResult.DragonType.ToLower())"
+        HitDice = $DragonLevel3SubtableResult.HitDice
 
     }
 
@@ -3242,8 +3274,7 @@ function Get-Room {
 #To do:
 
 #How many specifics should I pre-determine? Should I roll for all instances of a range, such as for damage? This will require some deliberation...
-#Monsters beyond level 1
-#Add dragon subtable
+#Monsters beyond level 3
 #Add random race for NPCs (20%) see DMG page 176
 #Magic item tables
 #Get-Passage
