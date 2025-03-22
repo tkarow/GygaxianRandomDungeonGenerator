@@ -2371,8 +2371,7 @@ function Get-DungeonRandomMonsterLevel2Roll {
 
     if($Relevant.Monster -ne "NPC Party"){
 
-        if($Roll -eq 1){$NumberAppearing = 1}
-        if($Roll -ne 1){$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
+        $NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)
         
 
     }
@@ -2387,7 +2386,72 @@ function Get-DungeonRandomMonsterLevel2Roll {
 
 }
 
-#To do: Tables for moster level 3 and above
+$DungeonRandomMonsterLevel3Table = @(
+
+[pscustomobject]@{Min = 1;Max = 10;Monster="Boring beetle";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 11;Max = 20;Monster="Bugbear";Number="2-7";Lowest=100;Base=1;VarianceDie = 6;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 21;Max = 30;Monster="NPC Party";Number="?";Lowest=100}
+[pscustomobject]@{Min = 31;Max = 32;Monster="Dragon";Number="1";Lowest=100;Base=1;VarianceDie = 0;VarianceDiceNumber = 0}
+[pscustomobject]@{Min = 33;Max = 34;Monster="Violet fungi";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 35;Max = 40;Monster="Gelatinous cube";Number="1";Lowest=100;Base=1;VarianceDie = 0;VarianceDiceNumber = 0}
+[pscustomobject]@{Min = 41;Max = 45;Monster="Ghoul";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 46;Max = 50;Monster="Giant lizard";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 51;Max = 54;Monster="Wererat";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 55;Max = 60;Monster="Ochre jelly";Number="1";Lowest=100;Base=1;VarianceDie = 0;VarianceDiceNumber = 0}
+[pscustomobject]@{Min = 61;Max = 72;Monster="Ogre";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 73;Max = 74;Monster="Piercer";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 75;Max = 75;Monster="Rot grub";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 76;Max = 77;Monster="Shrieker";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 78;Max = 84;Monster="Huge spider";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 85;Max = 93;Monster="Large spider";Number="2-5";Lowest=100;Base=1;VarianceDie = 4;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 94;Max = 95;Monster="Giant tick";Number="1-3";Lowest=100;Base=0;VarianceDie = 3;VarianceDiceNumber = 1}
+[pscustomobject]@{Min = 96;Max = 100;Monster="Giant weasel";Number="1-4";Lowest=100;Base=0;VarianceDie = 4;VarianceDiceNumber = 1}
+
+)
+
+function Get-DungeonRandomMonsterLevel3Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    if(($Level -like $Null) -or (!$Level)){$Level = 1}
+
+    $DungeonRandomMonsterLevel3TableResult = $DungeonRandomMonsterLevel3Table | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    if($DungeonRandomMonsterLevel3TableResult.Lowest -lt $Level){$Relevant = $DungeonRandomMonsterLevel3TableResult.Else}else{$Relevant = $DungeonRandomMonsterLevel3TableResult}
+
+    $NumberAppearing = $Relevant.Number
+
+    if($Relevant.Monster -ne "NPC Party"){
+
+        if($Relevant.Number -eq "1"){$NumberAppearing = 1}else{$NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)}
+        #if(($Roll -ge 31) -and ($Roll -le 32)){$NumberAppearing = 1}
+        #if(($Roll -ge 35) -and ($Roll -le 40)){$NumberAppearing = 1}
+        #if(($Roll -ge 55) -and ($Roll -le 60)){$NumberAppearing = 1}
+
+    }
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Encounter = $Relevant.Monster
+        NumberAppearing = $NumberAppearing
+
+    }
+
+}
+
+
+#To do: Tables for moster level 4 and above
 
 #endregion
 
