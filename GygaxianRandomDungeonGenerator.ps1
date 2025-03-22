@@ -2264,7 +2264,18 @@ function Get-CharacterSubtableRoll {
 
 }
 
-function Get-NPCPartyRoll {
+$NPCRaceAndMultiClassTable = @(
+
+[pscustomobject]@{Min = 1;Max = 25;Race="Dwarf";MultiClassLikelihood=15}
+[pscustomobject]@{Min = 26;Max = 50;Race="Elf";MultiClassLikelihood=85}
+[pscustomobject]@{Min = 51;Max = 60;Race="Gnome";MultiClassLikelihood=25}
+[pscustomobject]@{Min = 61;Max = 85;Race="Half-elf";MultiClassLikelihood=85}
+[pscustomobject]@{Min = 86;Max = 95;Race="Halfling";MultiClassLikelihood=10}
+[pscustomobject]@{Min = 96;Max = 100;Race="Half-Orc";MultiClassLikelihood=50}
+
+)
+
+function Get-NPCRaceAndMultiClassTableRoll {
 
     param(
 
@@ -2275,6 +2286,40 @@ function Get-NPCPartyRoll {
 
     if($Roll -gt 100){$Roll = 100}
     if(!$Roll){$Roll = (Get-D100Roll).Result}
+    $BoolMultiClass = $False
+
+    $NPCRaceAndMultiClassTableResult = $NPCRaceAndMultiClassTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    if((Get-D100Roll).Result -le $NPCRaceAndMultiClassTableResult.MultiClassLikelihood){$BoolMultiClass = $True}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        NPCRace = $NPCRaceAndMultiClassTableResult.Race
+        NPCMultiClassLikelihood = $NPCRaceAndMultiClassTableResult.MultiClassLikelihood
+        BoolMultiClass = $BoolMultiClass
+
+    }
+
+}
+#The rules do note that it is permissible to use race/profession (class) combinations that are normally "very limited or impossible", (pg. 176) though this is in the context of the NPC having a Multi-Class.
+#I am opting not to include rules regarding multiclassing at this time. Maybe later I will revisit this.
+
+function Get-NPCPartyRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    if(($Level -like $Null) -or (!$Level)){$Level = 1}
 
     $NumberInParty = 1 + (Get-D4Roll).Result
 
@@ -2289,6 +2334,7 @@ function Get-NPCPartyRoll {
     $AssassinBan = $False
     $MonkBan = $False
     $BardBan = $False
+    $Race = ''
 
     $NPCParty = @()
 
@@ -2315,15 +2361,19 @@ function Get-NPCPartyRoll {
             $PaladinBan = $True
             
         }
+
+        #DMG pg. 176:
+        if((Get-D100Roll).Result -le 20){$Race = (Get-NPCRaceAndMultiClassTableRoll).NPCRace}else{$Race = "Human"}
         
         $PotentialPartyMember = Get-CharacterSubtableRoll -NoCleric $ClericBan -NoDruid $DruidBan -NoFighter $FighterBan -NoPaladin $PaladinBan -NoRanger $RangerBan -NoMagicUser $MagicUserBan -NoIllusionist $IllusionistBan -NoThief $ThiefBan -NoAssassin $AssassinBan -NoMonk $MonkBan -NoBard $BardBan
             
-        $NPCParty += $PotentialPartyMember
+        $NPCParty += "$($Race) $($PotentialPartyMember.NPC.ToLower())"
             
     }
 
-    $NPCPartyOutput = $NPCParty.NPC
-    $NPCPartyOutput += "Henchmen x $((9 - $NumberInParty))"
+    $NPCPartyOutput = $NPCParty
+    #DMG pg. 175:
+    if($Level -le 3){$NPCPartyOutput += "Henchmen x $((9 - $NumberInParty))"}else{$NPCPartyOutput += "Men-at-arms x $((9 - $NumberInParty))"}
 
     $NPCPartyOutput
 
@@ -2588,7 +2638,7 @@ function Get-Monster {
         
         foreach($NPC in ($MonsterRoll | sort | Get-Unique)){
         
-            if($NPC -notlike "Henchmen*"){
+            if(($NPC -notlike "Henchmen*") -and ($NPC -notlike "Men-at*")){
             
                 $Party = "$($Party)$($NPC)$(if(($MonsterRoll | ?{$_ -like $NPC} | Measure).Count -gt 1){' x '})$(if(($MonsterRoll | ?{$_ -like $NPC} | Measure).Count -gt 1){($MonsterRoll | ?{$_ -like $NPC} | Measure).Count}), "
                 
