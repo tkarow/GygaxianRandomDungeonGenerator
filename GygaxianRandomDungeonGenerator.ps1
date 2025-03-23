@@ -1962,7 +1962,7 @@ function Get-MagicItemTypeRoll {
 
 }
 
-$Table3A = @(
+$PotionsTable = @(
 
 [pscustomobject]@{Min = 1;Max = 3;Item = "Potion of Animal Control";XP = 250;Value = 400}
 [pscustomobject]@{Min = 4;Max = 6;Item = "Potion of Clairaudience";XP = 250;Value = 400}
@@ -2002,7 +2002,7 @@ $Table3A = @(
 
 )
 
-function Get-Table3ARoll {
+function Get-PotionsTableRoll {
 
     param(
 
@@ -2014,13 +2014,13 @@ function Get-Table3ARoll {
     if($Roll -gt 100){$Roll = 100}
     if(!$Roll){$Roll = (Get-D100Roll).Result}
 
-    $Result = $Table3A | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+    $Result = $PotionsTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
     $Result
 
 }
 
-$Table3B = @(
+$ScrollsTable = @(
 
 [pscustomobject]@{Min = 1;Max = 10;Item = "1 scroll";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
 [pscustomobject]@{Min = 11;Max = 16;Item = "1 scroll";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
@@ -2051,7 +2051,7 @@ $Table3B = @(
 )
 #*30% of all scrolls are of clerical nature (dice 71-00), and 25% of all clerical scrolls are druidical. 10% of all magic-user scrolls are illusionist. This applies only to scrolls 01-60 above. Asterisked numbers indicate clerical spell levels.
 
-function Get-Table3BRoll {
+function Get-ScrollsTableRoll {
 
     param(
 
@@ -2063,7 +2063,7 @@ function Get-Table3BRoll {
     if($Roll -gt 100){$Roll = 100}
     if(!$Roll){$Roll = (Get-D100Roll).Result}
 
-    $Result = $Table3B | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+    $Result = $ScrollsTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
     $Result
 
@@ -3329,6 +3329,48 @@ function Get-Room {
 
     }
    
+}
+
+function Get-Passage {
+
+    [alias("Get-Hallway")]
+    param(
+
+        [Parameter(Mandatory=$False)]
+        $PassageSegments,
+        
+        [Parameter(Mandatory=$False)]
+        [int]$Table1Roll,
+        
+        [Parameter(Mandatory=$False)]
+        [int]$Level
+
+    )
+
+    $Width = ''
+    $Width = Get-Table3ARoll
+    if($Width.Description -notlike "SPECIAL*"){$Width = $Width.Description}else{$Width = (Get-Table3BRoll).Description}
+
+    if((!$Level) -or ($Level -like "")){$Level = 1}
+    if((!$PassageSegments) -or ($PassageSegments -like "")){$PassageSegments = @();$PassageSegments += "30', Width $($Width)"}
+
+    if(!$Table1Roll){$Table1Roll = (Get-D20Roll).Result}
+
+    if($Table1Roll -le 2){$Segments += "60', Width $($Width)"}
+    if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$Segments += "Door"}
+    if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){$Segments += "Side Passage"}
+    if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){$Segments += "Passage turns $((Get-Table4Roll).Description)";$Segments += "30', Width $($Width)"}
+    if(($Table1Roll -ge 14) -and ($Table1Roll -le 16)){$Segments += "Chamber"}
+    if($Table1Roll -eq 17){$Segments += "Stairs $((Get-Table6Roll).Description.ToLower())"}
+    #To do: Add directions for secet doors:
+    if($Table1Roll -eq 18){$Segments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
+    if($Table1Roll -eq 19){$Segments += "$((Get-Table7Roll).Specific)"}
+    if($Table1Roll -eq 20){$Segments += "$((Get-Monster).Encounter)"}
+
+    if(($PassageSegments[-1] -notlike "Room") -and ($PassageSegments[-1] -notlike "Chamber") -and ($PassageSegments[-1] -notlike "*dead end*")){$PassageSegments += Get-Passage -PassageSegments $PassageSegments}
+
+    $PassageSegments
+
 }
 
 ###################################
