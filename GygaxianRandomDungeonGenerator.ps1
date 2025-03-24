@@ -3396,7 +3396,8 @@ function Get-Passage {
         #To do: Add directions for secet doors:
         if($Table1Roll -eq 18){$PassageSegments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
         if($Table1Roll -eq 19){$PassageSegments += "$((Get-Table7Roll).Specific)"}
-        if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster).Encounter)"}
+        if($Table1Roll -eq 20){"DOOR"}
+        if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster -Level $Level).Encounter)"}
         
         $Loopies++
         $NotFirstTime = $True
