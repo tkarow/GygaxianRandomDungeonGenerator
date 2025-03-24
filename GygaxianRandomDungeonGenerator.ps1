@@ -404,8 +404,8 @@ $Table3B = @{
 8  = [pscustomobject]@{Description = "50', double raw of columns"}
 9  = [pscustomobject]@{Description = "50', double raw of columns"}
 10 = [pscustomobject]@{Description = "50', double raw of columns"}
-11 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (1 1-20) of the time.)"}
-12 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (1 1-20) of the time.)"}
+11 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time.)"}
+12 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time.)"}
 13 = [pscustomobject]@{Description = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
 14 = [pscustomobject]@{Description = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
 15 = [pscustomobject]@{Description = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
@@ -3351,10 +3351,28 @@ function Get-Passage {
     $Width = ''
     #To do: handle this/Decide how/when to check for width. Having a special width locked in for an entire corridor's length can be very very weird, (every segemented roll is bisected by streams...?)
     $Width = Get-Table3ARoll
-    if($Width.Description -notlike "SPECIAL*"){$Width = $Width.Description}else{$Width = (Get-Table3BRoll).Description}
+    if($Width.Description -notlike "SPECIAL*"){
+    
+        $Width = $Width.Description
+        
+    }else{
+    
+        #To do: Special passages have footnotes that have specific terminations sometimes
+        $Table3BRoll = (Get-Table3BRoll).Description
+        $Width = "$($Table3BRoll)".split(",")[0]
+        $PassageSegments += "$($Table3BRoll)".split(",")[1]
+        
+    }
 
     if((!$Level) -or ($Level -like "")){$Level = 1}
-    if((!$PassageSegments) -or ($PassageSegments -like "")){$PassageSegments = @();$PassageSegments += "30', Width $($Width)"}
+
+    if((!$PassageSegments) -or ($PassageSegments -like "")){
+    
+        $PassageSegments = @()
+        
+        $PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}
+        
+    }
 
     if(!$Table1Roll){$Table1Roll = (Get-D20Roll).Result}
 
@@ -3362,12 +3380,33 @@ function Get-Passage {
 
         if($NotFirstTime -eq $True){$Table1Roll = (Get-D20Roll).Result}
 
-        if($Table1Roll -le 2){$PassageSegments += "60', Width $($Width)"}
+        if($Table1Roll -le 2){$PassageSegments += [pscustomobject]@{SegmentLength = "60'";Width = "$($Width)"}}
         if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$PassageSegments += "Door"}
-        if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){$PassageSegments += "Side Passage";$PassageSegments += "30', Width $($Width)"}
-        if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){$PassageSegments += "Passage turns $((Get-Table4Roll).Description)";$PassageSegments += "30', Width $($Width)"}
+        if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){$PassageSegments += "Side Passage";$PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}}
+        if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){
+        
+            $PassageSegments += "Passage turns $((Get-Table4Roll).Description)"
+            
+            $Width = Get-Table3ARoll
+            
+            if($Width.Description -notlike "SPECIAL*"){
+    
+                $Width = $Width.Description
+        
+            }else{
+    
+                #To do: As bove, special passages have footnotes that have specific terminations sometimes
+                $Table3BRoll = (Get-Table3BRoll).Description
+                $Width = "$($Table3BRoll)".split(",")[0]
+                $PassageSegments += "$($Table3BRoll)".split(",")[1]
+        
+            }
+
+            $PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}
+            
+        }
         if(($Table1Roll -ge 14) -and ($Table1Roll -le 16)){$PassageSegments += "Chamber"}
-        if($Table1Roll -eq 17){$PassageSegments += "Stairs $((Get-Table6Roll).Description.ToLower())"}
+        if($Table1Roll -eq 17){$PassageSegments += "Stairs: $((Get-Table6Roll).Description)"}
         #To do: Add directions for secet doors:
         if($Table1Roll -eq 18){$PassageSegments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
         if($Table1Roll -eq 19){$PassageSegments += "$((Get-Table7Roll).Specific)"}
