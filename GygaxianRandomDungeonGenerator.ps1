@@ -3347,7 +3347,9 @@ function Get-Passage {
 
     )
 
+    $NotFirstTime = $False
     $Width = ''
+    #To do: handle this/Decide how/when to check for width. Having a special width locked in for an entire corridor's length can be very very weird, (every segemented roll is bisected by streams...?)
     $Width = Get-Table3ARoll
     if($Width.Description -notlike "SPECIAL*"){$Width = $Width.Description}else{$Width = (Get-Table3BRoll).Description}
 
@@ -3356,18 +3358,24 @@ function Get-Passage {
 
     if(!$Table1Roll){$Table1Roll = (Get-D20Roll).Result}
 
-    if($Table1Roll -le 2){$Segments += "60', Width $($Width)"}
-    if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$Segments += "Door"}
-    if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){$Segments += "Side Passage"}
-    if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){$Segments += "Passage turns $((Get-Table4Roll).Description)";$Segments += "30', Width $($Width)"}
-    if(($Table1Roll -ge 14) -and ($Table1Roll -le 16)){$Segments += "Chamber"}
-    if($Table1Roll -eq 17){$Segments += "Stairs $((Get-Table6Roll).Description.ToLower())"}
-    #To do: Add directions for secet doors:
-    if($Table1Roll -eq 18){$Segments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
-    if($Table1Roll -eq 19){$Segments += "$((Get-Table7Roll).Specific)"}
-    if($Table1Roll -eq 20){$Segments += "$((Get-Monster).Encounter)"}
+    while(($PassageSegments[-1] -notlike "Door") -and ($PassageSegments[-1] -notlike "Chamber") -and ($PassageSegments[-1] -notlike "Stairs*") -and ($PassageSegments[-1] -notlike "*dead end*")){
 
-    if(($PassageSegments[-1] -notlike "Room") -and ($PassageSegments[-1] -notlike "Chamber") -and ($PassageSegments[-1] -notlike "*dead end*")){$PassageSegments += Get-Passage -PassageSegments $PassageSegments}
+        if($NotFirstTime -eq $True){$Table1Roll = (Get-D20Roll).Result}
+
+        if($Table1Roll -le 2){$PassageSegments += "60', Width $($Width)"}
+        if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$PassageSegments += "Door"}
+        if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){$PassageSegments += "Side Passage";$PassageSegments += "30', Width $($Width)"}
+        if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){$PassageSegments += "Passage turns $((Get-Table4Roll).Description)";$PassageSegments += "30', Width $($Width)"}
+        if(($Table1Roll -ge 14) -and ($Table1Roll -le 16)){$PassageSegments += "Chamber"}
+        if($Table1Roll -eq 17){$PassageSegments += "Stairs $((Get-Table6Roll).Description.ToLower())"}
+        #To do: Add directions for secet doors:
+        if($Table1Roll -eq 18){$PassageSegments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
+        if($Table1Roll -eq 19){$PassageSegments += "$((Get-Table7Roll).Specific)"}
+        if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster).Encounter)"}
+        
+        $NotFirstTime = $True
+
+    }
 
     $PassageSegments
 
