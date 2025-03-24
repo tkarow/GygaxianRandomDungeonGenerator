@@ -406,13 +406,13 @@ $Table3B = @{
 10 = [pscustomobject]@{Description = "50', double raw of columns"}
 11 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time.)"}
 12 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time.)"}
-13 = [pscustomobject]@{Description = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
-14 = [pscustomobject]@{Description = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
-15 = [pscustomobject]@{Description = "10' stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
-16 = [pscustomobject]@{Description = "20' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
-17 = [pscustomobject]@{Description = "20' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
-18 = [pscustomobject]@{Description = "40' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
-19 = [pscustomobject]@{Description = "60' river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+13 = [pscustomobject]@{Description = "10', stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
+14 = [pscustomobject]@{Description = "10', stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
+15 = [pscustomobject]@{Description = "10', stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
+16 = [pscustomobject]@{Description = "20', river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+17 = [pscustomobject]@{Description = "20', river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+18 = [pscustomobject]@{Description = "40', river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
+19 = [pscustomobject]@{Description = "60', river (rivers bisect the passage. They will be bridged 50% (1-10) of the time, have a boat 25% (11-15) of the time (50% chance for either bank), and be an obstacle 25% of the time.)"}
 20 = [pscustomobject]@{Description = "20', chasm (chasms bisect the passage. They are 150' to 200' deep. They will be bridged 50% (1-10) of the time, have a jumping place 5'-10' wide 25% (1 1-15) of the time, and be an obstacle 25% (16-20) of the time.)"}
 
 }
@@ -3337,9 +3337,6 @@ function Get-Passage {
     param(
 
         [Parameter(Mandatory=$False)]
-        $PassageSegments,
-        
-        [Parameter(Mandatory=$False)]
         [int]$Table1Roll,
         
         [Parameter(Mandatory=$False)]
@@ -3350,31 +3347,24 @@ function Get-Passage {
     $NotFirstTime = $False
     $Width = ''
     #To do: handle this/Decide how/when to check for width. Having a special width locked in for an entire corridor's length can be very very weird, (every segemented roll is bisected by streams...?)
-    $Width = Get-Table3ARoll
-    if($Width.Description -notlike "SPECIAL*"){
-    
-        $Width = $Width.Description
-        
-    }else{
+    $Width = (Get-Table3ARoll).Description
+    if($Width -like "SPECIAL*"){
     
         #To do: Special passages have footnotes that have specific terminations sometimes
         $Table3BRoll = (Get-Table3BRoll).Description
         $Width = "$($Table3BRoll)".split(",")[0]
-        $PassageSegments += "$($Table3BRoll)".split(",")[1]
+        $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
         
     }
 
     if((!$Level) -or ($Level -like "")){$Level = 1}
-
-    if((!$PassageSegments) -or ($PassageSegments -like "")){
     
-        $PassageSegments = @()
-        
-        $PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}
-        
-    }
+    $PassageSegments = @()
+    $PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}
 
     if(!$Table1Roll){$Table1Roll = (Get-D20Roll).Result}
+
+    $Loopies = 0
 
     while(($PassageSegments[-1] -notlike "Door") -and ($PassageSegments[-1] -notlike "Chamber") -and ($PassageSegments[-1] -notlike "Stairs*") -and ($PassageSegments[-1] -notlike "*dead end*")){
 
@@ -3387,18 +3377,14 @@ function Get-Passage {
         
             $PassageSegments += "Passage turns $((Get-Table4Roll).Description)"
             
-            $Width = Get-Table3ARoll
+            $Width = (Get-Table3ARoll).Description
             
-            if($Width.Description -notlike "SPECIAL*"){
+            if($Width.Description -like "SPECIAL*"){
     
-                $Width = $Width.Description
-        
-            }else{
-    
-                #To do: As bove, special passages have footnotes that have specific terminations sometimes
+                #To do: As above, special passages have footnotes that have specific terminations sometimes
                 $Table3BRoll = (Get-Table3BRoll).Description
                 $Width = "$($Table3BRoll)".split(",")[0]
-                $PassageSegments += "$($Table3BRoll)".split(",")[1]
+                $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
         
             }
 
@@ -3412,11 +3398,13 @@ function Get-Passage {
         if($Table1Roll -eq 19){$PassageSegments += "$((Get-Table7Roll).Specific)"}
         if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster).Encounter)"}
         
+        $Loopies++
         $NotFirstTime = $True
 
     }
 
     $PassageSegments
+    $Loopies
 
 }
 
