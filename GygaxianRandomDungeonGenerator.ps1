@@ -1123,16 +1123,16 @@ $Table6 = @{
 15 = [pscustomobject]@{Description = "Trap door down 1 level, passage continues, check again in 30'"}
 16 = [pscustomobject]@{Description = "Trap door down 1 level, passage continues, check again in 30'"}
 17 = [pscustomobject]@{Description = "Trap door down 2 levels, passage continues, check again in 30'"}
-18 = [pscustomobject]@{Description = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"}
-19 = [pscustomobject]@{Description = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"}
-20 = [pscustomobject]@{Description = "Up 1 then down 2 (total down 1),chamber at end (roll on TABLE V.)"}
+18 = [pscustomobject]@{Description = "Up 1 then down 2 (total down 1), chamber at end (roll on TABLE V.)"}
+19 = [pscustomobject]@{Description = "Up 1 then down 2 (total down 1), chamber at end (roll on TABLE V.)"}
+20 = [pscustomobject]@{Description = "Up 1 then down 2 (total down 1), chamber at end (roll on TABLE V.)"}
 
 }
 #N.B. Check for such doors only after descending steps if playing solo!
 
 function Get-Table6Roll {
 
-    [alias("Get-HiddenTreasure")]
+    [alias("Get-Stairs")]
     param(
 
         [Parameter(Mandatory=$False)]
@@ -1142,10 +1142,22 @@ function Get-Table6Roll {
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
 
+    $SpecificStairs = "N/A"
+    $SpecificStairsD20Roll = (Get-D20Roll).Result
+    $SpecificStairsD6Roll = (Get-D6Roll).Result
+
+    if($Roll -le 5){$SpecificStairs = "Down 1 level$(if($SpecificStairsD20Roll -eq 1){". Door ahead which closes egress for the day."})"}
+    if($Roll -eq 6){$SpecificStairs = "Down 2 levels$(if($SpecificStairsD20Roll -le 2){". Door ahead which closes egress for the day."})"}
+    if($Roll -eq 7){$SpecificStairs = "Down 3 levels$(if($SpecificStairsD20Roll -le 3){". Door ahead which closes egress for the day."})"}
+    if($Roll -eq 9){$SpecificStairs = "Up, dead end$(if($SpecificStairsD6Roll -eq 1){". Then chute down 2 levels"})"}
+    if($Roll -eq 10){$SpecificStairs = "Down, dead end$(if($SpecificStairsD6Roll -eq 1){". Then chute down 1 levels"})"}
+    if($Roll -ge 18){$SpecificStairs = "Up 1 then down 2 (total down 1), to chamber."}
+
     [pscustomobject]@{
    
         Roll = $Roll;
         Description = $Table6.($Roll).Description
+        SpecificStairs = $SpecificStairs
    
     }
 
@@ -3360,7 +3372,7 @@ function Get-Passage {
     if((!$Level) -or ($Level -like "")){$Level = 1}
     
     $PassageSegments = @()
-    $PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}
+    $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
 
     if(!$Table1Roll){$Table1Roll = (Get-D20Roll).Result}
 
@@ -3370,9 +3382,15 @@ function Get-Passage {
 
         if($NotFirstTime -eq $True){$Table1Roll = (Get-D20Roll).Result}
 
-        if($Table1Roll -le 2){$PassageSegments += [pscustomobject]@{SegmentLength = "60'";Width = "$($Width)"}}
+        if($Table1Roll -le 2){$PassageSegments += [pscustomobject]@{SegmentLength = 60;Width = "$($Width)"}}
         if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$PassageSegments += "Door"}
-        if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){$PassageSegments += "Side Passage";$PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}}
+        if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){
+        
+            #To do: Add side passage roll, output here
+            $PassageSegments += "Side Passage"
+            $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
+            
+        }
         if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){
         
             $PassageSegments += "Passage turns $((Get-Table4Roll).Description)"
@@ -3388,17 +3406,58 @@ function Get-Passage {
         
             }
 
-            $PassageSegments += [pscustomobject]@{SegmentLength = "30'";Width = "$($Width)"}
+            $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
             
         }
         if(($Table1Roll -ge 14) -and ($Table1Roll -le 16)){$PassageSegments += "Chamber"}
-        if($Table1Roll -eq 17){$PassageSegments += "Stairs: $((Get-Table6Roll).Description)"}
+        if($Table1Roll -eq 17){
+        
+            $Stairs = ""
+            $Stairs = Get-Table6Roll
+            
+            if($Stairs.SpecificStairs -notlike "N/A"){
+            
+                $Stairs = $Stairs.SpecificStairs
+                
+            }else{
+            
+                $Stairs = $Stairs.Description
+                
+            }
+            
+        $PassageSegments += "Stairs: $($Stairs)"
+        
+        
+        
+        }
+
         #To do: Add directions for secet doors:
         if($Table1Roll -eq 18){$PassageSegments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
-        if($Table1Roll -eq 19){$PassageSegments += "$((Get-Table7Roll).Specific)"}
-        if($Table1Roll -eq 20){"DOOR"}
+        if($Table1Roll -eq 19){
+        
+            $Trick = ""
+            $Trick = Get-Table7Roll
+            
+            if($Trick.IllusionaryWall -notlike "N/A"){
+            
+                $Trick = "Illusionary wall hides a $($Trick.IllusionaryWall.ToLower())"
+                
+            }else{
+            
+                $Trick = "$($Trick.Specific)"
+                
+            }
+            
+            $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
+
+            $PassageSegments += "$($Trick)"
+        
+        }
+
         if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster -Level $Level).Encounter)"}
         
+        if(($PassageSegments[-2].SegmentLength -and $PassageSegments[-1].SegmentLength) -and ($PassageSegments[-2].Width -eq $PassageSegments[-1].Width)){$PassageSegments[-2].SegmentLength = $PassageSegments[-2].SegmentLength + $PassageSegments[-1].SegmentLength;$PassageSegments = @($PassageSegments | Select-Object -SkipLast 1)}
+
         $Loopies++
         $NotFirstTime = $True
 
