@@ -742,10 +742,13 @@ function Get-Table5DRoll {
     param(
 
         [Parameter(Mandatory=$False)]
-        [int]$Roll
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [bool]$DeadEnd
    
     )
 
+    if($DeadEnd -eq $True){$Roll = Get-Random -Minimum 1 -Maximum 18}
     if(!$Roll){$Roll = (Get-D20Roll).Result}
 
     [pscustomobject]@{
@@ -3359,11 +3362,11 @@ function Get-Passage {
     $NotFirstTime = $False
     $Width = ''
     #To do: handle this/Decide how/when to check for width. Having a special width locked in for an entire corridor's length can be very very weird, (every segemented roll is bisected by streams...?)
-    $Width = (Get-Table3ARoll).Description
+    $Width = (Get-Table3ARoll).Description.Replace("'","")
     if($Width -like "SPECIAL*"){
     
         #To do: Special passages have footnotes that have specific terminations sometimes
-        $Table3BRoll = (Get-Table3BRoll).Description
+        $Table3BRoll = (Get-Table3BRoll).Description.Replace("'","")
         $Width = "$($Table3BRoll)".split(",")[0]
         $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
         
@@ -3393,15 +3396,15 @@ function Get-Passage {
         }
         if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){
         
-            $PassageSegments += "Passage turns $((Get-Table4Roll).Description)"
+            $PassageSegments += "Passage turns $((Get-Table4Roll).Description.ToLower().Replace(" degrees","°"))"
             
-            $Width = (Get-Table3ARoll).Description
+            $Width = (Get-Table3ARoll).Description.Replace("'","")
             
             if($Width.Description -like "SPECIAL*"){
     
                 #To do: As above, special passages have footnotes that have specific terminations sometimes
                 $Table3BRoll = (Get-Table3BRoll).Description
-                $Width = "$($Table3BRoll)".split(",")[0]
+                $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
                 $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
         
             }
@@ -3431,8 +3434,7 @@ function Get-Passage {
         
         }
 
-        #To do: Add directions for secet doors:
-        if($Table1Roll -eq 18){$PassageSegments += "Dead end$($SecretDoors=0;1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}};if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})"})"}
+        if($Table1Roll -eq 18){$PassageSegments += Get-DeadEnd}
         if($Table1Roll -eq 19){
         
             $Trick = ""
@@ -3464,7 +3466,73 @@ function Get-Passage {
     }
 
     $PassageSegments
-    $Loopies
+    #$Loopies
+
+}
+
+function Get-DeadEnd {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$NumberOfSecretDoors
+
+    )
+
+    $SecretDoorString = ""
+
+    if((!$NumberOfSecretDoors) -or ($NumberOfSecretDoors -eq $Null)){
+
+        $SecretDoors = 0
+
+        #See DMG pg. 170 Appendix A Table I. result 18 and DMG pg. 171 Appendix A Table V. C. footnote / Table V. D. footnote for odds on finding secret doors in this situation
+        1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}
+
+    }else{
+    
+        $SecretDoors = $NumberOfSecretDoors
+
+    }
+
+    if($SecretDoors -gt 0){
+    
+        $SecretDoorLocations = @()
+
+        if($SecretDoors -eq 1){
+                    
+            $SecretDoorLocations += (Get-Table5DRoll -DeadEnd $True).Description
+            
+        }
+
+        if($SecretDoors -eq 2){
+
+            $SecretDoorLocations += (Get-Table5DRoll -DeadEnd $True).Description
+
+            $NewDeadEndWallLocation = ""
+            
+            while(($NewDeadEndWallLocation -like "") -or ($SecretDoorLocations -contains $NewDeadEndWallLocation)){
+            
+                $NewDeadEndWallLocation = (Get-Table5DRoll -DeadEnd $True).Description
+
+            }
+
+            $SecretDoorLocations += $NewDeadEndWallLocation
+
+        }
+
+        if($SecretDoors -eq 3){
+
+            $SecretDoorLocations += "Left wall"
+            $SecretDoorLocations += "Right wall"
+            $SecretDoorLocations += "Opposite wall"
+
+        }
+
+    }
+
+    $SecretDoorString = ": ($($SecretDoorLocations -join ", "))".ToLower()
+
+    "Dead end$(if($SecretDoors -gt 0){", $($SecretDoors) secret door$(if($SecretDoors -gt 1){"s"})$(if($SecretDoors -gt 0){"$($SecretDoorString)"})"})"
 
 }
 
