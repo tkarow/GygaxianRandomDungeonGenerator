@@ -1965,6 +1965,66 @@ function Get-JewelryPieceRoll {
 
 }
 
+$JewelryAndItemsTypicallyBeJewelled = @(
+
+    [pscustomobject]@{Min = 1;Max = 2;Item = "Anklet"}
+    [pscustomobject]@{Min = 3;Max = 6;Item = "Arm band"}
+    [pscustomobject]@{Min = 7;Max = 9;Item = "Belt"}
+    [pscustomobject]@{Min = 10;Max = 12;Item = "Box (small)"}
+    [pscustomobject]@{Min = 13;Max = 16;Item = "Bracelet"}
+    [pscustomobject]@{Min = 17;Max = 19;Item = "Brooch"}
+    [pscustomobject]@{Min = 20;Max = 21;Item = "Buckle"}
+    [pscustomobject]@{Min = 22;Max = 25;Item = "Chain"}
+    [pscustomobject]@{Min = 26;Max = 26;Item = "Chalice"}
+    [pscustomobject]@{Min = 27;Max = 27;Item = "Choker"}
+    [pscustomobject]@{Min = 28;Max = 30;Item = "Clasp"}
+    [pscustomobject]@{Min = 31;Max = 32;Item = "Coffer"}
+    [pscustomobject]@{Min = 33;Max = 33;Item = "Collar"}
+    [pscustomobject]@{Min = 34;Max = 35;Item = "Comb"}
+    [pscustomobject]@{Min = 36;Max = 36;Item = "Coronet"}
+    [pscustomobject]@{Min = 37;Max = 37;Item = "Crown"}
+    [pscustomobject]@{Min = 38;Max = 39;Item = "Decanter"}
+    [pscustomobject]@{Min = 40;Max = 40;Item = "Diadem"}
+    [pscustomobject]@{Min = 41;Max = 45;Item = "Earring"}
+    [pscustomobject]@{Min = 46;Max = 47;Item = "Fob"}
+    [pscustomobject]@{Min = 48;Max = 52;Item = "Goblet"}
+    [pscustomobject]@{Min = 53;Max = 54;Item = "Headband (Fillet)"}
+    [pscustomobject]@{Min = 55;Max = 57;Item = "Idol"}
+    [pscustomobject]@{Min = 58;Max = 59;Item = "Locket"}
+    [pscustomobject]@{Min = 60;Max = 62;Item = "Medal"}
+    [pscustomobject]@{Min = 63;Max = 68;Item = "Medallion"}
+    [pscustomobject]@{Min = 69;Max = 75;Item = "Necklace"}
+    [pscustomobject]@{Min = 76;Max = 78;Item = "Pendant"}
+    [pscustomobject]@{Min = 79;Max = 83;Item = "Pin"}
+    [pscustomobject]@{Min = 84;Max = 84;Item = "Orb"}
+    [pscustomobject]@{Min = 85;Max = 93;Item = "Ring"}
+    [pscustomobject]@{Min = 94;Max = 94;Item = "Sceptre"}
+    [pscustomobject]@{Min = 95;Max = 96;Item = "Seal"}
+    [pscustomobject]@{Min = 97;Max = 99;Item = "Statuette"}
+    [pscustomobject]@{Min = 100;Max = 100;Item = "Tiara"}
+
+)
+#The above is in the DMG (pg. 219). I created the table above this one before noticing this.
+
+function Get-JewelryAndItemsTypicallyBeJewelledRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    [pscustomobject]@{
+
+        Description = ($JewelryAndItemsTypicallyBeJewelled| ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}).Item
+
+    }
+
+}
+
 #endregion
 
 #region Magic Items
@@ -2982,7 +3042,7 @@ function Get-Jewelry {
         [Parameter(Mandatory=$False)]
         [int]$JewelryTableRoll,
         [Parameter(Mandatory=$False)]
-        [int]$JewelryTablePieceRoll,
+        [int]$JewelryAndItemsTypicallyBeJewelledRoll,
         [Parameter(Mandatory=$False)]
         [int]$ReRolls,
         [Parameter(Mandatory=$False)]
@@ -3018,7 +3078,7 @@ function Get-Jewelry {
         
     }
 
-    $Type = "$((Get-JewelryPieceRoll -Roll $JewelryTablePieceRoll).Description)"
+    $Type = "$((Get-JewelryAndItemsTypicallyBeJewelledRoll -Roll $JewelryAndItemsTypicallyBeJewelledRoll).Description)"
 
     if((Get-D10Roll).Result -eq 1){$Exceptional = $True}
 
