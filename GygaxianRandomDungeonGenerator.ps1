@@ -401,9 +401,9 @@ $Table3B = @{
 5  = [pscustomobject]@{Description = "40', double row of columns"}
 6  = [pscustomobject]@{Description = "40', double row of columns"}
 7  = [pscustomobject]@{Description = "40', double row of columns"}
-8  = [pscustomobject]@{Description = "50', double raw of columns"}
-9  = [pscustomobject]@{Description = "50', double raw of columns"}
-10 = [pscustomobject]@{Description = "50', double raw of columns"}
+8  = [pscustomobject]@{Description = "50', double row of columns"}
+9  = [pscustomobject]@{Description = "50', double row of columns"}
+10 = [pscustomobject]@{Description = "50', double row of columns"}
 11 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time.)"}
 12 = [pscustomobject]@{Description = "50', columns 10' right and left support 10' wide upper galleries 20' above (stairs up to gallery will be at end of passage (1-15) or at beginning (16-20). In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time.)"}
 13 = [pscustomobject]@{Description = "10', stream (streams bisect the passage. They will be bridged 75% (1-15) of the time and be an obstacle 25% (16-20) of the time.)"}
@@ -427,12 +427,36 @@ function Get-Table3BRoll {
    
     )
 
+    $SpecificSpecial = "N/A"
     if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+    if($Roll -ge 11){
+
+        $SpecificSpecialRoll = (Get-D20Roll).Result
+    
+        switch($Roll){
+        
+            11 {$SpecificSpecial = "50', columns 10' right and left support 10' wide upper galleries 20' above. $(if($SpecificSpecialRoll -le 15){"Stairs to gallery are at the end of the passage."}else{"Stairs to gallery are at the beginning of the passage."})"}
+            12 {$SpecificSpecial = "50', columns 10' right and left support 10' wide upper galleries 20' above. $(if($SpecificSpecialRoll -le 15){"Stairs to gallery are at the end of the passage."}else{"Stairs to gallery are at the beginning of the passage."})"}
+            #Above" "In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time." is too highly situational at this time to program. Maybe later.
+            13 {$SpecificSpecial = "10', streams bisect the passage$(if($SpecificSpecialRoll -le 15){". Bridges cross them."})"}
+            14 {$SpecificSpecial = "10', streams bisect the passage$(if($SpecificSpecialRoll -le 15){". Bridges cross them."})"}
+            15 {$SpecificSpecial = "10', streams bisect the passage$(if($SpecificSpecialRoll -le 15){". Bridges cross them."})"}
+            16 {$SpecificSpecial = "20', rivers bisect the passage$(if($SpecificSpecialRoll -le 10){". Bridges cross them."}elseif(($SpecificSpecialRoll -ge 11) -and ($SpecificSpecialRoll -le 15)){" A boat is present$(if((Get-Random -Minimum 1 -Maximum 3) -eq 1){" on the near shore."}else{" on the far shore."})"})"}
+            17 {$SpecificSpecial = "20', rivers bisect the passage$(if($SpecificSpecialRoll -le 10){". Bridges cross them."}elseif(($SpecificSpecialRoll -ge 11) -and ($SpecificSpecialRoll -le 15)){" A boat is present$(if((Get-Random -Minimum 1 -Maximum 3) -eq 1){" on the near shore."}else{" on the far shore."})"})"}
+            18 {$SpecificSpecial = "40', rivers bisect the passage$(if($SpecificSpecialRoll -le 10){". Bridges cross them."}elseif(($SpecificSpecialRoll -ge 11) -and ($SpecificSpecialRoll -le 15)){" A boat is present$(if((Get-Random -Minimum 1 -Maximum 3) -eq 1){" on the near shore."}else{" on the far shore."})"})"}
+            19 {$SpecificSpecial = "60', rivers bisect the passage$(if($SpecificSpecialRoll -le 10){". Bridges cross them."}elseif(($SpecificSpecialRoll -ge 11) -and ($SpecificSpecialRoll -le 15)){" A boat is present$(if((Get-Random -Minimum 1 -Maximum 3) -eq 1){" on the near shore."}else{" on the far shore."})"})"}
+            20 {$SpecificSpecial = "20', chasms ($(((Get-D6Roll).Result * 10) + 140)' deep) bisect the passage$(if($SpecificSpecialRoll -le 10){". Bridges cross them."}elseif(($SpecificSpecialRoll -ge 11) -and ($SpecificSpecialRoll -le 15)){" There is a place to jump across $((Get-Random -Minimum 1 -Maximum 3) * 5)' wide."})"}
+
+        }
+
+    }
 
     [pscustomobject]@{
    
         Roll = $Roll;
         Description = $Table3B.($Roll).Description
+        SpecificSpecial = $SpecificSpecial
    
     }
 
@@ -1212,6 +1236,7 @@ function Get-Table7Roll {
 
     if(!$Roll){$Roll = (Get-D20Roll).Result}
 
+    $SecretDoorTrap = "N/A"
     $IllusionaryWallHides = "N/A"
     $Gas = "N/A"
     $Arrows = "N/A"
@@ -1220,6 +1245,8 @@ function Get-Table7Roll {
     $Crush = "N/A"
 
     #To do: Add a roll for table II (maps) for results 1-5 above
+
+    if($Roll -le 5){$SecretDoorTrap = "Secret Door: Non-elf locates 3 in 20, elf locates 5 in 20, magical device locates 18 in 20; If secret door is not detected then pit, 10' deep, 3 in 6 to fall in."}
 
     if($Roll -eq 12){$Blocking = "Wall 10' behind slides across passage blocking it for $(Get-Random -Minimum 40 -Maximum 61) turns."}
 
@@ -1264,9 +1291,10 @@ function Get-Table7Roll {
    
         Roll = $Roll;
         Description = $Table7.($Roll).Description
-        Specific = "$(if($IllusionaryWallHides -notlike "N/A"){$IllusionaryWallHides}elseif($Gas -notlike "N/A"){$Gas}elseif($Arrows -notlike "N/A"){$Arrows}elseif($Spear -notlike "N/A"){$Spear}elseif($Blocking -notlike "N/A"){$Blocking}elseif($Crush -notlike "N/A"){$Crush}else{$Table7.($Roll).Description})"
+        Specific = "$(if($IllusionaryWallHides -notlike "N/A"){$IllusionaryWallHides}elseif($Gas -notlike "N/A"){$Gas}elseif($Arrows -notlike "N/A"){$Arrows}elseif($Spear -notlike "N/A"){$Spear}elseif($Blocking -notlike "N/A"){$Blocking}elseif($Crush -notlike "N/A"){$Crush}elseif($SecretDoorTrap -notlike "N/A"){$SecretDoorTrap}else{$Table7.($Roll).Description})"
         IllusionaryWall = $IllusionaryWallHides
         Gas = $Gas
+        SecretDoorTrap = $SecretDoorTrap
    
     }
 
@@ -3366,8 +3394,9 @@ function Get-Passage {
     if($Width -like "SPECIAL*"){
     
         #To do: Special passages have footnotes that have specific terminations sometimes
-        $Table3BRoll = (Get-Table3BRoll).Description.Replace("'","")
-        $Width = "$($Table3BRoll)".split(",")[0]
+        $Table3BRoll = Get-Table3BRoll
+        if($Table3BRoll.SpecificSpecial -like "N/A"){$Table3BRoll = $Table3BRoll.Description.Replace("'","")}else{$Table3BRoll = $Table3BRoll.SpecificSpecial}
+        $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
         $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
         
     }
@@ -3400,10 +3429,11 @@ function Get-Passage {
             
             $Width = (Get-Table3ARoll).Description.Replace("'","")
             
-            if($Width.Description -like "SPECIAL*"){
+            if($Width -like "SPECIAL*"){
     
                 #To do: As above, special passages have footnotes that have specific terminations sometimes
-                $Table3BRoll = (Get-Table3BRoll).Description
+                $Table3BRoll = Get-Table3BRoll
+                if($Table3BRoll.SpecificSpecial -like "N/A"){$Table3BRoll = $Table3BRoll.Description.Replace("'","")}else{$Table3BRoll = $Table3BRoll.SpecificSpecial}
                 $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
                 $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
         
@@ -3458,7 +3488,9 @@ function Get-Passage {
 
         if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster -Level $Level).Encounter)"}
         
+        if(($PassageSegments[0].SegmentLength -and $PassageSegments[1].SegmentLength) -and ($PassageSegments[0].Width -eq $PassageSegments[1].Width)){$PassageSegments[1].SegmentLength = $PassageSegments[0].SegmentLength + $PassageSegments[1].SegmentLength;$PassageSegments = @($PassageSegments | Select-Object -Skip 1)}
         if(($PassageSegments[-2].SegmentLength -and $PassageSegments[-1].SegmentLength) -and ($PassageSegments[-2].Width -eq $PassageSegments[-1].Width)){$PassageSegments[-2].SegmentLength = $PassageSegments[-2].SegmentLength + $PassageSegments[-1].SegmentLength;$PassageSegments = @($PassageSegments | Select-Object -SkipLast 1)}
+        if(($PassageSegments[-2].SegmentLength -and $PassageSegments[-3].SegmentLength) -and ($PassageSegments[-2].Width -eq $PassageSegments[-3].Width)){$PassageSegments[-3].SegmentLength = $PassageSegments[-2].SegmentLength + $PassageSegments[-3].SegmentLength;$LastBit=$PassageSegments[-1];$PassageSegments = @($PassageSegments | Select-Object -SkipLast 2);$PassageSegments += $LastBit}
 
         $Loopies++
         $NotFirstTime = $True
@@ -3466,7 +3498,7 @@ function Get-Passage {
     }
 
     $PassageSegments
-    #$Loopies
+    $Loopies
 
 }
 
