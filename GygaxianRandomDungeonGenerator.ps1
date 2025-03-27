@@ -3389,11 +3389,10 @@ function Get-Passage {
 
     $NotFirstTime = $False
     $Width = ''
-    #To do: handle this/Decide how/when to check for width. Having a special width locked in for an entire corridor's length can be very very weird, (every segemented roll is bisected by streams...?)
+    #To do: Decide how/when to check for width. For now my rule is that the width is only checked again if the passage changes direction- they are straight, uniform hallways otherwise. If I can find something in the original text or a popular reading that contradicts this I will update my logic.
     $Width = (Get-Table3ARoll).Description.Replace("'","")
     if($Width -like "SPECIAL*"){
     
-        #To do: Special passages have footnotes that have specific terminations sometimes
         $Table3BRoll = Get-Table3BRoll
         if($Table3BRoll.SpecificSpecial -like "N/A"){$Table3BRoll = $Table3BRoll.Description.Replace("'","")}else{$Table3BRoll = $Table3BRoll.SpecificSpecial}
         $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
@@ -3410,7 +3409,7 @@ function Get-Passage {
 
     $Loopies = 0
 
-    while(($PassageSegments[-1] -notlike "Door") -and ($PassageSegments[-1] -notlike "Chamber") -and ($PassageSegments[-1] -notlike "Stairs*") -and ($PassageSegments[-1] -notlike "*dead end*")){
+    while(($PassageSegments[-1] -notlike "Door") -and ($PassageSegments[-1] -notlike "Chamber") -and ($PassageSegments[-1] -notlike "Stairs*") -and ($PassageSegments[-1] -notlike "*dead end*") -and ($PassageSegments[-1] -notlike "*'s")){
 
         if($NotFirstTime -eq $True){$Table1Roll = (Get-D20Roll).Result}
 
@@ -3418,9 +3417,10 @@ function Get-Passage {
         if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$PassageSegments += "Door"}
         if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){
         
-            #To do: Add side passage roll, output here
-            $PassageSegments += "Side Passage"
-            $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
+            $SidePassage = "$((Get-Table3Roll).Description.Replace(" degrees","°"))"
+
+            $PassageSegments += "$(if($SidePassage -notlike "*'s"){"Side Passage: "})$($SidePassage)"
+            if($SidePassage -notlike "*'s*"){$PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}}
             
         }
         if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){
@@ -3431,7 +3431,6 @@ function Get-Passage {
             
             if($Width -like "SPECIAL*"){
     
-                #To do: As above, special passages have footnotes that have specific terminations sometimes
                 $Table3BRoll = Get-Table3BRoll
                 if($Table3BRoll.SpecificSpecial -like "N/A"){$Table3BRoll = $Table3BRoll.Description.Replace("'","")}else{$Table3BRoll = $Table3BRoll.SpecificSpecial}
                 $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
@@ -3459,9 +3458,7 @@ function Get-Passage {
             }
             
         $PassageSegments += "Stairs: $($Stairs)"
-        
-        
-        
+
         }
 
         if($Table1Roll -eq 18){$PassageSegments += Get-DeadEnd}
@@ -3479,10 +3476,10 @@ function Get-Passage {
                 $Trick = "$($Trick.Specific)"
                 
             }
-            
-            $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
 
             $PassageSegments += "$($Trick)"
+
+            $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
         
         }
 
@@ -3498,7 +3495,7 @@ function Get-Passage {
     }
 
     $PassageSegments
-    $Loopies
+    #$Loopies
 
 }
 
