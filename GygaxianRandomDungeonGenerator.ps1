@@ -2240,6 +2240,35 @@ function Get-ScrollsTableRoll {
 
 }
 
+$MagicRingsTable = @(
+
+[pscustomobject]@{Min = 1;Max = 6;Item = "Ring of Contrariness";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 7;Max = 12;Item = "Ring of Delusion";XPValue = "0";Value = "2000"}
+[pscustomobject]@{Min = 13;Max = 14;Item = "Ring of Djinni Summoning";XPValue = "3000";Value = "20000"}
+[pscustomobject]@{Min = 15;Max = 15;Item = "Ring of Elemental Command";XPValue = "5000";Value = "25000"}
+[pscustomobject]@{Min = 16;Max = 21;Item = "Ring of Feather Falling";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 22;Max = 27;Item = "Ring of Fire Resistance";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 28;Max = 30;Item = "Ring of Free Action";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 31;Max = 33;Item = "Ring of Human Influence";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 34;Max = 40;Item = "Ring of Invisibility";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 41;Max = 43;Item = "Ring of Mammal Control";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 44;Max = 44;Item = "Ring of Multiple Wishes";XPValue = "5000";Value = "25000"}
+[pscustomobject]@{Min = 45;Max = 60;Item = "Ring of Protection";XPValue = "2000-4000";Value = "10000-20000"}
+[pscustomobject]@{Min = 61;Max = 61;Item = "Ring of Regeneration";XPValue = "5000";Value = "40000"}
+[pscustomobject]@{Min = 62;Max = 63;Item = "Ring of Shooting Stars";XPValue = "3000";Value = "15000"}
+[pscustomobject]@{Min = 64;Max = 65;Item = "Ring of Spell Storing";XPValue = "2500";Value = "22500"}
+[pscustomobject]@{Min = 66;Max = 69;Item = "Ring of Spell Turning";XPValue = "2000";Value = "17500"}
+[pscustomobject]@{Min = 70;Max = 75;Item = "Ring of Swimming";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 76;Max = 77;Item = "Ring of Telekinesis";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 78;Max = 79;Item = "Ring of Three Wishes";XPValue = "3000";Value = "15000"}
+[pscustomobject]@{Min = 80;Max = 85;Item = "Ring of Warmth";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 86;Max = 90;Item = "Ring of Water Walking";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 91;Max = 98;Item = "Ring of Weakness";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 99;Max = 99;Item = "Ring of Wizardry";XPValue = "4000";Value = "50000"}
+[pscustomobject]@{Min = 100;Max = 100;Item = "Ring of X-Ray Vision";XPValue = "4000";Value = "35000"}
+
+)
+
 #To do: tables 3C - 3H
 
 #endregion
