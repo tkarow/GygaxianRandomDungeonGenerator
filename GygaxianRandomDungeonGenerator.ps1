@@ -2029,6 +2029,62 @@ function Get-JewelryAndItemsTypicallyBeJewelledRoll {
 
 #region Magic Items
 
+$MagicTreasure = @{
+
+1  = "Any item rolled on Magic Item Table, plus 4 Potions"
+2  = "Any item rolled on Magic Item Table, plus 4 Potions"
+3  = "Any item rolled on Magic Item Table, plus 4 Potions"
+4  = "Any item rolled on Magic Item Table, plus 4 Potions"
+5  = "Any item rolled on Magic Item Table, plus 4 Potions"
+6  = "Any 2 items rolled on Magic Item Table"
+7  = "Any 2 items rolled on Magic Item Table"
+8  = "Any 2 items rolled on Magic Item Table"
+9  = "1 Sword, 1 Armor or Shield, 1 Miscellaneous Weapon"
+10 = "1 Sword, 1 Armor or Shield, 1 Miscellaneous Weapon"
+11 = "1 Sword, 1 Armor or Shield, 1 Miscellaneous Weapon"
+12 = "1 Sword, 1 Armor or Shield, 1 Miscellaneous Weapon"
+13 = "Any 3 items, no Sword or Potions"
+14 = "Any 3 items, no Sword or Potions"
+15 = "Any 6 Potions and any 6 Scrolls"
+16 = "Any 6 Potions and any 6 Scrolls"
+17 = "Any 6 Potions and any 6 Scrolls"
+18 = "Any 6 Potions and any 6 Scrolls"
+19 = "Any 4 items, 1 os a Ring, 1 is a Rod"
+20 = "Any 5 items, 1 is a Rod, 1 is Miscellaneous Magic"
+
+}
+
+function Get-MagicTreasure {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if(!$Roll){$Roll = (Get-D20Roll).Result}
+
+    $Specific = @()
+
+    if($MagicTreasure.($Roll) -like "Any item rolled on Magic Item Table, plus 4 Potions"){$Specific += ""}
+    if($MagicTreasure.($Roll) -like "Any 2 items rolled on Magic Item Table"){$Specific += ""}
+    if($MagicTreasure.($Roll) -like "1 Sword, 1 Armor or Shield, 1 Miscellaneous Weapon"){$Specific += ""}
+    if($MagicTreasure.($Roll) -like "Any 3 items, no Sword or Potions"){$Specific += ""}
+    if($MagicTreasure.($Roll) -like "Any 6 Potions and any 6 Scrolls"){$Specific += ""}
+    if($MagicTreasure.($Roll) -like "Any 4 items, 1 os a Ring, 1 is a Rod"){$Specific += ""}
+    if($MagicTreasure.($Roll) -like "Any 5 items, 1 is a Rod, 1 is Miscellaneous Magic"){$Specific += ""}
+
+    [pscustomobject]@{
+    
+        Roll = $Roll
+        Result = $MagicTreasure.($Roll)
+        Specific = $Specific
+
+    }
+
+}
+
 $MagicItemType = @(
 
 [pscustomobject]@{Min = 1;Max = 20;Type = "Potions (A.)";ShortName = "Potion"}
@@ -2052,12 +2108,24 @@ function Get-MagicItemTypeRoll {
     param(
 
         [Parameter(Mandatory=$False)]
-        [int]$Roll
+        [int]$Roll,
+        [Parameter(Mandatory=$False)]
+        [bool]$NoPotionOrSword
    
     )
 
     if($Roll -gt 100){$Roll = 100}
     if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    if($NoPotionOrSword -eq $True){
+    
+        while(($Roll -le 20) -or (($Roll -ge 76) -and ($Roll -le 86))){
+        
+            $Roll = (Get-D100Roll).Result
+
+        }
+
+    }
 
     $Result = $MagicItemType | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
