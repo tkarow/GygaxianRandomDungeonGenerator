@@ -2269,6 +2269,41 @@ $MagicRingsTable = @(
 
 )
 
+$MagicRodsStavesAndWandsTable = @(
+
+[pscustomobject]@{Min = 1;Max = 3;Item = "Rod of Absorbtion";XPValue = "7500";Value = "40000"}
+[pscustomobject]@{Min = 4;Max = 4;Item = "Rod of Beguiling";XPValue = "5000";Value = "30000"}
+[pscustomobject]@{Min = 5;Max = 14;Item = "Rod of Cancellation";XPValue = "10000";Value = "15000"}
+[pscustomobject]@{Min = 15;Max = 16;Item = "Rod of Lordly Might";XPValue = "6000";Value = "20000"}
+[pscustomobject]@{Min = 17;Max = 17;Item = "Rod of Resurrection";XPValue = "10000";Value = "35000"}
+[pscustomobject]@{Min = 18;Max = 18;Item = "Rod of Rulership";XPValue = "8000";Value = "35000"}
+[pscustomobject]@{Min = 19;Max = 19;Item = "Rod of Smiting";XPValue = "4000";Value = "15000"}
+[pscustomobject]@{Min = 20;Max = 20;Item = "Staff of Command";XPValue = "5000";Value = "25000"}
+[pscustomobject]@{Min = 21;Max = 22;Item = "Staff of Curing";XPValue = "6000";Value = "25000"}
+[pscustomobject]@{Min = 23;Max = 23;Item = "Staff of the Magi";XPValue = "15000";Value = "75000"}
+[pscustomobject]@{Min = 24;Max = 24;Item = "Staff of Power";XPValue = "12000";Value = "60000"}
+[pscustomobject]@{Min = 25;Max = 27;Item = "Staff of the Serpent";XPValue = "7000";Value = "35000"}
+[pscustomobject]@{Min = 28;Max = 31;Item = "Staff of Striking";XPValue = "6000";Value = "15000"}
+[pscustomobject]@{Min = 32;Max = 33;Item = "Staff of Withering";XPValue = "8000";Value = "35000"}
+[pscustomobject]@{Min = 34;Max = 34;Item = "Wand of Conjuration";XPValue = "7000";Value = "35000"}
+[pscustomobject]@{Min = 35;Max = 38;Item = "Wand of Enemy Detection";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 39;Max = 41;Item = "Wand of Fear";XPValue = "3000";Value = "15000"}
+[pscustomobject]@{Min = 42;Max = 44;Item = "Wand of Fire";XPValue = "4500";Value = "25000"}
+[pscustomobject]@{Min = 45;Max = 47;Item = "Wand of Frost";XPValue = "6000";Value = "50000"}
+[pscustomobject]@{Min = 48;Max = 52;Item = "Wand of Illumination";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 53;Max = 56;Item = "Wand of Illusion";XPValue = "3000";Value = "20000"}
+[pscustomobject]@{Min = 57;Max = 59;Item = "Wand of Lightning";XPValue = "4000";Value = "30000"}
+[pscustomobject]@{Min = 60;Max = 68;Item = "Wand of Magic Detection";XPValue = "2500";Value = "25000"}
+[pscustomobject]@{Min = 69;Max = 73;Item = "Wand of Metal & Mineral Detection";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 74;Max = 78;Item = "Wand of Magic Missiles";XPValue = "4000";Value = "35000"}
+[pscustomobject]@{Min = 79;Max = 86;Item = "Wand of Negation";XPValue = "3500";Value = "15000"}
+[pscustomobject]@{Min = 87;Max = 89;Item = "Wand of Paralyzation";XPValue = "3500";Value = "25000"}
+[pscustomobject]@{Min = 90;Max = 92;Item = "Wand of Polymorphing";XPValue = "3500";Value = "25000"}
+[pscustomobject]@{Min = 93;Max = 94;Item = "Wand of Secret Door & Trap Location";XPValue = "5000";Value = "40000"}
+[pscustomobject]@{Min = 95;Max = 100;Item = "Wand of Wonder";XPValue = "6000";Value = "10000"}
+
+)
+
 #To do: tables 3C - 3H
 
 #endregion
