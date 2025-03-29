@@ -2343,7 +2343,45 @@ $MiscellaneousMagicTable1 = @(
 
 )
 
-#To do: tables 3C - 3H
+$MiscellaneousMagicTable2 = @(
+
+[pscustomobject]@{Min = 1;Max = 6;Item = "Candle of Invocation";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 7;Max = 8;Item = "Carpet of Flying";XPValue = "7500";Value = "25000"}
+[pscustomobject]@{Min = 9;Max = 10;Item = "Censer of Controlling Air Elementals";XPValue = "4000";Value = "25000"}
+[pscustomobject]@{Min = 11;Max = 11;Item = "Censer of Summoning Hostile Air Elementals";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 12;Max = 13;Item = "Chime of Opening";XPValue = "3500";Value = "20000"}
+[pscustomobject]@{Min = 14;Max = 14;Item = "Censer of Hunger";XPValue = "0";Value = "0"}
+[pscustomobject]@{Min = 15;Max = 18;Item = "Cloak of Displacement";XPValue = "3000";Value = "17500"}
+[pscustomobject]@{Min = 19;Max = 27;Item = "Cloak of Elvenkind";XPValue = "1000";Value = "6000"}
+[pscustomobject]@{Min = 28;Max = 30;Item = "Cloak of Manta Ray";XPValue = "2000";Value = "12500"}
+[pscustomobject]@{Min = 31;Max = 32;Item = "Cloak of Poisonousness";XPValue = "0";Value = "2500"}
+[pscustomobject]@{Min = 33;Max = 55;Item = "Cloak of Protection";XPValue = "1000*";Value = "10000*"}
+[pscustomobject]@{Min = 56;Max = 60;Item = "Crystal Ball";XPValue = "1000**";Value = "5000**"}
+[pscustomobject]@{Min = 61;Max = 61;Item = "Crystal Hypnosis Ball";XPValue = "0";Value = "3000"}
+[pscustomobject]@{Min = 62;Max = 63;Item = "Cube of Force";XPValue = "3000";Value = "20000"}
+[pscustomobject]@{Min = 64;Max = 65;Item = "Cube of Frost Resistance";XPValue = "2000";Value = "14000"}
+[pscustomobject]@{Min = 66;Max = 67;Item = "Cubic Gate";XPValue = "5000";Value = "17500"}
+[pscustomobject]@{Min = 68;Max = 69;Item = "Daern's Instant Fortress";XPValue = "7000";Value = "27500"}
+[pscustomobject]@{Min = 70;Max = 72;Item = "Decanter of Endless Water";XPValue = "1000";Value = "3000"}
+[pscustomobject]@{Min = 73;Max = 76;Item = "Deck of Many Things";XPValue = "0";Value = "10000"}
+[pscustomobject]@{Min = 77;Max = 77;Item = "Drums of Deafening";XPValue = "0";Value = "500"}
+[pscustomobject]@{Min = 78;Max = 79;Item = "Drums of Panic";XPValue = "6500";Value = "35000"}
+[pscustomobject]@{Min = 80;Max = 85;Item = "Dust of Appearance";XPValue = "1000";Value = "4000"}
+[pscustomobject]@{Min = 86;Max = 91;Item = "Dust of Disappearance";XPValue = "2000";Value = "8000"}
+[pscustomobject]@{Min = 92;Max = 92;Item = "Dust of Sneezing and Choking";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 93;Max = 93;Item = "Efreeti Bottle";XPValue = "9000";Value = "45000"}
+[pscustomobject]@{Min = 94;Max = 94;Item = "Eversmoking Bottle";XPValue = "500";Value = "2500"}
+[pscustomobject]@{Min = 95;Max = 95;Item = "Eyes of Charming";XPValue = "4000";Value = "24000"}
+[pscustomobject]@{Min = 96;Max = 97;Item = "Eyes of the Eagle";XPValue = "3500";Value = "18000"}
+[pscustomobject]@{Min = 98;Max = 99;Item = "Eyes of Minute Seeing";XPValue = "2000";Value = "12500"}
+[pscustomobject]@{Min = 100;Max = 100;Item = "Eyes of Petrification";XPValue = "0***";Value = "0***"}
+#* Per plus of protection.
+#** Add 100% for each additional feature.
+#*** If reverse effect, 12,500 x.p. and 50,000 g.p. sale value.
+
+)
+
+#To do: tables 3E - 3H
 
 #endregion
 
