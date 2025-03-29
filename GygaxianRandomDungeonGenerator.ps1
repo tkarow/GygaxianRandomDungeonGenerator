@@ -2304,6 +2304,45 @@ $MagicRodsStavesAndWandsTable = @(
 
 )
 
+$MiscellaneousMagicTable1 = @(
+
+[pscustomobject]@{Min = 1;Max = 2;Item = "Alchemy Jug";XPValue = "3000";Value = "12000"}
+[pscustomobject]@{Min = 3;Max = 4;Item = "Amulet of Inescapable Location";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 5;Max = 5;Item = "Amulet of Life Protection";XPValue = "5000";Value = "20000"}
+[pscustomobject]@{Min = 6;Max = 7;Item = "Amulet of the Planes";XPValue = "6000";Value = "30000"}
+[pscustomobject]@{Min = 8;Max = 11;Item = "Amulet of Proof Against Detection and Location";XPValue = "4000";Value = "15000"}
+[pscustomobject]@{Min = 12;Max = 13;Item = "Apparatus of Kwalish";XPValue = "8000";Value = "35000"}
+[pscustomobject]@{Min = 14;Max = 16;Item = "Arrow of Direction";XPValue = "2500";Value = "17500"}
+[pscustomobject]@{Min = 17;Max = 17;Item = "Artifact or Relic";XPValue = "0";Value = "0"}
+[pscustomobject]@{Min = 18;Max = 20;Item = "Bag of Beans";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 21;Max = 21;Item = "Bag of Devouring";XPValue = "0";Value = "1500"}
+[pscustomobject]@{Min = 22;Max = 26;Item = "Bag of Holding";XPValue = "5000";Value = "25000"}
+[pscustomobject]@{Min = 27;Max = 27;Item = "Bag of Transmuting";XPValue = "0";Value = "500"}
+[pscustomobject]@{Min = 28;Max = 29;Item = "Bag of Tricks";XPValue = "2500";Value = "15000"}
+[pscustomobject]@{Min = 30;Max = 31;Item = "Beaker of Plentiful Potions";XPValue = "1500";Value = "12500"}
+[pscustomobject]@{Min = 32;Max = 32;Item = "Folding Boat";XPValue = "10000";Value = "25000"}
+[pscustomobject]@{Min = 33;Max = 33;Item = "Book of Exalted Deeds";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 34;Max = 34;Item = "Book of Infinite Spells";XPValue = "9000";Value = "50000"}
+[pscustomobject]@{Min = 35;Max = 35;Item = "Book of Vile Darkness";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 36;Max = 36;Item = "Boots of Dancing";XPValue = "0";Value = "5000"}
+[pscustomobject]@{Min = 37;Max = 42;Item = "Boots of Elvenkind";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 43;Max = 47;Item = "Boots of Levitation";XPValue = "2000";Value = "15000"}
+[pscustomobject]@{Min = 48;Max = 51;Item = "Boots of Speed";XPValue = "2500";Value = "20000"}
+[pscustomobject]@{Min = 52;Max = 55;Item = "Boots of Striding and Springing";XPValue = "2500";Value = "20000"}
+[pscustomobject]@{Min = 56;Max = 58;Item = "Bowl of Commanding Water Elementals";XPValue = "4000";Value = "25000"}
+[pscustomobject]@{Min = 59;Max = 59;Item = "Bowl of Watery Death";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 60;Max = 79;Item = "Bracers of Defense";XPValue = "500*";Value = "3000*"}
+[pscustomobject]@{Min = 80;Max = 81;Item = "Bracers of Defenselessness";XPValue = "0";Value = "2000"}
+[pscustomobject]@{Min = 82;Max = 84;Item = "Brazier of Commanding Fire Elementals";XPValue = "4000";Value = "25000"}
+[pscustomobject]@{Min = 85;Max = 85;Item = "Brazier of Sleep Smoke";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 86;Max = 92;Item = "Brooch of Shielding";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 93;Max = 93;Item = "Broom of Animated Attack";XPValue = "0";Value = "3000"}
+[pscustomobject]@{Min = 94;Max = 98;Item = "Broom of Flying";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 99;Max = 100;Item = "Bucknard's Everfull Purse";XPValue = "1500/2500/4000";Value = "15000/25000/40000"}
+#*Per armor class above 10, i.e. AC 6 is worth 2,000 in x.p., 12,000 if sold.
+
+)
+
 #To do: tables 3C - 3H
 
 #endregion
