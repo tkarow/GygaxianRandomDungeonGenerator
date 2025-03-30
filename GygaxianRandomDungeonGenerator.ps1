@@ -2423,6 +2423,51 @@ $MiscellaneousMagicTable3 = @(
 #*** Per stone.
 #**** Per level of instrument for Bards.
 
+$MiscellaneousMagicTable4 = @(
+
+[pscustomobject]@{Min = 1;Max = 1;Item = "Libram of Gainful Conjuration";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 2;Max = 2;Item = "Libram of Ineffable Damnation";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 3;Max = 3;Item = "Libram of Silver Magic";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 4;Max = 4;Item = "Lyre of Building";XPValue = "5000";Value = "30000"}
+[pscustomobject]@{Min = 5;Max = 5;Item = "Manual of Bodily Health";XPValue = "5000";Value = "50000"}
+[pscustomobject]@{Min = 6;Max = 6;Item = "Manual of Gainful Exercise";XPValue = "5000";Value = "50000"}
+[pscustomobject]@{Min = 7;Max = 7;Item = "Manual of Golems";XPValue = "3000";Value = "30000"}
+[pscustomobject]@{Min = 8;Max = 8;Item = "Manual of Puissant Skill at Arms";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 9;Max = 9;Item = "Manual of Quickness of Action";XPValue = "5000";Value = "50000"}
+[pscustomobject]@{Min = 10;Max = 10;Item = "Manual of Stealthy Pilfering";XPValue = "8000";Value = "40000"}
+[pscustomobject]@{Min = 11;Max = 11;Item = "Mattock of the Titans";XPValue = "3500";Value = "7000"}
+[pscustomobject]@{Min = 12;Max = 12;Item = "Maul of the Titans";XPValue = "4000";Value = "12000"}
+[pscustomobject]@{Min = 13;Max = 15;Item = "Medallion of ESP";XPValue = "1000/3000";Value = "10000/30000"}
+[pscustomobject]@{Min = 16;Max = 17;Item = "Medallion of Thought Projection";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 18;Max = 18;Item = "Mirror of Life Trapping";XPValue = "2500";Value = "25000"}
+[pscustomobject]@{Min = 19;Max = 19;Item = "Mirror of Mental Prowess";XPValue = "5000";Value = "50000"}
+[pscustomobject]@{Min = 20;Max = 20;Item = "Mirror of Opposition";XPValue = "0";Value = "2000"}
+[pscustomobject]@{Min = 21;Max = 23;Item = "Necklace of Adaptation";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 24;Max = 27;Item = "Necklace of Missiles";XPValue = "50*";Value = "200*"}
+[pscustomobject]@{Min = 28;Max = 33;Item = "Necklace of Prayer Beads";XPValue = "500**";Value = "3000**"}
+[pscustomobject]@{Min = 34;Max = 35;Item = "Necklace of Strangulation";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 36;Max = 38;Item = "Net of Entrapment";XPValue = "1000";Value = "7500"}
+[pscustomobject]@{Min = 39;Max = 42;Item = "Net of Snaring";XPValue = "1000";Value = "6000"}
+[pscustomobject]@{Min = 43;Max = 44;Item = "Nolzurs' Marvelous Pigments";XPValue = "500***";Value = "3000***"}
+[pscustomobject]@{Min = 45;Max = 46;Item = "Pearl of Power";XPValue = "200****";Value = "2000****"}
+[pscustomobject]@{Min = 47;Max = 48;Item = "Pearl of Wisdom";XPValue = "500";Value = "5000"}
+[pscustomobject]@{Min = 49;Max = 50;Item = "Periapt of Foul Rotting";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 51;Max = 53;Item = "Periapt of Health";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 54;Max = 60;Item = "Periapt of Proof Against Poison";XPValue = "1500";Value = "12500"}
+[pscustomobject]@{Min = 61;Max = 64;Item = "Periapt of Wound Closure";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 65;Max = 70;Item = "Phylactery of Faithfulness";XPValue = "1000";Value = "7500"}
+[pscustomobject]@{Min = 71;Max = 74;Item = "Phylactery of Long Years";XPValue = "3000";Value = "25000"}
+[pscustomobject]@{Min = 75;Max = 76;Item = "Phylactery of Monstrous Attention";XPValue = "0";Value = "2000"}
+[pscustomobject]@{Min = 77;Max = 84;Item = "Pipes of the Sewers";XPValue = "1750";Value = "8500"}
+[pscustomobject]@{Min = 85;Max = 85;Item = "Portable Hole";XPValue = "5000";Value = "50000"}
+[pscustomobject]@{Min = 86;Max = 100;Item = "Quaal's Feather Token";XPValue = "500/1000";Value = "2000/7000"}
+
+)
+#* Per hit die of each missile.
+#** Per special bead.
+#*** Per pot of pigments.
+#**** Per level of spell.
+
 #To do: tables 3E - 3H
 
 #endregion
