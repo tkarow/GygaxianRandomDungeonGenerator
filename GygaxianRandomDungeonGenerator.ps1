@@ -2381,6 +2381,48 @@ $MiscellaneousMagicTable2 = @(
 
 )
 
+$MiscellaneousMagicTable3 = @(
+
+[pscustomobject]@{Min = 1;Max = 15;Item = "Figurine of Wondrous Power";XPValue = "100*";Value = "1000*"}
+[pscustomobject]@{Min = 16;Max = 16;Item = "Flask of Curses";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 17;Max = 18;Item = "Gauntlets of Dexterity";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 19;Max = 20;Item = "Gauntlets of Fumbling";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 21;Max = 22;Item = "Gauntlets of Ogre Power";XPValue = "1000";Value = "15000"}
+[pscustomobject]@{Min = 23;Max = 25;Item = "Gauntlets of Swimming and Climbing";XPValue = "1000";Value = "15000"}
+[pscustomobject]@{Min = 26;Max = 26;Item = "Gem of Brightness";XPValue = "2000";Value = "17500"}
+[pscustomobject]@{Min = 27;Max = 27;Item = "Gem of Seeing";XPValue = "2000";Value = "25000"}
+[pscustomobject]@{Min = 28;Max = 28;Item = "Girdle of Femininity/Masculinity";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 29;Max = 29;Item = "Girdle of Giant Strength";XPValue = "200";Value = "25000"}
+[pscustomobject]@{Min = 30;Max = 30;Item = "Helm of Brilliance";XPValue = "200";Value = "2500"}
+[pscustomobject]@{Min = 31;Max = 35;Item = "Helm of Comprehending Languages & Reading Magic";XPValue = "1000";Value = "12500"}
+[pscustomobject]@{Min = 36;Max = 37;Item = "Helm of Opposite Alignment";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 38;Max = 39;Item = "Helm of Telepathy";XPValue = "3000";Value = "35000"}
+[pscustomobject]@{Min = 40;Max = 40;Item = "Helm of Teleportation";XPValue = "2500";Value = "30000"}
+[pscustomobject]@{Min = 41;Max = 45;Item = "Helm of Underwater Action";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 46;Max = 46;Item = "Horn of Blasting";XPValue = "5000";Value = "55000"}
+[pscustomobject]@{Min = 47;Max = 48;Item = "Horn of Bubbles";XPValue = "0";Value = "0"}
+[pscustomobject]@{Min = 49;Max = 49;Item = "Horns of Collapsing";XPValue = "1500";Value = "25000"}
+[pscustomobject]@{Min = 50;Max = 53;Item = "Horn of the Tritons";XPValue = "2000";Value = "17500"}
+[pscustomobject]@{Min = 54;Max = 60;Item = "Horn of Valhalla";XPValue = "1000**";Value = "15000**"}
+[pscustomobject]@{Min = 61;Max = 63;Item = "Horseshoes of Speed";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 64;Max = 65;Item = "Horseshoes of a Zephyr";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 66;Max = 70;Item = "Incense of Meditation";XPValue = "500";Value = "7500"}
+[pscustomobject]@{Min = 71;Max = 71;Item = "Incense of Obsession";XPValue = "0";Value = "500"}
+[pscustomobject]@{Min = 72;Max = 72;Item = "Ioun Stones";XPValue = "300***";Value = "5000***"}
+[pscustomobject]@{Min = 73;Max = 78;Item = "Instrument of the Bards";XPValue = "1000****";Value = "5000****"}
+[pscustomobject]@{Min = 79;Max = 80;Item = "Iron Flask";XPValue = "0";Value = "0"}
+[pscustomobject]@{Min = 81;Max = 85;Item = "Javelin of Lightning";XPValue = "250";Value = "3000"}
+[pscustomobject]@{Min = 86;Max = 90;Item = "Javelin of Piercing";XPValue = "250";Value = "3000"}
+[pscustomobject]@{Min = 91;Max = 91;Item = "Jewel of Attacks";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 92;Max = 92;Item = "Jewel of Flawlessness";XPValue = "0";Value = "1000/facet"}
+[pscustomobject]@{Min = 93;Max = 100;Item = "Keoghtom's Ointment";XPValue = "500";Value = "10000"}
+
+)
+#* Per hit die of the figurine.
+#** Double for a bronze horn, triple for an iron horn.
+#*** Per stone.
+#**** Per level of instrument for Bards.
+
 #To do: tables 3E - 3H
 
 #endregion
