@@ -2543,6 +2543,37 @@ $MiscellaneousMagicTableSpecial = @(
 )
 #These items bring no experience points.
 
+$MagicArmorAndShieldTable = @(
+
+[pscustomobject]@{Min = 1;Max = 5;Item = "Chain Mail + 1";XPValue = "600";Value = "3500"}
+[pscustomobject]@{Min = 6;Max = 9;Item = "Chain Mail + 2";XPValue = "1200";Value = "7500"}
+[pscustomobject]@{Min = 10;Max = 11;Item = "Chain Mail + 3";XPValue = "2000";Value = "12500"}
+[pscustomobject]@{Min = 12;Max = 19;Item = "Leather Armor + 1";XPValue = "300";Value = "2000"}
+[pscustomobject]@{Min = 20;Max = 26;Item = "Plate Mail + 1";XPValue = "800";Value = "5000"}
+[pscustomobject]@{Min = 27;Max = 32;Item = "Plate Mail + 2";XPValue = "1750";Value = "10500"}
+[pscustomobject]@{Min = 33;Max = 35;Item = "Plate Mail + 3";XPValue = "2750";Value = "15500"}
+[pscustomobject]@{Min = 36;Max = 37;Item = "Plate Mail + 4";XPValue = "3500";Value = "20500"}
+[pscustomobject]@{Min = 38;Max = 38;Item = "Plate Mail + 5";XPValue = "4500";Value = "27500"}
+[pscustomobject]@{Min = 39;Max = 39;Item = "Plate Mail of Etherealness";XPValue = "5000";Value = "30000"}
+[pscustomobject]@{Min = 40;Max = 44;Item = "Plate Mail of Vulnerability";XPValue = "0";Value = "1500"}
+[pscustomobject]@{Min = 45;Max = 50;Item = "Ring Mail + 1";XPValue = "400";Value = "2500"}
+[pscustomobject]@{Min = 51;Max = 55;Item = "Scale Mail + 1";XPValue = "500";Value = "3000"}
+[pscustomobject]@{Min = 56;Max = 59;Item = "Scale Mail + 2";XPValue = "1100";Value = "6750"}
+[pscustomobject]@{Min = 60;Max = 63;Item = "Splint Mail + 1";XPValue = "700";Value = "4000"}
+[pscustomobject]@{Min = 64;Max = 66;Item = "Splint Mail + 2";XPValue = "1500";Value = "8500"}
+[pscustomobject]@{Min = 67;Max = 68;Item = "Splint Mail + 3";XPValue = "2250";Value = "14500"}
+[pscustomobject]@{Min = 69;Max = 69;Item = "Splint Mail + 4";XPValue = "3000";Value = "19000"}
+[pscustomobject]@{Min = 70;Max = 75;Item = "Studded Leather + 1";XPValue = "400";Value = "2500"}
+[pscustomobject]@{Min = 76;Max = 84;Item = "Shield + 1";XPValue = "250";Value = "2500"}
+[pscustomobject]@{Min = 85;Max = 89;Item = "Shield + 2";XPValue = "500";Value = "5000"}
+[pscustomobject]@{Min = 90;Max = 93;Item = "Shield + 3";XPValue = "800";Value = "8000"}
+[pscustomobject]@{Min = 94;Max = 95;Item = "Shield + 4";XPValue = "1200";Value = "12000"}
+[pscustomobject]@{Min = 96;Max = 96;Item = "Shield + 5";XPValue = "1750";Value = "17500"}
+[pscustomobject]@{Min = 97;Max = 97;Item = "Shield, large, + 1, + 4 vs. missiles";XPValue = "400";Value = "4000"}
+[pscustomobject]@{Min = 98;Max = 100;Item = "Shield -1, missile attractor";XPValue = "0";Value = "750"}
+
+)
+
 #To do: tables 3E - 3H
 
 #endregion
