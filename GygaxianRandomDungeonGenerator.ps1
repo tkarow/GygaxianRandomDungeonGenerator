@@ -2508,6 +2508,41 @@ $MiscellaneousMagicTable5 = @(
 
 )
 
+$MiscellaneousMagicTableSpecial = @(
+
+[pscustomobject]@{Min = 1;Max = 1;Item = "Axe of the Dwarvish Lords";XPValue = "0";Value = "55000"}
+[pscustomobject]@{Min = 2;Max = 2;Item = "Baba Yaga's Hut";XPValue = "0";Value = "90000"}
+[pscustomobject]@{Min = 3;Max = 4;Item = "Codex of the Infinite Planes";XPValue = "0";Value = "62500"}
+[pscustomobject]@{Min = 5;Max = 20;Item = "Crown of Might";XPValue = "0";Value = "50000"}
+[pscustomobject]@{Min = 21;Max = 21;Item = "Crystal of the Ebon Flame";XPValue = "0";Value = "75000"}
+[pscustomobject]@{Min = 22;Max = 22;Item = "Cup and Talisman of Al'Akbar";XPValue = "0";Value = "85000"}
+[pscustomobject]@{Min = 23;Max = 24;Item = "Eye of Vecna";XPValue = "0";Value = "35000"}
+[pscustomobject]@{Min = 25;Max = 25;Item = "Hand of Vecna";XPValue = "0";Value = "60000"}
+[pscustomobject]@{Min = 26;Max = 26;Item = "Heward's Mystical Organ";XPValue = "0";Value = "25000"}
+[pscustomobject]@{Min = 27;Max = 27;Item = "Horn of Change";XPValue = "0";Value = "20000"}
+[pscustomobject]@{Min = 28;Max = 29;Item = "Invulnerable Coat of Arnd";XPValue = "0";Value = "47500"}
+[pscustomobject]@{Min = 30;Max = 31;Item = "Iron Flask of Tuerny the Merciless";XPValue = "0";Value = "50000"}
+[pscustomobject]@{Min = 32;Max = 32;Item = "Jacinth of Inestimable Beauty";XPValue = "0";Value = "100000"}
+[pscustomobject]@{Min = 33;Max = 33;Item = "Johydee's Mask";XPValue = "0";Value = "40000"}
+[pscustomobject]@{Min = 34;Max = 35;Item = "Kuroth's Quill";XPValue = "0";Value = "27500"}
+[pscustomobject]@{Min = 36;Max = 37;Item = "Mace of Cuthbert";XPValue = "0";Value = "35000"}
+[pscustomobject]@{Min = 38;Max = 38;Item = "Machine of Lum the Mad";XPValue = "0";Value = "72500"}
+[pscustomobject]@{Min = 39;Max = 40;Item = "Mighty Servant of Leuk-O";XPValue = "0";Value = "185000"}
+[pscustomobject]@{Min = 41;Max = 47;Item = "Orb of the Dragonkind";XPValue = "0";Value = "10-80000"}
+[pscustomobject]@{Min = 48;Max = 63;Item = "Orb of Might";XPValue = "0";Value = "100000"}
+[pscustomobject]@{Min = 64;Max = 64;Item = "Queen Ehlissa's Marvelous Nightingale";XPValue = "0";Value = "112500"}
+[pscustomobject]@{Min = 65;Max = 66;Item = "Recorder of Ye'Cind";XPValue = "0";Value = "80000"}
+[pscustomobject]@{Min = 67;Max = 68;Item = "Ring of Gaxx";XPValue = "0";Value = "17500"}
+[pscustomobject]@{Min = 69;Max = 74;Item = "Rod of Seven Parts";XPValue = "0";Value = "25000"}
+[pscustomobject]@{Min = 75;Max = 91;Item = "Sceptre of Might";XPValue = "0";Value = "150000"}
+[pscustomobject]@{Min = 92;Max = 92;Item = "Sword of Kas";XPValue = "0";Value = "97000"}
+[pscustomobject]@{Min = 93;Max = 98;Item = "Teeth of Dahlver-Nar";XPValue = "0";Value = "5000/tooth"}
+[pscustomobject]@{Min = 99;Max = 99;Item = "Throne of the Gods";XPValue = "0";Value = "0"}
+[pscustomobject]@{Min = 100;Max = 100;Item = "Wand of Orcus";XPValue = "0";Value = "10000"}
+
+)
+#These items bring no experience points.
+
 #To do: tables 3E - 3H
 
 #endregion
