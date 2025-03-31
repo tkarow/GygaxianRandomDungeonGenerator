@@ -2573,6 +2573,39 @@ $MagicArmorAndShieldTable = @(
 [pscustomobject]@{Min = 98;Max = 100;Item = "Shield -1, missile attractor";XPValue = "0";Value = "750"}
 
 )
+#65% of all armor is man-sized, 20% is elf-sized, 10% is dwarf-sized, and but 5% gnome or halfling sized.
+
+$MagicSwordTable = @(
+
+[pscustomobject]@{Min = 1;Max = 25;Item = "Sword + 1";XPValue = "400";Value = "2000"}
+[pscustomobject]@{Min = 26;Max = 30;Item = "Sword + 1, + 2 vs. magic-using & enchanted creatures";XPValue = "600";Value = "3000"}
+[pscustomobject]@{Min = 31;Max = 35;Item = "Sword + 1, + 3 vs. lycanthropes & shape changers";XPValue = "700";Value = "3500"}
+[pscustomobject]@{Min = 36;Max = 40;Item = "Sword + 1, + 3 vs. regenerating creatures";XPValue = "800";Value = "4000"}
+[pscustomobject]@{Min = 41;Max = 45;Item = "Sword + 1, + 4 vs. reptiles";XPValue = "800";Value = "4000"}
+[pscustomobject]@{Min = 46;Max = 49;Item = "Sword + 1, Flame Tongue: + 2 vs. regenerating creatures, +3 vs. cold-using, inflammable, or avian creatures, + 4 vs. undead";XPValue = "900";Value = "4500"}
+[pscustomobject]@{Min = 50;Max = 50;Item = "Sword + 1, Luck Blade";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 51;Max = 58;Item = "Sword + 2";XPValue = "800";Value = "4000"}
+[pscustomobject]@{Min = 59;Max = 62;Item = "Sword + 2, Giant Slayer";XPValue = "900";Value = "4500"}
+[pscustomobject]@{Min = 63;Max = 66;Item = "Sword + 2, Dragon Slayer";XPValue = "900";Value = "4500"}
+[pscustomobject]@{Min = 67;Max = 67;Item = "Sword + 2, Nine Lives Stealer";XPValue = "1600";Value = "8000"}
+[pscustomobject]@{Min = 68;Max = 71;Item = "Sword + 3";XPValue = "1400";Value = "7000"}
+[pscustomobject]@{Min = 72;Max = 74;Item = "Sword + 3, Frost Brand: + 6 vs. fire using/dwelling creatures";XPValue = "1600";Value = "8000"}
+[pscustomobject]@{Min = 75;Max = 76;Item = "Sword + 4";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 77;Max = 77;Item = "Sword + 4, Defender";XPValue = "3000";Value = "15000"}
+[pscustomobject]@{Min = 78;Max = 78;Item = "Sword + 5";XPValue = "3000";Value = "15000"}
+[pscustomobject]@{Min = 79;Max = 79;Item = "Sword + 5, Defender";XPValue = "3600";Value = "18000"}
+[pscustomobject]@{Min = 80;Max = 80;Item = "Sword + 5, Holy Avenger";XPValue = "4000";Value = "20000"}
+[pscustomobject]@{Min = 81;Max = 81;Item = "Sword of Dancing";XPValue = "4400";Value = "22000"}
+[pscustomobject]@{Min = 82;Max = 82;Item = "Sword of Wounding";XPValue = "4400";Value = "22000"}
+[pscustomobject]@{Min = 83;Max = 83;Item = "Sword of Life Stealing";XPValue = "5000";Value = "25000"}
+[pscustomobject]@{Min = 84;Max = 84;Item = "Sword of Sharpness";XPValue = "7000";Value = "35000"}
+[pscustomobject]@{Min = 85;Max = 85;Item = "Sword, Vorpal Weapon";XPValue = "10000";Value = "50000"}
+[pscustomobject]@{Min = 86;Max = 90;Item = "Sword + 1, Cursed";XPValue = "400";Value = "0"}
+[pscustomobject]@{Min = 91;Max = 95;Item = "Sword - 2, Cursed";XPValue = "600";Value = "0"}
+[pscustomobject]@{Min = 96;Max = 100;Item = "Sword, Cursed Berserking";XPValue = "900";Value = "0"}
+
+)
+#70% of swords are longswords, 20% are broadswords, 5% are short (small) swords, 4% are bastard swords, 1% are two-handed swords.
 
 #To do: tables 3E - 3H
 
