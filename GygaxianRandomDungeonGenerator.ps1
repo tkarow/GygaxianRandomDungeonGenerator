@@ -2468,6 +2468,46 @@ $MiscellaneousMagicTable4 = @(
 #*** Per pot of pigments.
 #**** Per level of spell.
 
+$MiscellaneousMagicTable5 = @(
+
+[pscustomobject]@{Min = 1;Max = 1;Item = "Robe of the Archmagi";XPValue = "6000";Value = "65000"}
+[pscustomobject]@{Min = 2;Max = 8;Item = "Robe of Blending";XPValue = "3500";Value = "35000"}
+[pscustomobject]@{Min = 9;Max = 9;Item = "Robe of Eyes";XPValue = "4500";Value = "50000"}
+[pscustomobject]@{Min = 10;Max = 10;Item = "Robe of Powerlessness";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 11;Max = 11;Item = "Robe of Scintillating Colors";XPValue = "2750";Value = "25000"}
+[pscustomobject]@{Min = 12;Max = 19;Item = "Robe of Useful Items";XPValue = "1500";Value = "15000"}
+[pscustomobject]@{Min = 20;Max = 25;Item = "Rope of Climbing";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 26;Max = 27;Item = "Rope of Constriction";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 28;Max = 31;Item = "Rope of Entanglement";XPValue = "12500";Value = "12000"}
+[pscustomobject]@{Min = 32;Max = 32;Item = "Rug of Smothering";XPValue = "0";Value = "1500"}
+[pscustomobject]@{Min = 33;Max = 33;Item = "Rug of Welcome";XPValue = "6500";Value = "45000"}
+[pscustomobject]@{Min = 34;Max = 34;Item = "Saw of Mighty Cutting";XPValue = "1750";Value = "12500"}
+[pscustomobject]@{Min = 35;Max = 35;Item = "Scarab of Death";XPValue = "0";Value = "2500"}
+[pscustomobject]@{Min = 36;Max = 38;Item = "Scarab of Enraging Enemies";XPValue = "1000";Value = "8000"}
+[pscustomobject]@{Min = 39;Max = 40;Item = "Scarab Of Insanity";XPValue = "1500";Value = "11000"}
+[pscustomobject]@{Min = 41;Max = 46;Item = "Scarab of Protection";XPValue = "2500";Value = "25000"}
+[pscustomobject]@{Min = 47;Max = 47;Item = "Spade of Colossal Excavation";XPValue = "1000";Value = "6500"}
+[pscustomobject]@{Min = 48;Max = 48;Item = "Sphere of Annihilation";XPValue = "3750";Value = "30000"}
+[pscustomobject]@{Min = 49;Max = 50;Item = "Stone of Controlling Earth Elementals";XPValue = "1500";Value = "12500"}
+[pscustomobject]@{Min = 51;Max = 52;Item = "Stone of Good Luck (Luckstone)";XPValue = "3000";Value = "25000"}
+[pscustomobject]@{Min = 53;Max = 54;Item = "Stone of Weight (Loadstone)";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 55;Max = 57;Item = "Talisman of Pure Good";XPValue = "3500";Value = "27500"}
+[pscustomobject]@{Min = 58;Max = 58;Item = "Talisman of the Sphere";XPValue = "100";Value = "10000"}
+[pscustomobject]@{Min = 59;Max = 60;Item = "Talisman of Ultimate Evil";XPValue = "3500";Value = "32500"}
+[pscustomobject]@{Min = 61;Max = 66;Item = "Talisman of Zagy";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 67;Max = 67;Item = "Tome of Clear Thought";XPValue = "8000";Value = "48000"}
+[pscustomobject]@{Min = 68;Max = 68;Item = "Tome of Leadership and Influence";XPValue = "7500";Value = "40000"}
+[pscustomobject]@{Min = 69;Max = 69;Item = "Tome of Understanding";XPValue = "8000";Value = "43500"}
+[pscustomobject]@{Min = 70;Max = 76;Item = "Trident of Fish Command";XPValue = "500";Value = "4000"}
+[pscustomobject]@{Min = 77;Max = 78;Item = "Trident of Submission";XPValue = "1250";Value = "12500"}
+[pscustomobject]@{Min = 79;Max = 83;Item = "Trident of Warning";XPValue = "1000";Value = "10000"}
+[pscustomobject]@{Min = 84;Max = 85;Item = "Triddent of Yearning";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 86;Max = 87;Item = "Vacuous Grimoire";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 88;Max = 90;Item = "Well of Many Worlds";XPValue = "6000";Value = "12000"}
+[pscustomobject]@{Min = 91;Max = 100;Item = "Wings of Flying";XPValue = "750";Value = "7500"}
+
+)
+
 #To do: tables 3E - 3H
 
 #endregion
