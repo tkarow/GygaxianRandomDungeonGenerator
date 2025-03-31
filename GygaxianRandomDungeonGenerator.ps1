@@ -2575,7 +2575,7 @@ $MagicArmorAndShieldTable = @(
 )
 #65% of all armor is man-sized, 20% is elf-sized, 10% is dwarf-sized, and but 5% gnome or halfling sized.
 
-$MagicSwordTable = @(
+$MagicSwordsTable = @(
 
 [pscustomobject]@{Min = 1;Max = 25;Item = "Sword + 1";XPValue = "400";Value = "2000"}
 [pscustomobject]@{Min = 26;Max = 30;Item = "Sword + 1, + 2 vs. magic-using & enchanted creatures";XPValue = "600";Value = "3000"}
@@ -2607,7 +2607,47 @@ $MagicSwordTable = @(
 )
 #70% of swords are longswords, 20% are broadswords, 5% are short (small) swords, 4% are bastard swords, 1% are two-handed swords.
 
-#To do: tables 3E - 3H
+
+$MagicMiscellaneousWeaponsTable = @(
+
+[pscustomobject]@{Min = 1;Max = 8;Item = "Arrow + 1, 2-24 in number";XPValue = "20";Value = "120"}
+[pscustomobject]@{Min = 9;Max = 12;Item = "Arrow + 2, 2-16 in number";XPValue = "50";Value = "300"}
+[pscustomobject]@{Min = 13;Max = 14;Item = "Arrow + 3, 2-12 in number";XPValue = "75";Value = "450"}
+[pscustomobject]@{Min = 15;Max = 15;Item = "Arrow of slaying";XPValue = "250";Value = "2500"}
+[pscustomobject]@{Min = 16;Max = 20;Item = "Axe + 1";XPValue = "300";Value = "1750"}
+[pscustomobject]@{Min = 21;Max = 22;Item = "Axe + 2";XPValue = "600";Value = "3750"}
+[pscustomobject]@{Min = 23;Max = 23;Item = "Axe + 3, Throwing";XPValue = "750";Value = "4500"}
+[pscustomobject]@{Min = 24;Max = 24;Item = "Axe + 3";XPValue = "1000";Value = "7000"}
+[pscustomobject]@{Min = 25;Max = 27;Item = "Battle Axe + 1";XPValue = "400";Value = "2500"}
+[pscustomobject]@{Min = 28;Max = 32;Item = "Bolt + 2, 2-20 in number";XPValue = "50";Value = "300"}
+[pscustomobject]@{Min = 33;Max = 35;Item = "Bow + 1";XPValue = "500";Value = "3500"}
+[pscustomobject]@{Min = 36;Max = 36;Item = "Crossbow of Accuracy, + 3";XPValue = "2000";Value = "12000"}
+[pscustomobject]@{Min = 37;Max = 37;Item = "Crossbow of Distance";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 38;Max = 38;Item = "Crossbow of Speed";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 39;Max = 46;Item = "Dagger + 1, + 2 vs. creatures smaller than man-sized";XPValue = "100";Value = "750"}
+[pscustomobject]@{Min = 47;Max = 50;Item = "Dagger + 2, + 3 vs. creatures larger than man-sized";XPValue = "250";Value = "2000"}
+[pscustomobject]@{Min = 51;Max = 51;Item = "Dagger of Venom";XPValue = "350";Value = "3000"}
+[pscustomobject]@{Min = 52;Max = 56;Item = "Flail + 1";XPValue = "450";Value = "4000"}
+[pscustomobject]@{Min = 57;Max = 60;Item = "Hammer + 1";XPValue = "300";Value = "2500"}
+[pscustomobject]@{Min = 61;Max = 62;Item = "Hammer + 2";XPValue = "650";Value = "6000"}
+[pscustomobject]@{Min = 63;Max = 63;Item = "Hammer + 3, Dwarven Thrower";XPValue = "1500";Value = "15000"}
+[pscustomobject]@{Min = 64;Max = 64;Item = "Hammer of Thunderbolts";XPValue = "2500";Value = "25000"}
+[pscustomobject]@{Min = 65;Max = 67;Item = "Javelin + 2";XPValue = "750";Value = "5000"}
+[pscustomobject]@{Min = 68;Max = 72;Item = "Mace + 1";XPValue = "350";Value = "3000"}
+[pscustomobject]@{Min = 73;Max = 75;Item = "Mace + 2";XPValue = "700";Value = "4500"}
+[pscustomobject]@{Min = 76;Max = 76;Item = "Mace of Disruption";XPValue = "1750";Value = "17500"}
+[pscustomobject]@{Min = 77;Max = 77;Item = "Mace + 4";XPValue = "1500";Value = "15000"}
+[pscustomobject]@{Min = 78;Max = 80;Item = "Military Pick + 1";XPValue = "350";Value = "2500"}
+[pscustomobject]@{Min = 81;Max = 83;Item = "Morning Star + 1";XPValue = "400";Value = "3000"}
+[pscustomobject]@{Min = 84;Max = 88;Item = "Scimitar + 2";XPValue = "750";Value = "6000"}
+[pscustomobject]@{Min = 89;Max = 89;Item = "Sling of Seeking + 2";XPValue = "700";Value = "7000"}
+[pscustomobject]@{Min = 90;Max = 94;Item = "Spear + 1";XPValue = "500";Value = "3000"}
+[pscustomobject]@{Min = 95;Max = 96;Item = "Spear + 2";XPValue = "1000";Value = "6500"}
+[pscustomobject]@{Min = 97;Max = 97;Item = "Spear + 3";XPValue = "1750";Value = "15000"}
+[pscustomobject]@{Min = 98;Max = 99;Item = "Spear, Cursed Backbiter";XPValue = "0";Value = "1000"}
+[pscustomobject]@{Min = 100;Max = 100;Item = "Trident (Military Fork) + 3";XPValue = "1500";Value = "12500"}
+
+)
 
 #endregion
 
