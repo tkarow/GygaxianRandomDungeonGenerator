@@ -2269,6 +2269,24 @@ $MagicRingsTable = @(
 
 )
 
+function Get-MagicRingsTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MagicRingsTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
 $MagicRodsStavesAndWandsTable = @(
 
 [pscustomobject]@{Min = 1;Max = 3;Item = "Rod of Absorbtion";XPValue = "7500";Value = "40000"}
@@ -2303,6 +2321,24 @@ $MagicRodsStavesAndWandsTable = @(
 [pscustomobject]@{Min = 95;Max = 100;Item = "Wand of Wonder";XPValue = "6000";Value = "10000"}
 
 )
+
+function Get-MagicRodsStavesAndWandsTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MagicRodsStavesAndWandsTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
 
 $MiscellaneousMagicTable1 = @(
 
@@ -2343,6 +2379,24 @@ $MiscellaneousMagicTable1 = @(
 
 )
 
+function Get-MiscellaneousMagicTable1Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MiscellaneousMagicTable1 | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
 $MiscellaneousMagicTable2 = @(
 
 [pscustomobject]@{Min = 1;Max = 6;Item = "Candle of Invocation";XPValue = "1000";Value = "5000"}
@@ -2380,6 +2434,24 @@ $MiscellaneousMagicTable2 = @(
 #*** If reverse effect, 12,500 x.p. and 50,000 g.p. sale value.
 
 )
+
+function Get-MiscellaneousMagicTable2Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MiscellaneousMagicTable2 | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
 
 $MiscellaneousMagicTable3 = @(
 
@@ -2422,6 +2494,24 @@ $MiscellaneousMagicTable3 = @(
 #** Double for a bronze horn, triple for an iron horn.
 #*** Per stone.
 #**** Per level of instrument for Bards.
+
+function Get-MiscellaneousMagicTable3Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MiscellaneousMagicTable3 | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
 
 $MiscellaneousMagicTable4 = @(
 
@@ -2468,6 +2558,24 @@ $MiscellaneousMagicTable4 = @(
 #*** Per pot of pigments.
 #**** Per level of spell.
 
+function Get-MiscellaneousMagicTable4Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MiscellaneousMagicTable4 | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
 $MiscellaneousMagicTable5 = @(
 
 [pscustomobject]@{Min = 1;Max = 1;Item = "Robe of the Archmagi";XPValue = "6000";Value = "65000"}
@@ -2508,6 +2616,24 @@ $MiscellaneousMagicTable5 = @(
 
 )
 
+function Get-MiscellaneousMagicTable5Roll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MiscellaneousMagicTable5 | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
 $MiscellaneousMagicTableSpecial = @(
 
 [pscustomobject]@{Min = 1;Max = 1;Item = "Axe of the Dwarvish Lords";XPValue = "0";Value = "55000"}
@@ -2543,6 +2669,24 @@ $MiscellaneousMagicTableSpecial = @(
 )
 #These items bring no experience points.
 
+function Get-MiscellaneousMagicTableSpecialRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MiscellaneousMagicTableSpecial | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
 $MagicArmorAndShieldTable = @(
 
 [pscustomobject]@{Min = 1;Max = 5;Item = "Chain Mail + 1";XPValue = "600";Value = "3500"}
@@ -2575,6 +2719,24 @@ $MagicArmorAndShieldTable = @(
 )
 #65% of all armor is man-sized, 20% is elf-sized, 10% is dwarf-sized, and but 5% gnome or halfling sized.
 
+function Get-MagicArmorAndShieldTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MagicArmorAndShieldTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
+
 $MagicSwordsTable = @(
 
 [pscustomobject]@{Min = 1;Max = 25;Item = "Sword + 1";XPValue = "400";Value = "2000"}
@@ -2606,6 +2768,24 @@ $MagicSwordsTable = @(
 
 )
 #70% of swords are longswords, 20% are broadswords, 5% are short (small) swords, 4% are bastard swords, 1% are two-handed swords.
+
+function Get-MagicSwordsTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MagicSwordsTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
 
 
 $MagicMiscellaneousWeaponsTable = @(
@@ -2648,6 +2828,24 @@ $MagicMiscellaneousWeaponsTable = @(
 [pscustomobject]@{Min = 100;Max = 100;Item = "Trident (Military Fork) + 3";XPValue = "1500";Value = "12500"}
 
 )
+
+function Get-MagicMiscellaneousWeaponsTableRoll {
+
+    param(
+
+        [Parameter(Mandatory=$False)]
+        [int]$Roll
+   
+    )
+
+    if($Roll -gt 100){$Roll = 100}
+    if(!$Roll){$Roll = (Get-D100Roll).Result}
+
+    $Result = $MagicMiscellaneousWeaponsTable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
+
+    $Result
+
+}
 
 #endregion
 
