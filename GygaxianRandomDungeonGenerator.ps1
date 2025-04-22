@@ -2129,7 +2129,27 @@ function Get-MagicItemTypeRoll {
 
     $Result = $MagicItemType | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
-    $Result
+    $Specific = ""
+
+    if($Result.Type -like "Potion*"){$Specific = Get-PotionsTableRoll}
+    if($Result.Type -like "Scroll*"){$Specific = Get-ScrollsTableRoll}
+    if($Result.Type -like "Rings*"){$Specific = Get-MagicRingsTableRoll}
+    if($Result.Type -like "Rods*"){$Specific = Get-MagicRodsStavesAndWandsTableRoll}
+    if($Result.Type -like "*E.1.*"){$Specific = Get-MiscellaneousMagicTable1Roll}
+    if($Result.Type -like "*E.2.*"){$Specific = Get-MiscellaneousMagicTable2Roll}
+    if($Result.Type -like "*E.3.*"){$Specific = Get-MiscellaneousMagicTable3Roll}
+    if($Result.Type -like "*E.4.*"){$Specific = Get-MiscellaneousMagicTable4Roll}
+    if($Result.Type -like "*E.5.*"){$Specific = Get-MiscellaneousMagicTable5Roll}
+    if($Result.Type -like "Armor*"){$Specific = Get-MagicArmorAndShieldTableRoll}
+    if($Result.Type -like "Sword*"){$Specific = Get-MagicSwordsTableRoll}
+    if($Result.Type -like "*H.*"){$Specific = Get-MagicMiscellaneousWeaponsTableRoll}
+
+    [pscustomobject]@{
+    
+        MagicItemType = $Result.Type
+        Specific = $Specific
+
+    }
 
 }
 
@@ -2193,30 +2213,30 @@ function Get-PotionsTableRoll {
 
 $ScrollsTable = @(
 
-[pscustomobject]@{Min = 1;Max = 10;Item = "1 scroll";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 11;Max = 16;Item = "1 scroll";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 17;Max = 19;Item = "1 scroll";SpellLevelRange = "2-9 or 2-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 20;Max = 24;Item = "2 scrolls";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 25;Max = 27;Item = "2 scrolls";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 28;Max = 32;Item = "3 scrolls";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 33;Max = 35;Item = "3 scrolls";SpellLevelRange = "2-9 or 2-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 36;Max = 39;Item = "4 scrolls";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 40;Max = 42;Item = "4 scrolls";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 43;Max = 46;Item = "5 scrolls";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 47;Max = 49;Item = "5 scrolls";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 50;Max = 52;Item = "6 scrolls";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 53;Max = 54;Item = "6 scrolls";SpellLevelRange = "3-8 or 3-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 55;Max = 57;Item = "7 scrolls";SpellLevelRange = "1-8";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 58;Max = 59;Item = "7 scrolls";SpellLevelRange = "2-9";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 60;Max = 60;Item = "7 scrolls";SpellLevelRange = "4-9 or 4-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
-[pscustomobject]@{Min = 61;Max = 62;Item = "1 scroll (Protection - Demons)";SpellLevelRange = "";XPValue = "2500";Value = "12500"}
-[pscustomobject]@{Min = 63;Max = 64;Item = "1 scroll (Protection - Devils)";SpellLevelRange = "";XPValue = "2500";Value = "12500"}
-[pscustomobject]@{Min = 65;Max = 70;Item = "1 scroll (Protection - Elementals)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
-[pscustomobject]@{Min = 71;Max = 76;Item = "1 scroll (Protection - Lycanthropes)";SpellLevelRange = "";XPValue = "1000";Value = "5000"}
-[pscustomobject]@{Min = 77;Max = 82;Item = "1 scroll (Protection - Magic)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
-[pscustomobject]@{Min = 83;Max = 87;Item = "1 scroll (Protection - Petrification)";SpellLevelRange = "";XPValue = "2000";Value = "10000"}
-[pscustomobject]@{Min = 88;Max = 92;Item = "1 scroll (Protection - Possession)";SpellLevelRange = "";XPValue = "2000";Value = "10000"}
-[pscustomobject]@{Min = 93;Max = 97;Item = "1 scroll (Protection - Undead)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 1;Max = 10;Item = "1 spell";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 11;Max = 16;Item = "1 spell";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 17;Max = 19;Item = "1 spell";SpellLevelRange = "2-9 or 2-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 20;Max = 24;Item = "2 spells";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 25;Max = 27;Item = "2 spells";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 28;Max = 32;Item = "3 spells";SpellLevelRange = "1-4";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 33;Max = 35;Item = "3 spells";SpellLevelRange = "2-9 or 2-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 36;Max = 39;Item = "4 spells";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 40;Max = 42;Item = "4 spells";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 43;Max = 46;Item = "5 spells";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 47;Max = 49;Item = "5 spells";SpellLevelRange = "1-8 or 1-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 50;Max = 52;Item = "6 spells";SpellLevelRange = "1-6";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 53;Max = 54;Item = "6 spells";SpellLevelRange = "3-8 or 3-6*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 55;Max = 57;Item = "7 spells";SpellLevelRange = "1-8";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 58;Max = 59;Item = "7 spells";SpellLevelRange = "2-9";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 60;Max = 60;Item = "7 spells";SpellLevelRange = "4-9 or 4-7*";XPValue = "100 * spell level";Value = "XP value * 3"}
+[pscustomobject]@{Min = 61;Max = 62;Item = "1 spell (Protection - Demons)";SpellLevelRange = "";XPValue = "2500";Value = "12500"}
+[pscustomobject]@{Min = 63;Max = 64;Item = "1 spell (Protection - Devils)";SpellLevelRange = "";XPValue = "2500";Value = "12500"}
+[pscustomobject]@{Min = 65;Max = 70;Item = "1 spell (Protection - Elementals)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 71;Max = 76;Item = "1 spell (Protection - Lycanthropes)";SpellLevelRange = "";XPValue = "1000";Value = "5000"}
+[pscustomobject]@{Min = 77;Max = 82;Item = "1 spell (Protection - Magic)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
+[pscustomobject]@{Min = 83;Max = 87;Item = "1 spell (Protection - Petrification)";SpellLevelRange = "";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 88;Max = 92;Item = "1 spell (Protection - Possession)";SpellLevelRange = "";XPValue = "2000";Value = "10000"}
+[pscustomobject]@{Min = 93;Max = 97;Item = "1 spell (Protection - Undead)";SpellLevelRange = "";XPValue = "1500";Value = "7500"}
 [pscustomobject]@{Min = 98;Max = 100;Item = "1 cursed scroll";SpellLevelRange = "";XPValue = "0";Value = "0"}
 
 )
@@ -2786,7 +2806,6 @@ function Get-MagicSwordsTableRoll {
     $Result
 
 }
-
 
 $MagicMiscellaneousWeaponsTable = @(
 
@@ -3525,13 +3544,13 @@ function Get-Treasure {
 
         $Loot += [pscustomobject]@{
         
-            Item = $MagicItem.ShortName
+            Item = $MagicItem.Specific.Item
             Amount = 1
-            Value = "Varies"
+            Value = $MagicItem.Specific.Value
 
         }
 
-        $DetailedLoot += $MagicItem
+        $DetailedLoot += $MagicItem.Specific
                 
     }
 
