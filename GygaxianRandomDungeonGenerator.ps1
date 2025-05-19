@@ -433,9 +433,9 @@ function Get-Table3BRoll {
     if($Roll -ge 11){
 
         $SpecificSpecialRoll = (Get-D20Roll).Result
-    
+   
         switch($Roll){
-        
+       
             11 {$SpecificSpecial = "50', columns 10' right and left support 10' wide upper galleries 20' above. $(if($SpecificSpecialRoll -le 15){"Stairs to gallery are at the end of the passage."}else{"Stairs to gallery are at the beginning of the passage."})"}
             12 {$SpecificSpecial = "50', columns 10' right and left support 10' wide upper galleries 20' above. $(if($SpecificSpecialRoll -le 15){"Stairs to gallery are at the end of the passage."}else{"Stairs to gallery are at the beginning of the passage."})"}
             #Above" "In the former case if a stairway is indicated in or adjacent to the passage it will replace the end stairs 50% (1-10) of the time and supplement 50% (11-20) of the time." is too highly situational at this time to program. Maybe later.
@@ -876,7 +876,7 @@ function Get-Table5FRoll {
         $SpecialDieRoll = (Get-D20Roll).Result
 
         switch($SpecialDieRoll){
-        
+       
                 1 {$Stairs = "Stairs up 1 level"}
                 2 {$Stairs = "Stairs up 1 level"}
                 3 {$Stairs = "Stairs up 1 level"}
@@ -1259,7 +1259,7 @@ function Get-Table7Roll {
     if($Roll -eq 17){$Gas = "Gas: $((Get-Gas).Description) Party has detected it, but must breathe it to continue along corridor, as it covers 60' ahead. Mark map accordingly regardless of turning back or not."}
 
     if($Roll -eq 19){
-    
+   
         switch((Get-D20Roll).Result){
 
             1 {$IllusionaryWallHides = "Pit, 10' deep with spikes, 3 in 6 to fall in."}
@@ -1630,7 +1630,7 @@ function Get-GemTableRoll {
     if(!$Roll){$Roll = (Get-D100Roll).Result}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $Gems | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
@@ -1666,7 +1666,7 @@ function Get-GemModifierRoll {
     if(!$Roll){$Roll = (Get-D10Roll).Result}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $GemModifier.($Roll).Description
 
@@ -1703,7 +1703,7 @@ function Get-OrnamentalStone {
     if(!$Roll){$Roll = (Get-D12Roll).Result}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $OrnamentalStones.($Roll)
 
@@ -1741,7 +1741,7 @@ function Get-SemiPreciousStone {
     if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 14}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $SemiPreciousStones.($Roll)
 
@@ -1780,7 +1780,7 @@ function Get-FancyStone {
     if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 15}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $FancyStones.($Roll)
 
@@ -1812,7 +1812,7 @@ function Get-FancyPreciousStone {
     if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 7}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $FancyPreciousStones.($Roll)
 
@@ -1851,7 +1851,7 @@ function Get-GemStone {
     if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 15}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $GemStones.($Roll)
 
@@ -1882,7 +1882,7 @@ function Get-Jewel {
     if(!$Roll){$Roll = Get-Random -Minimum 1 -Maximum 6}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $Jewels.($Roll)
 
@@ -1923,7 +1923,7 @@ function Get-JewelryTableRoll {
     $Material = $Result.Material[(Get-Random -Minimum 0 ($Result.Material.Count))]
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $Result
         Material = $Material
@@ -2076,7 +2076,7 @@ function Get-MagicTreasure {
     if($MagicTreasure.($Roll) -like "Any 5 items, 1 is a Rod, 1 is Miscellaneous Magic"){$Specific += ""}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Result = $MagicTreasure.($Roll)
         Specific = $Specific
@@ -2118,9 +2118,9 @@ function Get-MagicItemTypeRoll {
     if(!$Roll){$Roll = (Get-D100Roll).Result}
 
     if($NoPotionOrSword -eq $True){
-    
+   
         while(($Roll -le 20) -or (($Roll -ge 76) -and ($Roll -le 86))){
-        
+       
             $Roll = (Get-D100Roll).Result
 
         }
@@ -2145,7 +2145,7 @@ function Get-MagicItemTypeRoll {
     if($Result.Type -like "*H.*"){$Specific = Get-MagicMiscellaneousWeaponsTableRoll}
 
     [pscustomobject]@{
-    
+   
         MagicItemType = $Result.Type
         Specific = $Specific
 
@@ -2927,7 +2927,7 @@ function Get-DungeonRandomMonsterLevel1Roll {
     }
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Encounter = $Relevant.Monster
         NumberAppearing = $NumberAppearing
@@ -2964,7 +2964,7 @@ function Get-HumanSubtableRoll {
     if($HumanSubtableResult.Human -notlike "*NPC*"){$NumberAppearing = $HumanSubtableResult.Base + ((Get-Random -Minimum 1 -Maximum ($HumanSubtableResult.VarianceDie + 1)) * $HumanSubtableResult.VarianceDiceNumber)}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Encounter = $HumanSubtableResult.Human
         NumberAppearing = $NumberAppearing
@@ -3038,7 +3038,7 @@ function Get-CharacterSubtableRoll {
     if(($NoMonk) -or ($NoBard)){100 | %{$ForbiddenNumbers += $_}}
 
     while($ForbiddenNumbers -contains $Roll){
-    
+   
         $Roll = (Get-D100Roll).Result
 
     }
@@ -3050,7 +3050,7 @@ function Get-CharacterSubtableRoll {
     if($Character -like "Monk or Bard"){if((Get-D2Roll).Result -eq 1){$Character = "Monk"}else{$Character = "Bard"}}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         NPC = $Character
         MaximumNumberPerParty = $CharacterSubtableResult.MaximumNumberPerParty
@@ -3088,7 +3088,7 @@ function Get-NPCRaceAndMultiClassTableRoll {
     if((Get-D100Roll).Result -le $NPCRaceAndMultiClassTableResult.MultiClassLikelihood){$BoolMultiClass = $True}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         NPCRace = $NPCRaceAndMultiClassTableResult.Race
         NPCMultiClassLikelihood = $NPCRaceAndMultiClassTableResult.MultiClassLikelihood
@@ -3155,22 +3155,22 @@ function Get-NPCPartyRoll {
         if(($NPCParty.NPC | ?{$_ -like "Bard"} | Measure).Count -ge 1){$BardBan = $True}
 
         if(($NPCParty.NPC | ?{$_ -like "Paladin"} | Measure).Count -gt 0){
-        
+       
             $AssassinBan = $True
-            
+           
         }elseif(($NPCParty.NPC | ?{$_ -like "Assassin"} | Measure).Count -gt 0){
-        
+       
             $PaladinBan = $True
-            
+           
         }
 
         #DMG pg. 176:
         if((Get-D100Roll).Result -le 20){$Race = (Get-NPCRaceAndMultiClassTableRoll).NPCRace}else{$Race = "Human"}
-        
+       
         $PotentialPartyMember = Get-CharacterSubtableRoll -NoCleric $ClericBan -NoDruid $DruidBan -NoFighter $FighterBan -NoPaladin $PaladinBan -NoRanger $RangerBan -NoMagicUser $MagicUserBan -NoIllusionist $IllusionistBan -NoThief $ThiefBan -NoAssassin $AssassinBan -NoMonk $MonkBan -NoBard $BardBan
-            
+           
         $NPCParty += "$($Race) $($PotentialPartyMember.NPC.ToLower())"
-            
+           
     }
 
     $NPCPartyOutput = $NPCParty
@@ -3178,7 +3178,7 @@ function Get-NPCPartyRoll {
     if($Level -le 3){$NPCPartyOutput += "Henchmen x $((9 - $NumberInParty))"}else{$NPCPartyOutput += "Men-at-arms x $((9 - $NumberInParty))"}
 
     [pscustomobject]@{
-        
+       
         NPCPartyOutput = $NPCPartyOutput
         LevelOfCharacters = $LevelOfCharacters
 
@@ -3229,12 +3229,12 @@ function Get-DungeonRandomMonsterLevel2Roll {
     if($Relevant.Monster -ne "NPC Party"){
 
         $NumberAppearing = $Relevant.Base + ((Get-Random -Minimum 1 -Maximum ($Relevant.VarianceDie + 1)) * $Relevant.VarianceDiceNumber)
-        
+       
 
     }
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Encounter = $Relevant.Monster
         NumberAppearing = $NumberAppearing
@@ -3297,7 +3297,7 @@ function Get-DungeonRandomMonsterLevel3Roll {
     if($Relevant.Monster -like "Dragon"){$Relevant.Monster = "$((Get-DragonLevel3Roll).Description) dragon"}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Encounter = $Relevant.Monster
         NumberAppearing = $NumberAppearing
@@ -3328,7 +3328,7 @@ function Get-DragonLevel3Roll {
     $DragonLevel3SubtableResult = $DragonLevel3Subtable | ?{$_.Min -le $Roll} | ?{$_.Max -ge $Roll}
 
     [pscustomobject]@{
-    
+   
         Roll = $Roll
         Color = $DragonLevel3SubtableResult.DragonType
         Age = $DragonLevel3SubtableResult.AgeCategory
@@ -3440,23 +3440,23 @@ function Get-Monster {
     if($MonsterRoll.Encounter -notlike "NPC Party"){$SimpleEncounter = "$($MonsterRoll.Encounter) x $($MonsterRoll.NumberAppearing)"}else{$SimpleEncounter = $MonsterRoll.Encounter}
 
     if($MonsterRoll.Encounter -like "NPC Party"){
-    
+   
         $MonsterRoll = Get-NPCPartyRoll -Level $Level -MonsterLevel $MonsterLevel
-        
+       
         foreach($NPC in ($MonsterRoll.NPCPartyOutput | sort | Get-Unique)){
-        
+       
             if(($NPC -notlike "Henchmen*") -and ($NPC -notlike "Men-at*")){
-            
+           
                 $Party = "$($Party)$($NPC)$(if(($MonsterRoll | ?{$_ -like $NPC} | Measure).Count -gt 1){' x '})$(if(($MonsterRoll | ?{$_ -like $NPC} | Measure).Count -gt 1){($MonsterRoll | ?{$_ -like $NPC} | Measure).Count}), "
-                
+               
             }else{
-            
+           
                 $Party = "$($Party)$($NPC), "
-                
+               
             }
 
         }
-            
+           
             $Party = $Party.Trim()
             if($Party -like "*,"){$Party = "$($Party.Substring(0,($Party.Length - 1)))"}
 
@@ -3499,9 +3499,9 @@ function Get-Treasure {
     $Loot = @()
 
     if($Treasure.Roll -le 90){
-    
+   
         $Loot += [pscustomobject]@{
-        
+       
             Item = $Treasure.Loot.Type
             Amount = $Treasure.Loot.Amount
             Value = $Treasure.Loot.Value
@@ -3511,39 +3511,39 @@ function Get-Treasure {
         $DetailedLoot += $Treasure.Loot
 
     }elseif(($Treasure.Roll -ge 91) -and ($Treasure.Roll -le 94)){
-    
+   
         1..((Get-D4Roll).Result * $Level) | %{$Gem = Get-Gem;$Loot += [pscustomobject]@{
-        
+       
                 Item = $Gem.Item
                 Amount = 1
                 Value = if($Gem.ModifiedValue -notlike '-'){$Gem.ModifiedValue}else{$Gem.BaseValue}}
 
                 $DetailedLoot += $Gem
-            
+           
             }
 
     }elseif(($Treasure.Roll -ge 95) -and ($Treasure.Roll -le 97)){
-    
+   
         1..(1 * $Level) | %{$JewelryLoot = Get-Jewelry
-        
+       
             $Loot += [pscustomobject]@{
-        
+       
                     Item = $JewelryLoot.Item
                     Amount = 1
                     Value = $JewelryLoot.Value
-                
+               
                 }
 
                 $DetailedLoot += $JewelryLoot
-                
+               
             }
 
     }elseif($Treasure.Roll -ge 98){
-        
+       
         $MagicItem = Get-MagicItemTypeRoll
 
         $Loot += [pscustomobject]@{
-        
+       
             Item = $MagicItem.Specific.Item
             Amount = 1
             Value = $MagicItem.Specific.Value
@@ -3551,7 +3551,7 @@ function Get-Treasure {
         }
 
         $DetailedLoot += $MagicItem.Specific
-                
+               
     }
 
     [pscustomobject]@{
@@ -3586,7 +3586,7 @@ function Get-Gem {
     $GemTable = Get-GemTableRoll -Roll $GemTableRoll
 
     $TypeOfGemTable = switch($GemTable.Result.Class){
-    
+   
         1 {Get-OrnamentalStone}
         2 {Get-SemiPreciousStone}
         3 {Get-FancyStone}
@@ -3607,16 +3607,16 @@ function Get-Gem {
             $i++
             $GemModifier = Get-GemModifierRoll -Roll (Get-Random -Minimum 1 -Maximum 8)
             $ModifierRolls += ($GemModifier).Roll
-            
+           
         }
 
         $Explode = 0
         if(($GemTable.Result.Class + $i) -gt 6){$Explode = $i - 6}
 
         if($GemTable.Result.Class -le 6){
-        
+       
             $TypeOfGemTable = switch($GemTable.Result.Class + $i){
-    
+   
                 1 {Get-OrnamentalStone}
                 2 {Get-SemiPreciousStone}
                 3 {Get-FancyStone}
@@ -3627,15 +3627,15 @@ function Get-Gem {
             }
 
         }else{
-        
+       
             $TypeOfGemTable = Get-Jewel
 
         }
 
         if($Explode -gt 0){
-            
+           
             $NewValue = switch($Explode){
-            
+           
                 1 {10000}
                 2 {25000}
                 3 {50000}
@@ -3649,11 +3649,11 @@ function Get-Gem {
         }
 
     }elseif($GemModifier.Roll -eq 2){
-    
+   
         $NewValue = $TypeOfGemTable.Result.Value * 2
 
     }elseif($GemModifier.Roll -eq 3){
-    
+   
         $BonusValue = ((Get-D6Roll).Result * .1) + 1
         if($NewValue -eq $Null){$NewValue = $TypeOfGemTable.Result.Value * $BonusValue}else{$NewValue = $NewValue * $BonusValue}
 
@@ -3671,16 +3671,16 @@ function Get-Gem {
             $i++
             $GemModifier = Get-GemModifierRoll -Roll (Get-Random -Minimum 3 -Maximum 11)
             $ModifierRolls += ($GemModifier).Roll
-            
+           
         }
 
         $Explode = 0
         if(($GemTable.Result.Class - $i) -lt 1){$Explode = $i}
 
         if(($GemTable.Result.Class - $i) -ge 1){
-        
+       
             $TypeOfGemTable = switch($GemTable.Result.Class - $i){
-    
+   
                 1 {Get-OrnamentalStone}
                 2 {Get-SemiPreciousStone}
                 3 {Get-FancyStone}
@@ -3691,15 +3691,15 @@ function Get-Gem {
             }
 
         }else{
-        
+       
             $TypeOfGemTable = Get-OrnamentalStone
 
         }
 
         if($Explode -gt 0){
-            
+           
             $NewValue = switch($Explode){
-            
+           
                 1 {5}
                 2 {1}
                 3 {1}
@@ -3754,7 +3754,7 @@ function Get-Jewelry {
     $JewelryTable = Get-JewelryTableRoll -Roll $JewelryTableRoll
 
     $Variance = switch($JewelryTable.Result.VarianceDie){
-    
+   
         6 {(Get-D6Roll).Result * $JewelryTable.Result.VarianceValue}
         8 {(Get-D8Roll).Result * $JewelryTable.Result.VarianceValue}
         10 {(Get-D10Roll).Result * $JewelryTable.Result.VarianceValue}
@@ -3767,7 +3767,7 @@ function Get-Jewelry {
 
         $Variance = $JewelryTable.Result.VarianceDie * $JewelryTable.Result.VarianceValue
         $Value = $JewelryTable.Result.TopValue
-        
+       
     }
 
     $Type = "$((Get-JewelryAndItemsTypicallyBeJewelledRoll -Roll $JewelryAndItemsTypicallyBeJewelledRoll).Description)"
@@ -3775,25 +3775,25 @@ function Get-Jewelry {
     if((Get-D10Roll).Result -eq 1){$Exceptional = $True}
 
     if(($Exceptional -eq $True) -and ($Value -ge $JewelryTable.Result.TopValue)){
-    
+   
         $Rerolls++
         $NewRoll = (($JewelryTable.Result.Max) + 1)
         if($NewRoll -gt 100){$NewRoll = 100}
         if($NewRoll -eq 100){Get-Jewelry -JewelryTableRoll $NewRoll -ReRolls $Rerolls -MaxValue $True}else{Get-Jewelry -JewelryTableRoll $NewRoll -Rerolls $Rerolls}
-        
+       
     }else{
 
         if((($JewelryTable.Result.Description -like "*gems*")) -and (Get-D8Roll).Result -eq 1){$ExceptionalGem = $True}
 
         if($ExceptionalGem -eq $True){
-        
+       
             $GemBonus = 1
             $GemReroll = $True
 
             while(($GemBonus -le 8) -and ($GemReroll -eq $True)){
-            
+           
                 switch($GemBonus) {
-                
+               
                     1 {$GemBonusValue = 5000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
                     2 {$GemBonusValue = 10000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
                     3 {$GemBonusValue = 20000;if((Get-D6Roll).Result -eq 1){$GemBonus++}else{$GemReroll = $False}}
@@ -3836,7 +3836,7 @@ function Get-Room {
 
         [Parameter(Mandatory=$False)]
         [int]$Level,
-        
+       
         [Parameter(Mandatory=$False)]
         [int]$Table5Roll,
 
@@ -3969,7 +3969,7 @@ function Get-Room {
     if(($CircleRoll -eq 8) -or ($CircleRoll -eq 9) -or ($CircleRoll -eq 10)){$Shaft = $True}
 
     if($Pool -eq $True){
-    
+   
         $PoolRoll = ''
         $PoolRoll = Get-Table8ARoll -Roll $Table8ARoll
 
@@ -3977,17 +3977,17 @@ function Get-Room {
         if(($PoolRoll.Roll -ge 11) -and ($PoolRoll.Roll -le 18)){$Monster = $True;$PoolDescription = "Pool"}
         if($PoolRoll.Description -like "*treasure*"){$TreasurePresent = $True;$PoolDescription = "Pool"}
         if($PoolRoll.Description -like "*Magical*"){$PoolDescription = "Magical pool: $((Get-Table8CRoll -Roll $Table8CRoll).PoolSpecificScenario)"}
-        
+       
     }else{
-    
+   
         $Pool = "N/A"
-        
+       
     }
     #endregion
 
     #region Exits
     if(($Shape -like "Square") -or ($Shape -like "Rectangular")){$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Width $Width -Length $Length}else{$SpecificNumberOfExits = Get-SpecificNumberOfExits -Roll $Table5CRoll -Type $Type -Area $Area}
-    
+   
     $ExitLocations = @()
     $SecretDoorLocations = @()
 
@@ -3999,7 +3999,7 @@ function Get-Room {
 
     if($SpecificNumberOfExits.Exits -gt 0){1..$SpecificNumberOfExits.Exits | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$ExitDirections += $_}else{$ExitDirections += "$($_.split('/')[0])"}}}else{$ExitDirections = "N/A"}
     if($SpecificNumberOfExits.SecretDoors -gt 0){1..$SpecificNumberOfExits.SecretDoors | %{(Get-ExitDirection).Description} | %{if($_ -notlike "45*"){$SecretDoorDirections += $_}else{$SecretDoorDirections += "$($_.split('/')[0])"}}}else{$SecretDoorDirections = "N/A"}
-    
+   
     if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "door"}
     if(($Type -like "Room") -and ($SpecificNumberOfExits.Passage -eq $True)){$ExitType = "passage"}
     if(($Type -like "Chamber") -and ($SpecificNumberOfExits.Passage -eq $False)){$ExitType = "passage"}
@@ -4012,26 +4012,26 @@ function Get-Room {
     $Contents = Get-RoomContents -Roll $Table5FRoll
 
     if(($Contents.Description -like "Monster*") -or ($Monster -eq $True)){
-    
+   
         $Monster = $True
         $Monsters = (Get-Monster -Level $Level).Encounter
-    
+   
         $Contents = "Monster(s)"
 
     }else{
-    
+   
         $Monsters = "N/A"
-        
+       
     }
 
     if(($Contents.Description -like "*treasure*") -or ($TreasurePresent -eq $True)){
-    
+   
         if($Monster -eq $True){
-    
+   
             $RolledTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10
             $Treasure += $RolledTreasure.Loot
             $DetailedTreasure += $RolledTreasure.DetailedLoot
-            
+           
             $Table5GRoll = (Get-D100Roll).Result
             $RolledTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Level $Level -RollBonus 10
             $Treasure += $RolledTreasure.Loot
@@ -4040,7 +4040,7 @@ function Get-Room {
             $Contents = "Monster(s) and treasure"
 
         }else{
-    
+   
             $RolledTreasure = Get-Treasure -Table5GRoll $Table5GRoll -Level $Level
             $Treasure += $RolledTreasure.Loot
             $DetailedTreasure += $RolledTreasure.DetailedLoot
@@ -4048,27 +4048,27 @@ function Get-Room {
             $Contents = "Treasure"
 
         }
-        
+       
     }
 
     if($Contents.Description -like "Trick*"){
-    
+   
         $Trick = Get-Table7Roll -Roll $Table7Roll
 
         if($Trick.IllusionaryWall -like "N/A"){
-        
+       
             $Contents = $Trick.Specific
-            
+           
         }else{
-        
+       
             $Contents = "Illusionary wall hides a $($Trick.IllusionaryWall.ToLower())"
-            
+           
         }
-        
+       
     }
 
     if($Contents.Description -like "Special*"){
-    
+   
         $Contents = $Contents.Stairs
 
     }
@@ -4081,19 +4081,19 @@ function Get-Room {
     if(($Shaft -eq $True) -and ($Contents -eq "Empty")){$Contents = "Shaft"}
 
     if($Contents -like "*treasure*"){
-    
+   
         $Container = (Get-Table5HRoll -Roll $Table5HRoll).Description
 
         #region This is logic I made up. The DMG indicates that treasure being guarded or hidden is to be rolled "if desired". I think that having one or the other 100% of the time is silly and unintended. I also think that allowing for an escalating probability of dangerous/hidden treasure to increase as the dungeon level increases makes sense, so I have wirrten some logic for what sounds fair to me below. This may need to be amended/revisited in the future.
         if(((((Get-D100Roll).Result) -le (50 + ($Level - 1) * 10))) -and ($Container -notlike "Loose")){
         #endregion
-        
+       
             if((Get-D20Roll).Result -le 8){$TreasureTrap = (Get-Table5IRoll -Roll $Table5IRoll).Description}else{$HiddenByIn = (Get-Table5JRoll -Roll $Table5JRoll).Sentence}
-            
+           
         }
-        
+       
     }else{
-    
+   
         $Treasure = "N/A"
         $DetailedTreasure = "N/A"
 
@@ -4133,7 +4133,7 @@ function Get-Passage {
 
         [Parameter(Mandatory=$False)]
         [int]$Table1Roll,
-        
+       
         [Parameter(Mandatory=$False)]
         [int]$Level
 
@@ -4144,16 +4144,16 @@ function Get-Passage {
     #To do: Decide how/when to check for width. For now my rule is that the width is only checked again if the passage changes direction- they are straight, uniform hallways otherwise. If I can find something in the original text or a popular reading that contradicts this I will update my logic.
     $Width = (Get-Table3ARoll).Description.Replace("'","")
     if($Width -like "SPECIAL*"){
-    
+   
         $Table3BRoll = Get-Table3BRoll
         if($Table3BRoll.SpecificSpecial -like "N/A"){$Table3BRoll = $Table3BRoll.Description.Replace("'","")}else{$Table3BRoll = $Table3BRoll.SpecificSpecial}
         $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
         $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
-        
+       
     }
 
     if((!$Level) -or ($Level -like "")){$Level = 1}
-    
+   
     $PassageSegments = @()
     $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
 
@@ -4168,75 +4168,76 @@ function Get-Passage {
         if($Table1Roll -le 2){$PassageSegments += [pscustomobject]@{SegmentLength = 60;Width = "$($Width)"}}
         if(($Table1Roll -ge 3) -and ($Table1Roll -le 5)){$PassageSegments += "Door"}
         if(($Table1Roll -ge 6) -and ($Table1Roll -le 10)){
-        
+       
             $SidePassage = "$((Get-Table3Roll).Description.Replace(" degrees","°"))"
 
             $PassageSegments += "$(if($SidePassage -notlike "*'s"){"Side Passage: "})$($SidePassage)"
             if($SidePassage -notlike "*'s*"){$PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}}
-            
+           
         }
         if(($Table1Roll -ge 11) -and ($Table1Roll -le 13)){
-        
+       
             $PassageSegments += "Passage turns $((Get-Table4Roll).Description.ToLower().Replace(" degrees","°"))"
-            
+           
             $Width = (Get-Table3ARoll).Description.Replace("'","")
-            
+           
             if($Width -like "SPECIAL*"){
-    
+   
                 $Table3BRoll = Get-Table3BRoll
                 if($Table3BRoll.SpecificSpecial -like "N/A"){$Table3BRoll = $Table3BRoll.Description.Replace("'","")}else{$Table3BRoll = $Table3BRoll.SpecificSpecial}
                 $Width = "$($Table3BRoll)".split(",")[0].Replace("'","")
                 $PassageSegments += "$($Table3BRoll)".split(",")[1].Trim().Substring(0, 1).ToUpper() + "$($Table3BRoll)".split(",")[1].Trim().Substring(1)
-        
+       
             }
 
             $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
-            
+           
         }
         if(($Table1Roll -ge 14) -and ($Table1Roll -le 16)){$PassageSegments += "Chamber"}
         if($Table1Roll -eq 17){
-        
+       
             $Stairs = ""
             $Stairs = Get-Table6Roll
-            
+           
             if($Stairs.SpecificStairs -notlike "N/A"){
-            
+           
                 $Stairs = $Stairs.SpecificStairs
-                
+               
             }else{
-            
+           
                 $Stairs = $Stairs.Description
-                
+               
             }
-            
+           
         $PassageSegments += "Stairs: $($Stairs)"
 
         }
 
         if($Table1Roll -eq 18){$PassageSegments += Get-DeadEnd}
         if($Table1Roll -eq 19){
-        
+       
             $Trick = ""
             $Trick = Get-Table7Roll
-            
+           
             if($Trick.IllusionaryWall -notlike "N/A"){
-            
+           
                 $Trick = "Illusionary wall hides a $($Trick.IllusionaryWall.ToLower())"
-                
+               
             }else{
-            
+           
                 $Trick = "$($Trick.Specific)"
-                
+               
             }
 
             $PassageSegments += "$($Trick)"
 
             $PassageSegments += [pscustomobject]@{SegmentLength = 30;Width = "$($Width)"}
-        
+       
         }
 
+        #From DMG: "Wandering Monster, check again immediately to see what lies ahead so direction of monster's approach can be determined." This means that the passage does not automatically continue another 30' or anything- i.e. the monster(s) could be encountered at a door or dead end.
         if($Table1Roll -eq 20){$PassageSegments += "$((Get-Monster -Level $Level).Encounter)"}
-        
+       
         if(($PassageSegments[0].SegmentLength -and $PassageSegments[1].SegmentLength) -and ($PassageSegments[0].Width -eq $PassageSegments[1].Width)){$PassageSegments[1].SegmentLength = $PassageSegments[0].SegmentLength + $PassageSegments[1].SegmentLength;$PassageSegments = @($PassageSegments | Select-Object -Skip 1)}
         if(($PassageSegments[-2].SegmentLength -and $PassageSegments[-1].SegmentLength) -and ($PassageSegments[-2].Width -eq $PassageSegments[-1].Width)){$PassageSegments[-2].SegmentLength = $PassageSegments[-2].SegmentLength + $PassageSegments[-1].SegmentLength;$PassageSegments = @($PassageSegments | Select-Object -SkipLast 1)}
         if(($PassageSegments[-2].SegmentLength -and $PassageSegments[-3].SegmentLength) -and ($PassageSegments[-2].Width -eq $PassageSegments[-3].Width)){$PassageSegments[-3].SegmentLength = $PassageSegments[-2].SegmentLength + $PassageSegments[-3].SegmentLength;$LastBit=$PassageSegments[-1];$PassageSegments = @($PassageSegments | Select-Object -SkipLast 2);$PassageSegments += $LastBit}
@@ -4270,19 +4271,19 @@ function Get-DeadEnd {
         1..3 | %{if((Get-D20Roll).Result -le 5){$SecretDoors++}}
 
     }else{
-    
+   
         $SecretDoors = $NumberOfSecretDoors
 
     }
 
     if($SecretDoors -gt 0){
-    
+   
         $SecretDoorLocations = @()
 
         if($SecretDoors -eq 1){
-                    
+                   
             $SecretDoorLocations += (Get-Table5DRoll -DeadEnd $True).Description
-            
+           
         }
 
         if($SecretDoors -eq 2){
@@ -4290,9 +4291,9 @@ function Get-DeadEnd {
             $SecretDoorLocations += (Get-Table5DRoll -DeadEnd $True).Description
 
             $NewDeadEndWallLocation = ""
-            
+           
             while(($NewDeadEndWallLocation -like "") -or ($SecretDoorLocations -contains $NewDeadEndWallLocation)){
-            
+           
                 $NewDeadEndWallLocation = (Get-Table5DRoll -DeadEnd $True).Description
 
             }
